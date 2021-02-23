@@ -28,7 +28,9 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="eg. MondayRoutine"
+            android:inputType="text" />
 
     </LinearLayout>
 

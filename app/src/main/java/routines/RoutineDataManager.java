@@ -3,6 +3,10 @@ package routines;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class is temporary. It will likely be replaced by a viewmodel (looking into it).
+ */
+
 public class RoutineDataManager {
     //enumerations
     //the 'Show' enum is partially redundant (since the 'Routine' class contains an enum for weekdays); fixable?
