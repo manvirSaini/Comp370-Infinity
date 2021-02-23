@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Infinity - Course Project</string>
+    <string name="routines_order_by_name">Name</string>
+    <string name="routines_order_by_total_time">Total Time</string>
 </resources>

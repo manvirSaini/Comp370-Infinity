@@ -3,7 +3,7 @@ package routines;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class RoutineManager {
+public class RoutineDataManager {
     //enumerations
     //the 'Show' enum is partially redundant (since the 'Routine' class contains an enum for weekdays); fixable?
     enum OrderingMethod {NAME, TOTAL_TIME}
@@ -17,14 +17,13 @@ public class RoutineManager {
     private Routine defaultWeekdayRoutine;
     private Routine defaultRoutine;
 
-
     /**
      * Constructor
      * @param currentRoutine - routine currently in use
      * @param defaultWeekdayRoutine - routine to be autoselected for the specified
      * @param defaultRoutine
      */
-    public RoutineManager(Routine currentRoutine, Routine defaultWeekdayRoutine, Routine defaultRoutine) {
+    public RoutineDataManager(Routine currentRoutine, Routine defaultWeekdayRoutine, Routine defaultRoutine) {
         this.partitionedRoutines = new ArrayList<>(8);
         for (int i = 0; i < 8; i++) {
             partitionedRoutines.add(new ArrayList<>());
@@ -187,7 +186,7 @@ public class RoutineManager {
     }
 
     public static void setOrderBy(OrderingMethod orderBy) {
-        RoutineManager.orderBy = orderBy;
+        RoutineDataManager.orderBy = orderBy;
     }
 
     public static Show getView() {
@@ -195,6 +194,6 @@ public class RoutineManager {
     }
 
     public static void setView(Show view) {
-        RoutineManager.view = view;
+        RoutineDataManager.view = view;
     }
 }

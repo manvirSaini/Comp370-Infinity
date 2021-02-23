@@ -28,7 +28,7 @@ public class Routine implements Comparable<Routine> {
     @Override
     public int compareTo(Routine routine) {
         int weight = 0;
-        switch(RoutineManager.getOrderBy()) {
+        switch(RoutineDataManager.getOrderBy()) {
             case NAME:
                 weight = this.getTitle().compareTo(routine.getTitle());
                 break;
