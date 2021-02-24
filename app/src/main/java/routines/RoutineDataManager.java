@@ -5,6 +5,7 @@ import java.util.Collections;
 
 /**
  * This class is temporary. It will likely be replaced by a viewmodel (looking into it).
+ * NOTE THAT IN THE THE PARTITIONED_ROUTINES ARRAYLIST, INDEX 0 REPRESENTS MONDAY, NOT SUNDAY
  */
 
 public class RoutineDataManager {
@@ -37,48 +38,28 @@ public class RoutineDataManager {
         this.defaultRoutine = defaultRoutine;
     }
 
-    public void sortPartitionedRoutines() {
+    private void sortPartitionedRoutines() {
         for (ArrayList<Routine> array : partitionedRoutines) {
             Collections.sort(array);
         }
     }
 
     public void addRoutine(Routine routine) {
-        if (routine.getWeekdays().length != 0) {
-            for(Routine.Weekday w : routine.getWeekdays()) {
-                ArrayList<Routine> partition = null;
-                switch (w) {
-                    case MONDAY:
-                        partition = partitionedRoutines.get(0);
-                        break;
-                    case TUESDAY:
-                        partition = partitionedRoutines.get(1);
-                        break;
-                    case WEDNESDAY:
-                        partition = partitionedRoutines.get(2);
-                        break;
-                    case THURSDAY:
-                        partition = partitionedRoutines.get(3);
-                        break;
-                    case FRIDAY:
-                        partition = partitionedRoutines.get(4);
-                        break;
-                    case SATURDAY:
-                        partition = partitionedRoutines.get(5);
-                        break;
-                    case SUNDAY:
-                        partition = partitionedRoutines.get(6);
-                }
+        int[] weekdays = routine.getWeekdays();
+        ArrayList<Routine> partition = null;
+        boolean weekdayFound = false;
+        for (int i = 0; i < weekdays.length; i++) {
+            if (weekdays[i] == 1) {
+                partition = partitionedRoutines.get(i);
                 partition.add(routine);
-                Collections.sort(partition);
+                weekdayFound = true;
             }
         }
-        else {
-            ArrayList<Routine> compartment = partitionedRoutines.get(7);
-            compartment.add(routine);
-            Collections.sort(compartment);
+        if (!weekdayFound) {
+            partition = partitionedRoutines.get(7);
+            partition.add(routine);
         }
-
+        sortPartitionedRoutines();
     }
 
     public void deleteRoutine(Routine routine) {

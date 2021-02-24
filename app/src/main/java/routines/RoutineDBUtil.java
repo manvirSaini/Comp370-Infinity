@@ -1,15 +1,11 @@
 package routines;
 
-import java.util.ArrayList;
-
-import static routines.Routine.*;
-
-public class RoutineDatabaseUtil {
+public class RoutineDBUtil {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "routine_db";
     public static final String TABLE_NAME = "routine";
 
-    //contact table col names
+    //routine table col names
     public static final String KEY_ID = "id";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MONDAY = "monday"; //true or false; same for all weekdays
