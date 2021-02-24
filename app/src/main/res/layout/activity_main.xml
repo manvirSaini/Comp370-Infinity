@@ -7,10 +7,4 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- work for future toolbar
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"
-        />
-    -->
-
 </RelativeLayout>

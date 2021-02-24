@@ -1,52 +1,50 @@
 package routines;
 
-import java.util.ArrayList;
-
 public class Routine implements Comparable<Routine> {
-    //enums
-    enum Weekday {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
-    //enum variables
-    private Weekday[] weekdays;
-    //other variables
+    private int id;
+    //weekdays is an array of 1's and 0's, where 1 is bool value true, 0 is false, and
+    //index 0 represents Monday; if weekdays[0] = 1, then this routine is associated with Monday
+    //make sure this is always size 7
+    private int[] weekdays;
     private String title;
-    private ArrayList<Period> periods;
-    private int startHour; //we will be using the 24h clock because I am lazy
+    private int startHour; //we will be using the 24h clock
     private int startMinute;
     private int totalTimeHour;
     private int totalTimeMinute;
 
     public Routine() {
-        this.weekdays = new Weekday[7];
-        this.periods = new ArrayList<>();
+        this.weekdays = new int[7];
     }
 
-    public Routine(Weekday[] weekdays, String title, ArrayList<Period> periods,
-                   int startHour, int startMinute) {
+    public Routine(int id, int[] weekdays, String title, int startHour, int startMinute) {
+        this.id = id;
         this.weekdays = weekdays;
         this.title = title;
-        this.periods = periods;
         this.startHour = startHour;
         this.startMinute = startMinute;
         //for the sake of total time
-        int[] totalTime = calculateTotalTimeinHoursAndMinutes();
-        this.totalTimeHour = totalTime[0];
-        this.totalTimeMinute = totalTime[1];
+        //int[] totalTime = calculateTotalTimeInHoursAndMinutes();
+        //this.totalTimeHour = totalTime[0];
+        //this.totalTimeMinute = totalTime[1];
     }
 
-    public Routine(Weekday[] weekdays, String title, ArrayList<Period> periods) {
+    public Routine(int id, int[] weekdays, String title) {
+        this.id = id;
         this.weekdays = weekdays;
         this.title = title;
-        this.periods = periods;
         //24:00 does not exist (becomes 00:00 at midnight), therefore 24:00 will
         //represent a nonexistent start time
         this.startHour = 24;
         this.startMinute = 0;
-        int[] totalTime = calculateTotalTimeinHoursAndMinutes();
-        this.totalTimeHour = totalTime[0];
-        this.totalTimeMinute = totalTime[1];
+        //int[] totalTime = calculateTotalTimeInHoursAndMinutes();
+        //this.totalTimeHour = totalTime[0];
+        //this.totalTimeMinute = totalTime[1];
     }
 
-    private int[] calculateTotalTimeinHoursAndMinutes() {
+    //find a way to get the periods for routine using database
+
+    /*
+    private int[] calculateTotalTimeInHoursAndMinutes() {
         int[] totalTime = new int[2];
         int totalMinutes = 0;
         for (Period p : periods) {
@@ -57,7 +55,7 @@ public class Routine implements Comparable<Routine> {
         totalTime[1] = totalMinutes % 60;
         return totalTime;
     }
-
+    */
     @Override
     public int compareTo(Routine routine) {
         int weight = 0;
@@ -71,15 +69,24 @@ public class Routine implements Comparable<Routine> {
         return weight;
     }
 
+
     /**
      *
      * @return - an int representing total minutes
      */
     public int calculateTotalTimeInMinutes() {
-        return startHour * 60 + startMinute;
+        return totalTimeHour * 60 + totalTimeMinute;
     }
 
     //Getters and Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -89,20 +96,12 @@ public class Routine implements Comparable<Routine> {
         this.title = title;
     }
 
-    public Weekday[] getWeekdays() {
+    public int[] getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(Weekday[] weekdays) {
+    public void setWeekdays(int[] weekdays) {
         this.weekdays = weekdays;
-    }
-
-    public ArrayList<Period> getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(ArrayList<Period> periods) {
-        this.periods = periods;
     }
 
     public int getStartHour() {
