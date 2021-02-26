@@ -3,4 +3,6 @@
     <string name="routines_order_by_name">Name</string>
     <string name="routines_order_by_total_time">Total Time</string>
     <string name="db_drop">DROP TABLE IF EXISTS</string>
+    <string name="channel_name">ChannelN</string>
+    <string name="channel_description">ChannelD</string>
 </resources>
