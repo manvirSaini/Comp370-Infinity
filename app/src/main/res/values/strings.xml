@@ -3,4 +3,10 @@
     <string name="routines_order_by_name">Name</string>
     <string name="routines_order_by_total_time">Total Time</string>
     <string name="db_drop">DROP TABLE IF EXISTS</string>
+    <string name="title_hint">Enter Title</string>
+    <string name="routine_start">Enter Start</string>
+    <string name="save">Save</string>
+    <string name="empty">Enter Information</string>
+    <string name="enter_prof">Enter Professor</string>
+    <string name="enter_description">Enter description</string>
 </resources>
