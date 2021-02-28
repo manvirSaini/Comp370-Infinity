@@ -1,17 +1,34 @@
 package questionLog;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+import courses.Course;
+
+@Entity(tableName = "question_table", foreignKeys = {@ForeignKey(entity = Course.class,
+        parentColumns = "title", childColumns = "course_title",
+        onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE)})
 public class Question {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
+
+    @ColumnInfo(name = "question")
+    @NonNull
     private String question;
-    private int course_id; //you can get course by using this id
 
-    public Question() {
-    }
+    @ColumnInfo(name = "course_title")
+    @Nullable
+    private String courseTitle;
 
-    public Question(int id, String question, int course_id) {
-        this.id = id;
+    public Question(@NonNull String question, @Nullable String courseTitle) {
         this.question = question;
-        this.course_id = course_id;
+        this.courseTitle = courseTitle;
     }
 
     public int getId() {
@@ -22,19 +39,21 @@ public class Question {
         this.id = id;
     }
 
+    @NonNull
     public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(@NonNull String question) {
         this.question = question;
     }
 
-    public int getCourse_id() {
-        return course_id;
+    @Nullable
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setCourseTitle(@Nullable String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 }
