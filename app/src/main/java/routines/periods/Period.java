@@ -1,62 +1,45 @@
 package routines.periods;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+
+import courses.Course;
+import routines.Routine;
+
+@Entity(tableName = "period_table", primaryKeys = {"position", "routine_title"}, foreignKeys =
+        {@ForeignKey(entity = Course.class, parentColumns = "title", childColumns = "course_title",
+                onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE),
+                @ForeignKey(entity = Routine.class, parentColumns = "title", childColumns = "routine_title",
+                        onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
 public class Period {
-    private int id;
+
+    @ColumnInfo(name = "position")
     private int position;
-    private int studyTimeHour;
-    private int studyTimeMinute;
-    private int breakTimeHour;
-    private int breakTimeMinute;
-    private int courseId;
-    private int routineId;
 
-    public Period() {
+    @ColumnInfo(name = "study_minutes")
+    private int studyMinutes; //time of study subperiod in minutes
 
-    }
+    @ColumnInfo(name = "break_minutes")
+    private int breakMinutes; //time of break subperiod in minutes
 
-    public Period(int id, int position, int studyTimeHour, int studyTimeMinute,
-                  int breakTimeHour, int breakTimeMinute, int courseId, int routineId) {
-        this.id = id;
+    @ColumnInfo(name = "course_title", index = true)
+    @Nullable
+    private String courseTitle;
+
+    @ColumnInfo(name = "routine_title", index = true)
+    @NonNull
+    private String routineTitle;
+
+    public Period(int position, int studyMinutes, int breakMinutes,
+                  @Nullable String courseTitle, @NonNull String routineTitle) {
         this.position = position;
-        this.studyTimeHour = studyTimeHour;
-        this.studyTimeMinute = studyTimeMinute;
-        this.breakTimeHour = breakTimeHour;
-        this.breakTimeMinute = breakTimeMinute;
-        this.courseId = courseId;
-        this.routineId = routineId;
-    }
-
-    public Period(int id, int position, int studyTimeHour, int studyTimeMinute,
-                  int courseId, int routineId) {
-        this.id = id;
-        this.position = position;
-        this.studyTimeHour = studyTimeHour;
-        this.studyTimeMinute = studyTimeMinute;
-        this.breakTimeHour = 0;
-        this.breakTimeMinute = 0;
-        this.courseId = courseId;
-        this.routineId = routineId;
-    }
-
-
-
-    /**
-     *
-     * @return - an int representing total minutes
-     */
-    public int calculateTotalTimeInMinutes() {
-        return (studyTimeHour + breakTimeHour) * 60 + breakTimeMinute+studyTimeMinute;
-    }
-
-    //getters and setters
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.studyMinutes = studyMinutes;
+        this.breakMinutes = breakMinutes;
+        this.courseTitle = courseTitle;
+        this.routineTitle = routineTitle;
     }
 
     public int getPosition() {
@@ -67,51 +50,37 @@ public class Period {
         this.position = position;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getStudyMinutes() {
+        return studyMinutes;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setStudyMinutes(int studyMinutes) {
+        this.studyMinutes = studyMinutes;
     }
 
-    public int getRoutineId() {
-        return routineId;
+    public int getBreakMinutes() {
+        return breakMinutes;
     }
 
-    public void setRoutineId(int routineId) {
-        this.routineId = routineId;
+    public void setBreakMinutes(int breakMinutes) {
+        this.breakMinutes = breakMinutes;
     }
 
-    public int getStudyTimeHour() {
-        return studyTimeHour;
+    @Nullable
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setStudyTimeHour(int studyTimeHour) {
-        this.studyTimeHour = studyTimeHour;
+    public void setCourseTitle(@Nullable String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
-    public int getStudyTimeMinute() {
-        return studyTimeMinute;
+    @NonNull
+    public String getRoutineTitle() {
+        return routineTitle;
     }
 
-    public void setStudyTimeMinute(int studyTimeMinute) {
-        this.studyTimeMinute = studyTimeMinute;
-    }
-
-    public int getBreakTimeHour() {
-        return breakTimeHour;
-    }
-
-    public void setBreakTimeHour(int breakTimeHour) {
-        this.breakTimeHour = breakTimeHour;
-    }
-
-    public int getBreakTimeMinute() {
-        return breakTimeMinute;
-    }
-
-    public void setBreakTimeMinute(int breakTimeMinute) {
-        this.breakTimeMinute = breakTimeMinute;
+    public void setRoutineTitle(@NonNull String routineTitle) {
+        this.routineTitle = routineTitle;
     }
 }
