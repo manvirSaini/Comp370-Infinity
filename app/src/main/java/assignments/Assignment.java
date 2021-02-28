@@ -1,83 +1,81 @@
 package assignments;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+
+import courses.Course;
+
+@Entity(tableName = "assignment_table", primaryKeys = {"title"},
+foreignKeys = {@ForeignKey(entity = Course.class, parentColumns = "title",
+        childColumns = "course_title", onDelete = ForeignKey.SET_NULL,
+        onUpdate = ForeignKey.CASCADE)})
 public class Assignment {
-    private int id;
+
+    @ColumnInfo(name = "title")
+    @NonNull
     private String title;
-    private int courseId;
-    private String dueDate;
-    private int dueTimeHour; //24 hour clock
-    private int dueTimeMinute;
+
+    @ColumnInfo(name = "course_title", index = true)
+    @Nullable
+    private String courseTitle;
+
+    @ColumnInfo(name = "due_time")
+    @Nullable
+    private Long dueTime;
+
+    @ColumnInfo(name = "description")
+    @Nullable
     private String description;
+
+    @ColumnInfo(name = "mark_as_upcoming") //this int value corresponds to days
     private int markAsUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
 
-    public Assignment() {
-    }
-
-    public Assignment(int id, String title, int courseId, String dueDate, int dueTimeHour,
-                      int dueTimeMinute, String description, int markAsUpcoming) {
-        this.id = id;
+    public Assignment(@NonNull String title, @Nullable String courseTitle, @Nullable Long dueTime,
+                      @Nullable String description, int markAsUpcoming) {
         this.title = title;
-        this.courseId = courseId;
-        this.dueDate = dueDate;
-        this.dueTimeHour = dueTimeHour;
-        this.dueTimeMinute = dueTimeMinute;
+        this.courseTitle = courseTitle;
+        this.dueTime = dueTime;
         this.description = description;
         this.markAsUpcoming = markAsUpcoming;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NonNull String title) {
         this.title = title;
     }
 
-    public int getCourseId() {
-        return courseId;
+    @Nullable
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseTitle(@Nullable String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    @Nullable
+    public Long getDueTime() {
+        return dueTime;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setDueTime(@Nullable Long dueTime) {
+        this.dueTime = dueTime;
     }
 
-    public int getDueTimeHour() {
-        return dueTimeHour;
-    }
-
-    public void setDueTimeHour(int dueTimeHour) {
-        this.dueTimeHour = dueTimeHour;
-    }
-
-    public int getDueTimeMinute() {
-        return dueTimeMinute;
-    }
-
-    public void setDueTimeMinute(int dueTimeMinute) {
-        this.dueTimeMinute = dueTimeMinute;
-    }
-
+    @Nullable
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
 
