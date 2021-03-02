@@ -1,9 +1,19 @@
 package courses;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.appcompat.app.AppCompatActivity;
+public class Course extends AppCompatActivity{
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.course_main);
+    }
+}
 
 @Entity(tableName = "course_table", primaryKeys = {"title"})
 public class Course {
