@@ -1,4 +1,4 @@
-package routines;
+package com.example.infinity_courseproject.courses;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -10,18 +10,17 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface RoutineDao {
+public interface CourseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Routine routine);
+    void insert(Course course);
 
     @Delete
-    void delete(Routine routine);
+    void delete(Course course);
 
-    @Query("DELETE FROM routine_table")
+    @Query("DELETE FROM course_table")
     void deleteAll();
 
-    @Query("SELECT * FROM routine_table")
-    LiveData<List<Routine>> getAllRoutines();
-
+    @Query("SELECT * FROM course_table")
+    LiveData<List<Course>> getAllCourses();
 }

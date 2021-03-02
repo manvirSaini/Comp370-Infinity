@@ -1,4 +1,4 @@
-package questionLog;
+package com.example.infinity_courseproject.questionLog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,7 +7,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import courses.Course;
+import com.example.infinity_courseproject.courses.Course;
 
 @Entity(tableName = "question_table", foreignKeys = {@ForeignKey(entity = Course.class,
         parentColumns = "title", childColumns = "course_title",

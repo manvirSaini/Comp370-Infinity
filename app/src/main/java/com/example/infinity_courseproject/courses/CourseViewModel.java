@@ -1,4 +1,4 @@
-package courses;
+package com.example.infinity_courseproject.courses;
 
 import android.app.Application;
 

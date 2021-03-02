@@ -1,4 +1,4 @@
-package assignments;
+package com.example.infinity_courseproject.assignments;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

@@ -1,4 +1,4 @@
-package assignments;
+package com.example.infinity_courseproject.assignments;
 
 import android.app.Application;
 
