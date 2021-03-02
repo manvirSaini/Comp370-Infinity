@@ -1,4 +1,4 @@
-package assignments;
+package com.example.infinity_courseproject.assignments;
 
 
 import androidx.annotation.NonNull;
@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-import courses.Course;
+import com.example.infinity_courseproject.courses.Course;
 
 @Entity(tableName = "assignment_table", primaryKeys = {"title"},
 foreignKeys = {@ForeignKey(entity = Course.class, parentColumns = "title",

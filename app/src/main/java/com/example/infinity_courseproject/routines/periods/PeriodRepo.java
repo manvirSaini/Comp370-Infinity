@@ -1,15 +1,15 @@
-package routines.periods;
+package com.example.infinity_courseproject.routines.periods;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.infinity_courseproject.RoomDatabase.myStudyRoutineDB;
+import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.util.List;
 
-import courses.Course;
-import routines.Routine;
+import com.example.infinity_courseproject.courses.Course;
+import com.example.infinity_courseproject.routines.Routine;
 
 public class PeriodRepo {
     private PeriodDao periodDao;

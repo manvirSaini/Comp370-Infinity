@@ -4,18 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import java.util.List;
 
-import courses.Course;
-import courses.CourseViewModel;
-import routines.Routine;
-import routines.RoutineViewModel;
-import routines.periods.Period;
-import routines.periods.PeriodViewModel;
+import com.example.infinity_courseproject.courses.Course;
+import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.Routine;
+import com.example.infinity_courseproject.routines.RoutineViewModel;
+import com.example.infinity_courseproject.routines.periods.Period;
+import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
 public class DBTestActivity extends AppCompatActivity {
     private static final int ADD_COURSE_ACTIVITY_REQUEST_CODE = 1;

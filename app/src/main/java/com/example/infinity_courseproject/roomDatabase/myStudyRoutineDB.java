@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject.RoomDatabase;
+package com.example.infinity_courseproject.roomDatabase;
 
 import android.content.Context;
 
@@ -11,14 +11,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import assignments.Assignment;
-import assignments.AssignmentDao;
-import courses.Course;
-import courses.CourseDao;
-import routines.periods.Period;
-import routines.periods.PeriodDao;
-import routines.Routine;
-import routines.RoutineDao;
+import com.example.infinity_courseproject.assignments.Assignment;
+import com.example.infinity_courseproject.assignments.AssignmentDao;
+import com.example.infinity_courseproject.courses.Course;
+import com.example.infinity_courseproject.courses.CourseDao;
+import com.example.infinity_courseproject.routines.periods.Period;
+import com.example.infinity_courseproject.routines.periods.PeriodDao;
+import com.example.infinity_courseproject.routines.Routine;
+import com.example.infinity_courseproject.routines.RoutineDao;
 
 @Database(entities = {Routine.class, Course.class, Period.class, Assignment.class},
         version = 4, exportSchema = false)

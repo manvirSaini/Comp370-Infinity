@@ -1,4 +1,4 @@
-package routines;
+package com.example.infinity_courseproject.routines;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

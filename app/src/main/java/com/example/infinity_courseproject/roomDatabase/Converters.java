@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject.RoomDatabase;
+package com.example.infinity_courseproject.roomDatabase;
 
 import androidx.room.TypeConverter;
 

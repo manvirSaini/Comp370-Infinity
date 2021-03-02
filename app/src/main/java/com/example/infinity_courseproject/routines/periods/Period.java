@@ -1,4 +1,4 @@
-package routines.periods;
+package com.example.infinity_courseproject.routines.periods;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,8 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-import courses.Course;
-import routines.Routine;
+import com.example.infinity_courseproject.courses.Course;
+import com.example.infinity_courseproject.routines.Routine;
 
 @Entity(tableName = "period_table", primaryKeys = {"position", "routine_title"}, foreignKeys =
         {@ForeignKey(entity = Course.class, parentColumns = "title", childColumns = "course_title",

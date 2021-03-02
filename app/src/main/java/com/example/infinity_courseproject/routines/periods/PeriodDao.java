@@ -1,4 +1,4 @@
-package routines.periods;
+package com.example.infinity_courseproject.routines.periods;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

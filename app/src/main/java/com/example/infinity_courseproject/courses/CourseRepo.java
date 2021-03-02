@@ -1,10 +1,10 @@
-package courses;
+package com.example.infinity_courseproject.courses;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.infinity_courseproject.RoomDatabase.myStudyRoutineDB;
+import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.util.List;
 

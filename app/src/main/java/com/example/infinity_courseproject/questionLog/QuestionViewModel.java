@@ -1,4 +1,4 @@
-package questionLog;
+package com.example.infinity_courseproject.questionLog;
 
 import android.app.Application;
 
