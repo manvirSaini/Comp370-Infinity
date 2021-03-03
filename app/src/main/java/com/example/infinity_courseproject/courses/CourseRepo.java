@@ -20,16 +20,16 @@ public class CourseRepo {
     }
 
     public void insert(Course course) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.insert(course));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.insert(course));
     }
 
     public void delete(Course course) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.delete(course));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.delete(course));
     }
 
     public void deleteAll() {
 
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.deleteAll());
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.deleteAll());
     }
 
     public CourseDao getCourseDao() {

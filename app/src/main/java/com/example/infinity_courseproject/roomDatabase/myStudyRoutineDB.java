@@ -24,8 +24,11 @@ import com.example.infinity_courseproject.routines.RoutineDao;
         version = 4, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class myStudyRoutineDB extends RoomDatabase {
+
     private static final String DB_NAME = "mystudy_routine_DB";
-    public static final int NUM_OF_THREADS = 4;
+
+    public static final int THREADS_FOR_IN_ORDER_THREADING = 1;
+    public static final int THREADS_FOR_ANY_ORDER_THREADING = 4;
 
     public abstract RoutineDao routineDao();
     public abstract CourseDao courseDao();
@@ -36,12 +39,18 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
     private static volatile myStudyRoutineDB INSTANCE;
 
     /**
-     * Executor service - used to run extra threads in the background
+     * Executor services - used to run extra threads in the background
      * Note that this is used to implement insert methods, and currently may lead to poorly ordered
      * thread executions resulting in database failure
      */
-    public static final ExecutorService databaseWriteExecutor
-            = Executors.newFixedThreadPool(NUM_OF_THREADS);
+    //this executor is used when the order of inputs matters (useful for testing
+    //and making sure a routine is entered into the DB before its periods
+    public static final ExecutorService inOrderDatabaseWriteExecutor
+            = Executors.newFixedThreadPool(THREADS_FOR_IN_ORDER_THREADING);
+
+    //for cases when input into the tables can occur in any order
+    public static final ExecutorService anyOrderDatabaseWriteExecutor
+            = Executors.newFixedThreadPool(THREADS_FOR_ANY_ORDER_THREADING);
 
     /**
      * Method to create singleton database - stay away from callbacks for prepopulation of tables

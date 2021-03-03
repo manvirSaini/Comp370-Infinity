@@ -20,16 +20,16 @@ public class QuestionRepo {
     }
 
     public void insert(Question question) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> questionDao.insert(question));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> questionDao.insert(question));
     }
 
     public void delete(Question question) {
 
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> questionDao.delete(question));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> questionDao.delete(question));
     }
 
     public void deleteAll() {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> questionDao.deleteAll());
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> questionDao.deleteAll());
     }
 
     public QuestionDao getQuestionDao() {

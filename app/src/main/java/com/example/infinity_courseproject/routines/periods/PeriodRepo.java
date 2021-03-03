@@ -31,16 +31,19 @@ public class PeriodRepo {
     }
 
     public void insert(Period period) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> periodDao.insert(period));
+        myStudyRoutineDB.inOrderDatabaseWriteExecutor.execute(() ->
+        periodDao.insert(period));
     }
 
     public void delete(Period period) {
 
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> periodDao.delete(period));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() ->
+                periodDao.delete(period));
     }
 
     public void deleteAll() {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> periodDao.deleteAll());
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() ->
+                periodDao.deleteAll());
     }
 
     public PeriodDao getPeriodDao() {
