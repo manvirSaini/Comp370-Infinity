@@ -3,4 +3,19 @@
     <string name="routines_order_by_name">Name</string>
     <string name="routines_order_by_total_time">Total Time</string>
     <string name="db_drop">DROP TABLE IF EXISTS</string>
+    <string name="s_for_sunday">S</string>
+    <string name="m_for_monday">M</string>
+    <string name="t_for_tuesday">T</string>
+    <string name="w_for_wednesday">W</string>
+    <string name="t_for_thursday">T</string>
+    <string name="f_for_friday">F</string>
+    <string name="s_for_saturday">S</string>
+    <string name="title_activity_routines_add">Add Routine</string>
+    <string name="add_routine_title">Title:</string>
+    <string name="add_routine_title_hint">eg. MondayRoutine</string>
+    <string name="add_routine_weekdays">Weekdays:</string>
+    <string name="add_routine_start_time">Start Time:</string>
+    <string name="add_routine_total_time">Total Time:</string>
+    <string name="zero_hours_hint">00h</string>
+    <string name="zero_minutes_hint">00m</string>
 </resources>
