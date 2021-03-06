@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.R;
-import com.example.infinity_courseproject.ui.gallery.GalleryViewModel;
+
 
 public class AssignmentFragment extends Fragment {
 
