@@ -20,11 +20,16 @@ import java.util.Objects;
 
 public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAdapter.ViewHolder> {
     private List<Routine> routineList;
+    private RoutineViewModel routineViewModel;
+    private PeriodViewModel periodViewModel;
     private Context context;
 
-    public RoutineRecViewAdapter(List<Routine> routineList, Context context) {
+    public RoutineRecViewAdapter(List<Routine> routineList, Context context,
+                                 RoutineViewModel routineViewModel, PeriodViewModel periodViewModel) {
         this.routineList = routineList;
         this.context = context;
+        this.routineViewModel = routineViewModel;
+        this.periodViewModel = periodViewModel;
     }
 
     @NonNull
@@ -41,11 +46,8 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
         holder.routineName.setText(routine.getTitle());
 
         if (RoutineViewModel.isOrderByTotalTime()) {
-            holder.totalTime.setText("");
+            holder.totalTime.setText(periodViewModel.getTotalRoutineTime(routine));
         }
-
-
-
     }
 
     @Override

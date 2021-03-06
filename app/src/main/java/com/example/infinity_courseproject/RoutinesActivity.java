@@ -30,9 +30,6 @@ public class RoutinesActivity extends AppCompatActivity {
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
 
-    private List<Routine> routineList;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +78,8 @@ public class RoutinesActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Routine> routines) {
 
-                routineRecViewAdapter = new RoutineRecViewAdapter(routines,RoutinesActivity.this);
+                routineRecViewAdapter = new RoutineRecViewAdapter(routines,
+                        RoutinesActivity.this, routineViewModel, periodViewModel);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
             }

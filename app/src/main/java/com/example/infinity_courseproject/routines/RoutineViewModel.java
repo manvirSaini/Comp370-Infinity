@@ -16,22 +16,19 @@ public class RoutineViewModel extends AndroidViewModel {
 
     public static RoutineRepo repo;
     public final LiveData<List<Routine>> allRoutines;
-    public PeriodViewModel periodViewModel;
+    private static boolean orderByTotalTime = false; //if false, routines are ordered by title
 
-    public static boolean orderByTotalTime = false; //if false, routines are ordered by title
-
-    public RoutineViewModel(@NonNull Application application, PeriodViewModel periodViewModel) {
+    public RoutineViewModel(@NonNull Application application) {
         super(application);
         repo = new RoutineRepo(application);
         allRoutines = repo.getAllRoutines();
-        this.periodViewModel = periodViewModel;
     }
 
     /**
      * Method for ordering by routines by their total time.
      * @return - the resulting ordered routines list
      */
-    public List<Routine> orderRoutinesByTotalTime() {
+    public List<Routine> orderRoutinesByTotalTime(PeriodViewModel periodViewModel) {
         List<Routine> routines = Objects.requireNonNull(allRoutines.getValue());
         int[] totalTimeArray = new int[routines.size()];
         for (int i=0; i < totalTimeArray.length; i++) {
@@ -58,7 +55,6 @@ public class RoutineViewModel extends AndroidViewModel {
 
         return routines;
     }
-
 
     public LiveData<List<Routine>> getAllRoutines() {
 
