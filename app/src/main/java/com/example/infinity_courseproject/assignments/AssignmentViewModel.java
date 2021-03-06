@@ -13,7 +13,7 @@ import java.util.List;
 public class AssignmentViewModel extends AndroidViewModel {
     public static AssignmentRepo repo;
     public final LiveData<List<Assignment>> allAssignments;
-    public static MutableLiveData text;
+    private MutableLiveData text;
 
     public AssignmentViewModel(@NonNull Application application) {
         super(application);
@@ -39,5 +39,5 @@ public class AssignmentViewModel extends AndroidViewModel {
         repo.deleteAll();
     }
 
-    public static LiveData<String> getText(){return text;}
+    public LiveData<String> getText(){return text;}
 }
