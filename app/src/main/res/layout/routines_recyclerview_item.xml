@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/item_to_item_padding">
 
     <androidx.cardview.widget.CardView
@@ -22,11 +22,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/routine_name"
-            android:layout_width="match_parent"
+            android:id="@+id/routine_name_textview"
+            android:layout_width="249dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
+            android:layout_gravity="center|start"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textSize="@dimen/header2" />
+
+        <TextView
+            android:id="@+id/total_time_textview"
+            android:layout_width="117dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center|end"
+            android:textSize="@dimen/header2"
+            android:visibility="invisible" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

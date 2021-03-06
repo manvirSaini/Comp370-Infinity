@@ -29,6 +29,16 @@ public class PeriodViewModel extends AndroidViewModel {
         return repo.getRoutinePeriods(routine);
     }
 
+    public int getTotalRoutineTime(Routine routine) {
+        List<Period> routinePeriods = repo.getRoutinePeriods(routine).getValue();
+
+        int sum = 0;
+        for (Period r : routinePeriods) {
+            sum += r.getStudyMinutes() + r.getStudyMinutes();
+        }
+        return sum;
+    }
+
     /**
      *
      * @param course - if null, returns all periods that do not have a course
@@ -49,5 +59,4 @@ public class PeriodViewModel extends AndroidViewModel {
     public static void deleteAll() {
         repo.deleteAll();
     }
-
 }

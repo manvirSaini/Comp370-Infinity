@@ -23,7 +23,7 @@ public interface PeriodDao {
     @Query("SELECT * FROM period_table")
     LiveData<List<Period>> getAllPeriods();
 
-    @Query("SELECT * FROM period_table WHERE routine_title = :routineTitle")
+    @Query("SELECT * FROM period_table WHERE routine_title = :routineTitle ORDER BY position ASC")
     LiveData<List<Period>> getRoutinePeriods(String routineTitle);
 
     @Query("SELECT * FROM period_table WHERE course_title = :courseTitle")

@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 /**
  * Entity class defining a routine, where a routine is a sequence of study and break periods. Routines
  * can be associated with 0 or more weekdays, and can have a specified start time (if set,
- * the app will inform the user by means of a notification).
+ * the app will inform the user by means of a notification). Routines may be ordered by their
+ * total time (sum of all of their periods), but the default is alphabetical ordering.
  */
 @Entity(tableName = "routine_table", primaryKeys = {"title"})
 public class Routine {
@@ -110,5 +112,4 @@ public class Routine {
     public void setStartMinute(@Nullable Integer startMinute) {
         this.startMinute = startMinute;
     }
-
 }

@@ -21,7 +21,8 @@ public interface RoutineDao {
     @Query("DELETE FROM routine_table")
     void deleteAll();
 
-    @Query("SELECT * FROM routine_table")
+    //order by title will be default
+    @Query("SELECT * FROM routine_table ORDER BY title ASC")
     LiveData<List<Routine>> getAllRoutines();
 
 }
