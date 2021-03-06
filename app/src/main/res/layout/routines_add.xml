@@ -17,7 +17,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/titleText"
+            android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/weekdaysText"
+        android:id="@+id/weekdays_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
@@ -203,6 +203,38 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_period_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/periods_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/add_routine_periods"
+                android:textSize="@dimen/standard_text_size" />
+
+        </LinearLayout>
+
+        <include layout="@layout/basic_recyclerview"/>
+
+
+
+    </LinearLayout>
 
     <!--include recycler here-->
 
