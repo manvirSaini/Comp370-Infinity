@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.R;
-import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
 import java.util.List;
@@ -61,8 +58,8 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            routineName = itemView.findViewById(R.id.routine_name_textview);
-            totalTime = itemView.findViewById(R.id.total_time_textview);
+            routineName = itemView.findViewById(R.id.routine_title_textview);
+            totalTime = itemView.findViewById(R.id.total_time_text);
         }
     }
 

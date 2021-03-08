@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/item_to_item_padding">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/routine_recycler_item"
+        android:id="@+id/period_recycler_item"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -22,21 +21,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/routine_title_textview"
-            android:layout_width="249dp"
+            android:id="@+id/period_label_textview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="@dimen/header2" />
 
-        <TextView
-            android:id="@+id/total_time_text"
-            android:layout_width="117dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center|end"
-            android:textSize="@dimen/header2"
-            android:visibility="invisible" />
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

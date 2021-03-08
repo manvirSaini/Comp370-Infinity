@@ -35,6 +35,7 @@ public class RoutineViewModel extends AndroidViewModel {
             totalTimeArray[i] = periodViewModel.getTotalRoutineTime(routines.get(i));
         }
 
+        //selection sort
         for (int i = 0; i < totalTimeArray.length-1; i++)
         {
             // Find the minimum element in unsorted array

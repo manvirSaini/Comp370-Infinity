@@ -16,7 +16,14 @@
     <string name="add_routine_weekdays">Weekdays:</string>
     <string name="add_routine_start_time">Start Time:</string>
     <string name="add_routine_total_time">Total Time:</string>
-    <string name="zero_hours_hint">00h</string>
+    <string name="twenty_four_hours_hint">24h</string>
     <string name="zero_minutes_hint">00m</string>
     <string name="add_routine_periods">Periods:</string>
+    <string name="done_button_text">Done</string>
+    <string name="back_button_text"><![CDATA[<— Back]]></string>
+    <string name="minus_sign">-</string>
+    <string name="plus_sign">+</string>
+    <string name="add_period_fab_content_description">button for adding periods</string>
+    <string name="toast_empty_title">Enter a title.</string>
+    <string name="add_routine_fab_content_description">Button for adding routine</string>
 </resources>
