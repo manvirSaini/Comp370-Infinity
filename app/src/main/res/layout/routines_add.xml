@@ -27,6 +27,7 @@
             tools:layout_editor_absoluteY="101dp" />
 
         <EditText
+            android:id="@+id/add_routine_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_routine_title_hint"
@@ -118,7 +119,7 @@
             android:layout_marginTop="24dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="@string/zero_hours_hint"
+            android:hint="@string/twenty_four_hours_hint"
             android:textSize="@dimen/standard_text_size" />
 
         <LinearLayout
@@ -131,14 +132,15 @@
                 android:id="@+id/increment_button_hour"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="+"
-                android:textSize="14sp" />
+                android:onClick="incrementStartHour"
+                android:text="@string/plus_sign" />
 
             <Button
                 android:id="@+id/decrement_button_hour"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:text="-" />
+                android:onClick="decrementStartHour"
+                android:text="@string/minus_sign" />
         </LinearLayout>
 
 
@@ -150,7 +152,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/zero_minutes_hint"
-            android:shadowColor="#000000"
             android:textSize="@dimen/standard_text_size" />
 
         <LinearLayout
@@ -163,14 +164,15 @@
                 android:id="@+id/increment_button_minute"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="+"
-                android:textSize="14sp" />
+                android:onClick="incrementStartMinute"
+                android:text="@string/plus_sign" />
 
             <Button
                 android:id="@+id/decrement_button_minute"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:text="-" />
+                android:onClick="decrementStartMinute"
+                android:text="@string/minus_sign" />
 
         </LinearLayout>
 
@@ -183,7 +185,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/total_time_textview"
+            android:id="@+id/total_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -194,8 +196,8 @@
             tools:layout_editor_absoluteY="137dp" />
 
         <TextView
-            android:id="@+id/total_time_textview_input"
-            android:layout_width="wrap_content"
+            android:id="@+id/add_routine_total_time_textview"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_weight="1"
@@ -204,39 +206,77 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
+        android:id="@+id/periods_title_and_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_period_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:src="@drawable/ic_add"
+            android:contentDescription="@string/add_period_fab_content_description"
+            android:onClick="addPeriod"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_period_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add" />
-
-            <TextView
-                android:id="@+id/periods_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/add_routine_periods"
-                android:textSize="@dimen/standard_text_size" />
-
-        </LinearLayout>
-
-        <include layout="@layout/basic_recyclerview"/>
-
-
+        <TextView
+            android:id="@+id/periods_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/add_routine_periods"
+            android:textSize="@dimen/standard_text_size" />
 
     </LinearLayout>
 
-    <!--include recycler here-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/add_routine_period_recyclerview"
+            layout="@layout/basic_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/back_and_done_buttons"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/back_and_done_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="20dp">
+
+
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="transitionToRoutineSection"
+                android:text="@string/back_button_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/done_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addRoutine"
+                android:text="@string/done_button_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/back_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+
+
 
 
 </LinearLayout>
