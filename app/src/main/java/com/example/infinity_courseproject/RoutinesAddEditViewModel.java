@@ -7,25 +7,20 @@ import com.example.infinity_courseproject.routines.periods.Period;
 import java.util.ArrayList;
 
 public class RoutinesAddEditViewModel extends ViewModel {
-    private Integer startHour;
-    private Integer startMin;
+
+    private int startHour = 24;
+    private int startMin = 0;
     private int totalTimeInMinutes;
     private MutableLiveData<ArrayList<Period>> periodLiveData;
+    //copy of mutable data contents
+    private ArrayList<Period> periodCopiedData;
 
     //private DecimalFormat formatter = new DecimalFormat("00");
 
-
-    //constructors
+    //constructor
     public RoutinesAddEditViewModel() {
         periodLiveData = new MutableLiveData<>();
-    }
-
-    public RoutinesAddEditViewModel(Integer startHour, Integer startMin, int totalTimeInMinutes,
-                                    ArrayList<Period> periodArrayList) {
-        this.startHour = startHour;
-        this.startMin = startMin;
-        this.totalTimeInMinutes = totalTimeInMinutes;
-        this.periodLiveData.setValue(periodArrayList);
+        periodCopiedData = new ArrayList<>();
     }
 
     /**
@@ -37,7 +32,7 @@ public class RoutinesAddEditViewModel extends ViewModel {
      */
 
     public void incrementStartHour() {
-        if (startHour == 24 || startHour == null) {
+        if (startHour == 24) {
             startHour = 0;
         }
         else
@@ -45,33 +40,29 @@ public class RoutinesAddEditViewModel extends ViewModel {
     }
 
     public void decrementStartHour() {
-        if (startHour == null) {
-            startHour = 23;
-        }
-        else if (startHour == 0)
+        if (startHour == 0) {
             startHour = 24;
+        }
         else
             startHour--;
     }
 
     public void incrementStartMinute() {
-        if (startMin == null) {
-            startMin = 1;
-        }
-        else if (startMin == 59)
+        if (startMin == 59)
             startMin = 0;
         else
             startMin++;
     }
 
     public void decrementStartMinute() {
-        if (startMin == 0 || startMin == null)
+        if (startMin == 0)
             startMin = 59;
         else
             startMin--;
     }
 
     public void updateTotalTime(ArrayList<Period> periods) {
+        totalTimeInMinutes = 0;
         for (Period p : periods)
             totalTimeInMinutes += p.getBreakMinutes() + p.getStudyMinutes();
     }
@@ -100,6 +91,21 @@ public class RoutinesAddEditViewModel extends ViewModel {
         this.startMin = startMin;
     }
 
+    public void addPeriod() {
+        Period period = new Period(periodCopiedData.size() + 1,
+                60, 15, null, null);
+        periodCopiedData.add(period);
+        periodLiveData.setValue(periodCopiedData);
+    }
+
+    public void removePeriod(int recyclerviewPosition) {
+        periodCopiedData.remove(recyclerviewPosition);
+        for (int i = recyclerviewPosition; i < periodCopiedData.size(); i++) {
+            periodCopiedData.get(i).setPosition(i-1);
+        }
+        periodLiveData.setValue(periodCopiedData);
+    }
+
     public MutableLiveData<ArrayList<Period>> getPeriodLiveData() {
         return periodLiveData;
     }
@@ -108,5 +114,20 @@ public class RoutinesAddEditViewModel extends ViewModel {
         periodLiveData.setValue(periodList);
     }
 
+    public int getTotalTimeInMinutes() {
+        return totalTimeInMinutes;
+    }
+
+    public void setTotalTimeInMinutes(int totalTimeInMinutes) {
+        this.totalTimeInMinutes = totalTimeInMinutes;
+    }
+
+    public ArrayList<Period> getPeriodCopiedData() {
+        return periodCopiedData;
+    }
+
+    public void setPeriodCopiedData(ArrayList<Period> periodCopiedData) {
+        this.periodCopiedData = periodCopiedData;
+    }
 }
 

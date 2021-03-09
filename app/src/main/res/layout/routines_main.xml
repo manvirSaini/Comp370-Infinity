@@ -13,7 +13,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/order_by_text"
+            android:id="@+id/routine_order_by_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -21,28 +21,29 @@
             android:layout_marginRight="20dp"
             android:text="Order By:"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/orderByToggle"
+            app:layout_constraintEnd_toStartOf="@+id/routine_order_by_toggle"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ToggleButton
-            android:id="@+id/orderByToggle"
+            android:id="@+id/routine_order_by_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#B1B4C6"
+            android:onClick="changeOrderMethod"
             android:textOff="@string/routines_order_by_name"
             android:textOn="@string/routines_order_by_total_time"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/order_by_text"
+            app:layout_constraintBottom_toBottomOf="@+id/routine_order_by_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/order_by_text"
-            app:layout_constraintTop_toTopOf="@+id/order_by_text" />
+            app:layout_constraintStart_toEndOf="@+id/routine_order_by_text"
+            app:layout_constraintTop_toTopOf="@+id/routine_order_by_text" />
 
         <TextView
-            android:id="@+id/show_text"
+            android:id="@+id/routine_show_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -50,22 +51,22 @@
             android:layout_marginRight="20dp"
             android:text="Show:"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/showSpinner"
+            app:layout_constraintEnd_toStartOf="@+id/routine_show_spinner"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/order_by_text" />
+            app:layout_constraintTop_toBottomOf="@+id/routine_order_by_text" />
 
         <Spinner
-            android:id="@+id/showSpinner"
+            android:id="@+id/routine_show_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="@+id/show_text"
+            app:layout_constraintBottom_toBottomOf="@+id/routine_show_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/show_text"
-            app:layout_constraintTop_toTopOf="@+id/show_text" />
+            app:layout_constraintStart_toEndOf="@+id/routine_show_text"
+            app:layout_constraintTop_toTopOf="@+id/routine_show_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

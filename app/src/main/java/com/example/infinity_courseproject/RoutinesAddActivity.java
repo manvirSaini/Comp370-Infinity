@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     public static final String WEEKDAYS_REPLY = "weekdays_reply";
     public static final String START_HOUR_REPLY = "start_hour_reply";
     public static final String START_MINUTE_REPLY = "start_minute_reply";
+    public static final String PERIOD_ARRAYLIST_REPLY = "period_arraylist_reply";
 
     private EditText enterTitle;
     private com.nex3z.togglebuttongroup.MultiSelectToggleGroup groupWeekdays;
@@ -45,6 +49,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     private Button doneButton;
 
     private Observer<ArrayList<Period>> periodListUpdateObserver = new Observer<ArrayList<Period>>() {
+
         @Override
         public void onChanged(ArrayList<Period> periods) {
             periodRecViewAdapter = new PeriodRecViewAdapter(
@@ -79,35 +84,29 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
 
-        //create a new period (not yet in database)
-        //note that routineTitle is null here
-        ArrayList<Period> periodArrayList = new ArrayList<>();
-        periodArrayList.add(new Period(0, 60, 15,
-                null, null));
-
         periodRecyclerView.setHasFixedSize(true);
         periodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //initialize LiveData list
-        routinesAddEditViewModel.setPeriodLiveData(periodArrayList);
+        routinesAddEditViewModel.addPeriod();
         routinesAddEditViewModel.getPeriodLiveData().observe(this, periodListUpdateObserver);
 
     }
 
 
     /**
-     * Onclick function for 'done' button when adding routine
-     * @param view
+     * Onclick function for 'done' button when adding routine.
+     * Returns to routine section due to delivery of activity result.
+     * @param view - 'done' button
      */
     public void addRoutine(View view) {
 
         //intent to return to routine section
         Intent replyIntent = new Intent();
-
         if (!TextUtils.isEmpty(enterTitle.getText())) {
-
             //title, weekdays, startHour, startMin
             String title = enterTitle.getText().toString();
+
 
             Set<Integer> idsOfClicked = groupWeekdays.getCheckedIds();
 
@@ -115,80 +114,94 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
             for (Integer i : idsOfClicked) {
                 switch(i) {
-                    case 0:
+                    case 2131231114:
                         weekdays[6] = true;
                         break;
-                    case 1:
+                    case 2131230970:
                         weekdays[0] = true;
                         break;
-                    case 2:
+                    case 2131231165:
                         weekdays[1] = true;
                         break;
-                    case 3:
+                    case 2131231176:
                         weekdays[2] = true;
                         break;
-                    case 4:
+                    case 2131231145:
                         weekdays[3] = true;
                         break;
-                    case 5:
+                    case 2131230904:
                         weekdays[4] = true;
                         break;
-                    case 6:
+                    case 2131231055:
                         weekdays[5] = true;
                         break;
                 }
             }
 
-            Integer startHourInt = Integer.parseInt(startHour.getText().toString());
-            Integer startMinInt = Integer.parseInt(startMinute.getText().toString());
+            int startHourInt = routinesAddEditViewModel.getStartHour();
+            int startMinInt = routinesAddEditViewModel.getStartMin();
+            Log.d("RR", "addRoutine: period arraylist reached");
+            ArrayList<Period> periods = routinesAddEditViewModel.getPeriodCopiedData();
+            for (Period p : periods) {
+                p.setRoutineTitle(title);
+            }
 
             replyIntent.putExtra(TITLE_REPLY, title);
             replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
             replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
             replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
+
+            //Log.d("RR", "addRoutine: period arraylist reached");
+            //replyIntent.putExtra(PERIOD_ARRAYLIST_REPLY, periods);
+
+            Log.d("RR", "addRoutine: result ok reached");
             setResult(RESULT_OK, replyIntent);
 
             finish();
         }
         else {
             Toast.makeText(this, R.string.toast_empty_title, Toast.LENGTH_SHORT).show();
-            setResult(RESULT_CANCELED, replyIntent);
         }
 
     }
 
     /**
      * Onclick method for 'back' button
-     * @param view - add_routine_fab
+     * @param view - 'back' button
      */
     public void transitionToRoutineSection(View view) {
-//        Intent replyIntent = new Intent();
-//        setResult(RESULT_OK, replyIntent);
+        Intent replyIntent = new Intent();
+        setResult(RESULT_CANCELED, replyIntent);
+
+        finish();
     }
 
     public void incrementStartHour(View view) {
         routinesAddEditViewModel.incrementStartHour();
-        startHour.setText(routinesAddEditViewModel.getStartHour());
+        startHour.setText(String.valueOf(routinesAddEditViewModel.getStartHour()));
     }
 
     public void decrementStartHour(View view) {
         routinesAddEditViewModel.decrementStartHour();
-        startHour.setText(routinesAddEditViewModel.getStartHour());
+        startHour.setText(String.valueOf(routinesAddEditViewModel.getStartHour()));
     }
 
     public void incrementStartMinute(View view) {
         routinesAddEditViewModel.incrementStartMinute();
-        startMinute.setText(routinesAddEditViewModel.getStartMin());
+        startMinute.setText(String.valueOf(routinesAddEditViewModel.getStartMin()));
     }
 
     public void decrementStartMinute(View view) {
         routinesAddEditViewModel.decrementStartMinute();
-        startMinute.setText(routinesAddEditViewModel.getStartMin());
+        startMinute.setText(String.valueOf(routinesAddEditViewModel.getStartMin()));
     }
 
+    /**
+     * Onclick method for fab button used for adding periods
+     * @param view - add_period_fab
+     */
     public void addPeriod(View view) {
-
+        routinesAddEditViewModel.addPeriod();
     }
-
-
+    
 }

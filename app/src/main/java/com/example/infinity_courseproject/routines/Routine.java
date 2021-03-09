@@ -37,41 +37,15 @@ public class Routine {
      * @param weekdays - boolean array, where index 0 corresponds to the existence of an
      *                 association with the weekday that is Monday (if false, not associated
      *                 with Monday); this array therefore must be of size 7
-     * @param startHour - an integer or null; if null, startMinute must also be null
-     * @param startMinute - an integer or null; if null, startHour must also be null
+     * @param startHour - an integer; if 24, treat as null
+     * @param startMinute - an integer or null; if startHour is 24, treat as null
      */
     public Routine(@NonNull String title, @NonNull boolean[] weekdays, @Nullable Integer startHour,
-                   @Nullable Integer startMinute) throws IllegalStartTimeException,
-            IllegalWeekdaysLengthException {
+                   @Nullable Integer startMinute) {
         this.title = title;
-        if (weekdays.length != 7)
-            throw new IllegalWeekdaysLengthException("Incorrect length for weekdays array: "
-                    + weekdays.length + " - length must be 7");
         this.weekdays = weekdays;
-        if ((startHour == null && startMinute != null) || (startHour != null && startMinute == null)) {
-            throw new IllegalStartTimeException("Illegal start time - either both startHour and "
-                    + "startMinute are null, or neither are null.");
-        }
         this.startHour = startHour;
         this.startMinute = startMinute;
-    }
-
-    /**
-     * Error raised when the length of the field array 'weekdays' != 7
-     */
-    public static class IllegalWeekdaysLengthException extends Exception {
-        public IllegalWeekdaysLengthException(String errorMsg) {
-            super(errorMsg);
-        }
-    }
-
-    /**
-     * Error raised when only one of startHour and startMinute is null
-     */
-    public static class IllegalStartTimeException extends Exception {
-        public IllegalStartTimeException(String errorMsg) {
-            super(errorMsg);
-        }
     }
 
     //getters and setters
