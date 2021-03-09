@@ -46,6 +46,10 @@ public class PeriodRepo {
                 periodDao.deleteAll());
     }
 
+    public LiveData<Period> get(Routine routine, Period period) {
+        return periodDao.get(routine.getTitle(), period.getPosition());
+    }
+
     public PeriodDao getPeriodDao() {
         return periodDao;
     }

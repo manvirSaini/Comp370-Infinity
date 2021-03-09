@@ -6,9 +6,15 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
+/**
+ * Dao class for the Period entity
+ * Note that there is no updating periods; upon submitting an edited routine, all previous
+ * routines are deleted and the new ones are entered
+ */
 @Dao
 public interface PeriodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -16,6 +22,10 @@ public interface PeriodDao {
 
     @Delete
     void delete(Period period);
+
+    @Query("SELECT * FROM period_table WHERE routine_title LIKE :routineTitle AND" +
+            " position = :periodPosition")
+    LiveData<Period> get(String routineTitle, int periodPosition);
 
     @Query("DELETE FROM period_table")
     void deleteAll();

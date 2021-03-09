@@ -23,6 +23,10 @@ public class RoutineRepo {
         myStudyRoutineDB.inOrderDatabaseWriteExecutor.execute(() -> routineDao.insert(routine));
     }
 
+    public void update(Routine routine) {
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> routineDao.update(routine));
+    }
+
     public void delete(Routine routine) {
 
         myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> routineDao.delete(routine));
@@ -31,6 +35,10 @@ public class RoutineRepo {
     public void deleteAll() {
 
         myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> routineDao.deleteAll());
+    }
+
+    public LiveData<Routine> get(Routine routine) {
+        return routineDao.get(routine.getTitle());
     }
 
     public RoutineDao getRoutineDao() {

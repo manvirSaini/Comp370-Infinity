@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
@@ -21,6 +22,10 @@ public class PeriodViewModel extends AndroidViewModel {
         allPeriods = repo.getAllPeriods();
     }
 
+    public LiveData<Period> get(Routine routine, Period period) {
+        return repo.get(routine, period);
+    }
+
     public LiveData<List<Period>> getAllPeriods() {
         return allPeriods;
     }
@@ -30,12 +35,13 @@ public class PeriodViewModel extends AndroidViewModel {
     }
 
     public int getTotalRoutineTime(Routine routine) {
-        List<Period> routinePeriods = repo.getRoutinePeriods(routine).getValue();
+        List<Period> routinePeriods =
+                Objects.requireNonNull(repo.getRoutinePeriods(routine)).getValue();
 
         int sum = 0;
-        for (Period r : routinePeriods) {
-            sum += r.getStudyMinutes() + r.getStudyMinutes();
-        }
+//        for (Period p : routinePeriods) {
+//            sum += p.getStudyMinutes() + p.getStudyMinutes();
+//        }
         return sum;
     }
 
