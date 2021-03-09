@@ -29,7 +29,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoutinesActivity extends AppCompatActivity {
+public class RoutinesActivity extends AppCompatActivity
+        implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
 
@@ -69,7 +70,8 @@ public class RoutinesActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Routine> routines) {
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
-                        RoutinesActivity.this, routineViewModel, periodViewModel);
+                        RoutinesActivity.this, routineViewModel, periodViewModel,
+                        RoutinesActivity.this);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
             }
@@ -108,6 +110,16 @@ public class RoutinesActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    /**
+     * Onclick for routine recyclerview items
+     * @param position - index of item in recyclerview list
+     */
+    @Override
+    public void onRoutineClick(int position) {
+
+        //where the magic happens
     }
 
     /**
@@ -158,6 +170,11 @@ public class RoutinesActivity extends AppCompatActivity {
     }
 
     public void changeOrderMethod(View view) {
+        if (RoutineViewModel.isOrderByTotalTime()) {
+            RoutineViewModel.setOrderByTotalTime(false);
+        }
+        else
+            RoutineViewModel.setOrderByTotalTime(true);
 
     }
 

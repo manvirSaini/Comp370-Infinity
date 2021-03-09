@@ -57,6 +57,9 @@ public class RoutineViewModel extends AndroidViewModel {
         return routines;
     }
 
+    public LiveData<Routine> get(Routine routine) {
+        return repo.get(routine);
+    }
     public LiveData<List<Routine>> getAllRoutines() {
 
         return allRoutines;
@@ -68,6 +71,10 @@ public class RoutineViewModel extends AndroidViewModel {
 
     public static void delete(Routine routine) {
         repo.delete(routine);
+    }
+
+    public void update(Routine routine) {
+        repo.update(routine);
     }
 
     public static void deleteAll() {

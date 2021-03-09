@@ -26,7 +26,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner {
+public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
+        PeriodRecViewAdapter.OnPeriodClickListener {
 
     public static final String TITLE_REPLY = "title_reply";
     public static final String WEEKDAYS_REPLY = "weekdays_reply";
@@ -53,7 +54,8 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         @Override
         public void onChanged(ArrayList<Period> periods) {
             periodRecViewAdapter = new PeriodRecViewAdapter(
-                    periods, RoutinesAddActivity.this);
+                    periods, RoutinesAddActivity.this,
+                    RoutinesAddActivity.this);
             periodRecyclerView.setAdapter(periodRecViewAdapter);
 
             //update total time
@@ -93,6 +95,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     }
 
+    @Override
+    public void onPeriodClick(int position) {
+
+        //where the magic happens
+    }
 
     /**
      * Onclick function for 'done' button when adding routine.
@@ -151,7 +158,6 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
             replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
 
-            //Log.d("RR", "addRoutine: period arraylist reached");
             //replyIntent.putExtra(PERIOD_ARRAYLIST_REPLY, periods);
 
             Log.d("RR", "addRoutine: result ok reached");
@@ -203,5 +209,5 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     public void addPeriod(View view) {
         routinesAddEditViewModel.addPeriod();
     }
-    
+
 }

@@ -26,12 +26,15 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
     public static final int MAX_NUM_OF_CHILDREN = 3;
     private static int numOfVisibleChildren = 0;
 
+    private OnPeriodClickListener onPeriodClickListener;
     private List<Period> periodList;
     private Context context;
 
-    public PeriodRecViewAdapter(List<Period> periodList, Context context) {
+    public PeriodRecViewAdapter(List<Period> periodList, Context context,
+                                OnPeriodClickListener onPeriodClickListener) {
         this.periodList = periodList;
         this.context = context;
+        this.onPeriodClickListener = onPeriodClickListener;
     }
 
     /**
@@ -45,7 +48,7 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
     public PeriodRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.periods_recyclerview_item, parent,false);
-        return new PeriodRecViewAdapter.ViewHolder(view);
+        return new PeriodRecViewAdapter.ViewHolder(view, onPeriodClickListener);
     }
 
     @Override
@@ -71,24 +74,37 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
        // return Objects.requireNonNull(periodList).size() + numOfVisibleChildren;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        OnPeriodClickListener onPeriodClickListener;
         private final TextView periodLabel;
-        private final ViewGroup childrenDropdown;
-        private final ViewGroup breakTimeChild;
-        private final Spinner courseSpinner;
-        private final Spinner studyTimeSpinner;
-        private final Spinner breakTimeSpinner;
+//        private final ViewGroup childrenDropdown;
+//        private final ViewGroup breakTimeChild;
+//        private final Spinner courseSpinner;
+//        private final Spinner studyTimeSpinner;
+//        private final Spinner breakTimeSpinner;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnPeriodClickListener onPeriodClickListener) {
             super(itemView);
+            this.onPeriodClickListener = onPeriodClickListener;
             periodLabel = itemView.findViewById(R.id.period_label_textview);
-            childrenDropdown = itemView.findViewById(R.id.period_recycler_item_dropdown);
-            breakTimeChild = itemView.findViewById(R.id.period_child_break_recycler_item);
-            courseSpinner = itemView.findViewById(R.id.period_course_spinner);
-            studyTimeSpinner = itemView.findViewById(R.id.period_study_spinner);
-            breakTimeSpinner = itemView.findViewById(R.id.period_break_spinner);
+//            childrenDropdown = itemView.findViewById(R.id.period_recycler_item_dropdown);
+//            breakTimeChild = itemView.findViewById(R.id.period_child_break_recycler_item);
+//            courseSpinner = itemView.findViewById(R.id.period_course_spinner);
+//            studyTimeSpinner = itemView.findViewById(R.id.period_study_spinner);
+//            breakTimeSpinner = itemView.findViewById(R.id.period_break_spinner);
+
+            itemView.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            onPeriodClickListener.onPeriodClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnPeriodClickListener {
+        void onPeriodClick(int position);
     }
 
     public static int getNumOfVisibleChildren() {
