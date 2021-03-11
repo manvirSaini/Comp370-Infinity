@@ -4,19 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00FFFFFF"
     tools:context=".NavigationDrawerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.InfinityCourseProject.AppBarOverlay">
+        android:background="#00FFFFFF"
+        android:theme="@style/Theme.InfinityCourseProject.AppBarOverlay"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/tbg_color_default_marker"
-            app:popupTheme="@style/Theme.InfinityCourseProject.PopupOverlay" />
+            android:background="#9F6464"
+            app:popupTheme="@style/Theme.InfinityCourseProject.PopupOverlay"
+            app:subtitleTextColor="#000000"
+            app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
