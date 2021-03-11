@@ -161,15 +161,14 @@ public class RoutinesActivity extends AppCompatActivity
                     data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
                     startHour, startMin);
 
-//            ArrayList<Period> periods = (ArrayList<Period>)
-//                    data.getSerializableExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
+            ArrayList<Period> periods = data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
             Log.d("RR", "onActivityResult: period array list received");
 
             RoutineViewModel.insert(routine);
 
-//            for (Period p : periods) {
-//                PeriodViewModel.insert(p);
-//            }
+            for (Period p : periods) {
+                PeriodViewModel.insert(p);
+            }
         }
 
     }

@@ -199,7 +199,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
             replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
 
-            //replyIntent.putExtra(PERIOD_ARRAYLIST_REPLY, periods);
+            replyIntent.putParcelableArrayListExtra(PERIOD_ARRAYLIST_REPLY, periods);
 
             Log.d("RR", "addRoutine: result ok reached");
             setResult(RESULT_OK, replyIntent);

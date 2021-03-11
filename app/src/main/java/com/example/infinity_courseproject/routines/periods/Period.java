@@ -1,10 +1,14 @@
 package com.example.infinity_courseproject.routines.periods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
@@ -14,7 +18,7 @@ import com.example.infinity_courseproject.routines.Routine;
                 onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE),
                 @ForeignKey(entity = Routine.class, parentColumns = "title", childColumns = "routine_title",
                         onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
-public class Period {
+public class Period implements Parcelable {
 
     @ColumnInfo(name = "position")
     private int position;
@@ -40,6 +44,41 @@ public class Period {
         this.breakMinutes = breakMinutes;
         this.courseTitle = courseTitle;
         this.routineTitle = routineTitle;
+    }
+
+    @Ignore
+    protected Period(Parcel in) {
+        position = in.readInt();
+        studyMinutes = in.readInt();
+        breakMinutes = in.readInt();
+        courseTitle = in.readString();
+        routineTitle = in.readString();
+    }
+
+    public static final Creator<Period> CREATOR = new Creator<Period>() {
+        @Override
+        public Period createFromParcel(Parcel in) {
+            return new Period(in);
+        }
+
+        @Override
+        public Period[] newArray(int size) {
+            return new Period[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(position);
+        dest.writeInt(studyMinutes);
+        dest.writeInt(breakMinutes);
+        dest.writeString(courseTitle);
+        dest.writeString(routineTitle);
     }
 
     public int getPosition() {
