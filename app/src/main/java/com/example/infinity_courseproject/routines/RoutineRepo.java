@@ -37,8 +37,8 @@ public class RoutineRepo {
         myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> routineDao.deleteAll());
     }
 
-    public LiveData<Routine> get(Routine routine) {
-        return routineDao.get(routine.getTitle());
+    public LiveData<Routine> get(String routineTitle) {
+        return routineDao.get(routineTitle);
     }
 
     public RoutineDao getRoutineDao() {

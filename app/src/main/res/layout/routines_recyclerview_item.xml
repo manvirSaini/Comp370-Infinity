@@ -9,14 +9,14 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/routine_recycler_item"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,12 +31,20 @@
             android:textSize="@dimen/header2" />
 
         <TextView
-            android:id="@+id/total_time_text"
+            android:id="@+id/routine_recycler_item_edit_delete"
             android:layout_width="117dp"
             android:layout_height="32dp"
             android:layout_gravity="center|end"
             android:textSize="@dimen/header2"
             android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/routine_recycler_item_total_time"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="18sp" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

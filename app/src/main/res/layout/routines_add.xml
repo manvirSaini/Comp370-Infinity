@@ -185,7 +185,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/total_time_text"
+            android:id="@+id/routine_recycler_item_edit_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

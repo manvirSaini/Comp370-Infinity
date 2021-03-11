@@ -1,5 +1,6 @@
 package com.example.infinity_courseproject;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -11,6 +12,7 @@ public class RoutinesAddEditViewModel extends ViewModel {
     private int startHour = 24;
     private int startMin = 0;
     private int totalTimeInMinutes;
+
     private MutableLiveData<ArrayList<Period>> periodLiveData;
     //copy of mutable data contents
     private ArrayList<Period> periodCopiedData;

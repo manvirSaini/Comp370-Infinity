@@ -22,8 +22,8 @@ public class PeriodViewModel extends AndroidViewModel {
         allPeriods = repo.getAllPeriods();
     }
 
-    public LiveData<Period> get(Routine routine, Period period) {
-        return repo.get(routine, period);
+    public LiveData<Period> get(String routineTitle, int periodPos) {
+        return repo.get(routineTitle, periodPos);
     }
 
     public LiveData<List<Period>> getAllPeriods() {

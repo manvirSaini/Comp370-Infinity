@@ -57,9 +57,11 @@ public class RoutineViewModel extends AndroidViewModel {
         return routines;
     }
 
-    public LiveData<Routine> get(Routine routine) {
-        return repo.get(routine);
+    public LiveData<Routine> get(String routineTitle) {
+
+        return repo.get(routineTitle);
     }
+
     public LiveData<List<Routine>> getAllRoutines() {
 
         return allRoutines;

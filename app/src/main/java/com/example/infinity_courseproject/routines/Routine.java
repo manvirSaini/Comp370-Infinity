@@ -35,8 +35,8 @@ public class Routine {
      * Constructor for routine class
      * @param title - title of routine
      * @param weekdays - boolean array, where index 0 corresponds to the existence of an
-     *                 association with the weekday that is Monday (if false, not associated
-     *                 with Monday); this array therefore must be of size 7
+     *                 association with the weekday that is Sunday (if false, not associated
+     *                 with Sunday); this array therefore must be of size 7
      * @param startHour - an integer; if 24, treat as null
      * @param startMinute - an integer or null; if startHour is 24, treat as null
      */

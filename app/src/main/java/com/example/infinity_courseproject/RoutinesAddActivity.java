@@ -3,8 +3,11 @@ package com.example.infinity_courseproject;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodRecViewAdapter;
+import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -41,7 +44,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     private TextView startMinute;
     private TextView totalTime;
 
+
     RoutinesAddEditViewModel routinesAddEditViewModel;
+    RoutineViewModel routineViewModel;
+    PeriodViewModel periodViewModel;
+    private CourseViewModel courseViewModel;
 
     private PeriodRecViewAdapter periodRecViewAdapter;
     private RecyclerView periodRecyclerView;
@@ -75,6 +82,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         groupWeekdays = findViewById(R.id.group_weekdays);
 
+
         startHour = findViewById(R.id.start_hour_textview);
         startMinute = findViewById(R.id.start_minute_textview);
         totalTime = findViewById(R.id.add_routine_total_time_textview);
@@ -85,6 +93,52 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         backButton = findViewById(R.id.back_button);
 
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
+        routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(RoutineViewModel.class);
+        periodViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(PeriodViewModel.class);
+        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(CourseViewModel.class);
+
+        //get data in the case of an edit - startActivity occurs from RoutinesActivity
+        Bundle data = getIntent().getExtras();
+        if (data != null) {
+            String routineTitle = data.getString(RoutinesActivity.ROUTINE_TITLE);
+            routineViewModel.get(routineTitle).observe(this, routine -> {
+                enterTitle.setText(routine.getTitle());
+                boolean[] weekdays = routine.getWeekdays();
+
+                for (int i = 0; i < 7; i++) {
+                    if (weekdays[i]) {
+                        int id = groupWeekdays.getChildAt(i).getId();
+                        groupWeekdays.check(id);
+                    }
+                }
+
+                //other ui components need to be addressed in add/edit view model
+
+            });
+
+            int[] buttonIds = new int[7];
+            for (int i = 0; i < groupWeekdays.getChildCount(); i++) {
+                buttonIds[i] = groupWeekdays.getChildAt(i).getId();
+            }
+
+            Set<Integer> idsOfClicked = groupWeekdays.getCheckedIds();
+            boolean[] weekdays = new boolean[7];
+
+            //determine weekdays routine is to be associated with
+            for (Integer i : idsOfClicked) {
+                for (int k = 0; k < 7; k++) {
+                    if (i == buttonIds[k])
+                        weekdays[k] = true;
+                }
+            }
+        }
+
+
+
+
 
         periodRecyclerView.setHasFixedSize(true);
         periodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -97,6 +151,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     @Override
     public void onPeriodClick(int position) {
+
 
         //where the magic happens
     }
@@ -114,34 +169,20 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             //title, weekdays, startHour, startMin
             String title = enterTitle.getText().toString();
 
+            //first index will be the id for sunday button...
+            int[] buttonIds = new int[7];
+            for (int i = 0; i < groupWeekdays.getChildCount(); i++) {
+                buttonIds[i] = groupWeekdays.getChildAt(i).getId();
+            }
 
             Set<Integer> idsOfClicked = groupWeekdays.getCheckedIds();
-
             boolean[] weekdays = new boolean[7];
 
+            //determine weekdays routine is to be associated with
             for (Integer i : idsOfClicked) {
-                switch(i) {
-                    case 2131231114:
-                        weekdays[6] = true;
-                        break;
-                    case 2131230970:
-                        weekdays[0] = true;
-                        break;
-                    case 2131231165:
-                        weekdays[1] = true;
-                        break;
-                    case 2131231176:
-                        weekdays[2] = true;
-                        break;
-                    case 2131231145:
-                        weekdays[3] = true;
-                        break;
-                    case 2131230904:
-                        weekdays[4] = true;
-                        break;
-                    case 2131231055:
-                        weekdays[5] = true;
-                        break;
+                for (int k = 0; k < 7; k++) {
+                    if (i == buttonIds[k])
+                        weekdays[k] = true;
                 }
             }
 

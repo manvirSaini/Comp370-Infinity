@@ -28,11 +28,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RoutinesActivity extends AppCompatActivity
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
+    public static final String ROUTINE_TITLE = "routine_title";
 
     private Spinner spinner;
 
@@ -118,8 +120,11 @@ public class RoutinesActivity extends AppCompatActivity
      */
     @Override
     public void onRoutineClick(int position) {
+        Routine routine = Objects.requireNonNull(routineViewModel.getAllRoutines().getValue()).get(position);
 
-        //where the magic happens
+        Intent intent = new Intent(this, RoutinesAddActivity.class);
+        intent.putExtra(ROUTINE_TITLE, routine.getTitle());
+        startActivity(intent);
     }
 
     /**
