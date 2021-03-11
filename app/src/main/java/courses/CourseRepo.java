@@ -3,6 +3,7 @@ package courses;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.infinity_courseproject.RoomDatabase.myStudyRoutineDB;
 
@@ -10,13 +11,13 @@ import java.util.List;
 
 public class CourseRepo {
     private CourseDao courseDao;
-    private LiveData<List<Course>> allCourses;
+    private MutableLiveData<List<Course>> allCourses;
 
     public CourseRepo(Application application) {
         myStudyRoutineDB db = myStudyRoutineDB.getDatabase(application);
         courseDao = db.courseDao();
 
-        allCourses = courseDao.getAllCourses();
+        allCourses = (MutableLiveData<List<Course>>) courseDao.getAllCourses();
     }
 
     public void insert(Course course) {
