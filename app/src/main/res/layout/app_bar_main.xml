@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#9F6464"
+            android:background="@color/Clear"
             app:popupTheme="@style/Theme.InfinityCourseProject.PopupOverlay"
             app:subtitleTextColor="#000000"
             app:titleTextColor="@color/black" />

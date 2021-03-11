@@ -9,4 +9,9 @@
         <item name="android:inputType">textPersonName</item>
         <item name="colorControlNormal">@color/black</item>>
     </style>
+
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/black</item>
+    </style>
+
 </resources>
