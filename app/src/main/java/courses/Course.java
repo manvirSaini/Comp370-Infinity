@@ -4,14 +4,31 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.infinity_courseproject.MainActivity;
+import com.example.infinity_courseproject.R;
+
+import java.util.List;
+
+import static androidx.appcompat.widget.AppCompatDrawableManager.get;
+
 public class Course extends AppCompatActivity{
+
+    private CourseViewModel mCourseViewModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_main);
+
+        mCourseViewModel = ViewModelProvider.of(activity: this).get(CourseViewModel.class);
+        mCourseViewModel.getAllCourses().observe(owner: this, new Observer<List<Course>>()){
+
+        }
     }
 }
 

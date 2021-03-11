@@ -5,13 +5,14 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 public class CourseViewModel extends AndroidViewModel {
 
     public static CourseRepo repo;
-    public final LiveData<List<Course>> allCourses;
+    public final MutableLiveData<List<Course>> allCourses;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
