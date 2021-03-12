@@ -16,15 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.example.infinity_courseproject.courses.Course;
-import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +34,6 @@ public class RoutinesActivity extends AppCompatActivity
     private Spinner spinner;
 
     private RoutineViewModel routineViewModel;
-    private PeriodViewModel periodViewModel;
 
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
@@ -56,8 +50,6 @@ public class RoutinesActivity extends AppCompatActivity
         //initialize viewmodels
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
-        periodViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                this.getApplication()).create(PeriodViewModel.class);
 
         routineRecyclerView.setHasFixedSize(true);
         routineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -71,7 +63,7 @@ public class RoutinesActivity extends AppCompatActivity
             public void onChanged(List<Routine> routines) {
 
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
-                        RoutinesActivity.this, routineViewModel, periodViewModel,
+                        RoutinesActivity.this, routineViewModel,
                         RoutinesActivity.this);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
@@ -169,7 +161,6 @@ public class RoutinesActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("RR", "onActivityResult: result code = " + resultCode);
         if (requestCode == ADD_ROUTINE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Integer startHour = data.getIntExtra(RoutinesAddActivity.START_HOUR_REPLY, 24);
             Integer startMin = data.getIntExtra(RoutinesAddActivity.START_MINUTE_REPLY, 0);
@@ -181,7 +172,6 @@ public class RoutinesActivity extends AppCompatActivity
 
 
             ArrayList<Period> periods = data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
-            Log.d("RR", "onActivityResult: period array list received");
 
             Routine routine = new Routine(
                     data.getStringExtra(RoutinesAddActivity.TITLE_REPLY),
@@ -189,10 +179,6 @@ public class RoutinesActivity extends AppCompatActivity
                     startHour, startMin, periods);
 
             RoutineViewModel.insert(routine);
-
-            for (Period p : periods) {
-                PeriodViewModel.insert(p);
-            }
         }
 
     }

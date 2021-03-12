@@ -16,12 +16,11 @@ import com.example.infinity_courseproject.assignments.AssignmentDao;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseDao;
 import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodDao;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineDao;
 
-@Database(entities = {Routine.class, Course.class, Period.class, Assignment.class},
-        version = 4, exportSchema = false)
+@Database(entities = {Routine.class, Course.class, Assignment.class},
+        version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class myStudyRoutineDB extends RoomDatabase {
 
@@ -32,9 +31,7 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
 
     public abstract RoutineDao routineDao();
     public abstract CourseDao courseDao();
-    public abstract PeriodDao periodDao();
     public abstract AssignmentDao assignmentDao();
-    //public abstract QuestionDao questionDao();
 
     private static volatile myStudyRoutineDB INSTANCE;
 
@@ -64,7 +61,7 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             myStudyRoutineDB.class, DB_NAME)
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
 
                 }
@@ -82,23 +79,8 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
         }
     };
 
-    //pos, study_minutes, break_minutes, course_title, routine_title
-    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE IF NOT EXISTS 'period_table' ('position' INTEGER," +
-                    "'study_minutes' INTEGER NOT NULL, 'break_minutes' INTEGER NOT NULL," +
-                    "'course_title' TEXT, 'routine_title' TEXT," +
-                    "PRIMARY KEY('position', 'routine_title')," +
-                    "FOREIGN KEY('course_title') REFERENCES 'course_table'('title')" +
-                    "ON DELETE SET NULL ON UPDATE CASCADE," +
-                    "FOREIGN KEY('routine_title') REFERENCES 'routine_table'('title')" +
-                    "ON DELETE CASCADE ON UPDATE CASCADE)");
-        }
-    };
-
     //title, course_title, dueTime, descrip, markasupcoming
-    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE IF NOT EXISTS 'assignment_table' ('title' TEXT " +

@@ -6,11 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
-
 import java.util.List;
-import java.util.Objects;
 
 public class RoutineViewModel extends AndroidViewModel {
 

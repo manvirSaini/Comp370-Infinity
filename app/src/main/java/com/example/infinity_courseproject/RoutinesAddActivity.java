@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.infinity_courseproject.courses.CourseViewModel;
-import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodRecViewAdapter;
-import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -21,15 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Set;
 
 public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
@@ -51,9 +46,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     RoutinesAddEditViewModel routinesAddEditViewModel;
     RoutineViewModel routineViewModel;
-    PeriodViewModel periodViewModel;
     private CourseViewModel courseViewModel;
-
     private PeriodRecViewAdapter periodRecViewAdapter;
     private RecyclerView periodRecyclerView;
 
@@ -76,6 +69,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     };
 
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +93,6 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
-        periodViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                this.getApplication()).create(PeriodViewModel.class);
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
@@ -118,11 +110,14 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
                         groupWeekdays.check(id);
                     }
                 }
+
                 if (routine.getStartHour() != null) {
                     routinesAddEditViewModel.setStartHour(routine.getStartHour());
+                    startHour.setText(String.format("%02d", routinesAddEditViewModel.getStartHour()));
                 }
                 if (routine.getStartMinute() != null) {
                     routinesAddEditViewModel.setStartMin(routine.getStartMinute());
+                    startMinute.setText(String.format("%02d", routinesAddEditViewModel.getStartMin()));
                 }
                 routinesAddEditViewModel.setPeriodLiveData(routine.getPeriods());
             });
@@ -177,11 +172,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
             int startHourInt = routinesAddEditViewModel.getStartHour();
             int startMinInt = routinesAddEditViewModel.getStartMin();
-            Log.d("RR", "addRoutine: period arraylist reached");
             ArrayList<Period> periods = routinesAddEditViewModel.getPeriodCopiedData();
-            for (Period p : periods) {
-                p.setRoutineTitle(title);
-            }
 
             replyIntent.putExtra(TITLE_REPLY, title);
             replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
@@ -190,7 +181,6 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
             replyIntent.putParcelableArrayListExtra(PERIOD_ARRAYLIST_REPLY, periods);
 
-            Log.d("RR", "addRoutine: result ok reached");
             setResult(RESULT_OK, replyIntent);
 
             finish();

@@ -87,7 +87,7 @@ public class RoutinesAddEditViewModel extends ViewModel {
 
     public void addPeriod() {
         Period period = new Period(periodCopiedData.size() + 1,
-                60, 15, null, null);
+                60, 15, null);
         periodCopiedData.add(period);
         periodLiveData.setValue(periodCopiedData);
     }

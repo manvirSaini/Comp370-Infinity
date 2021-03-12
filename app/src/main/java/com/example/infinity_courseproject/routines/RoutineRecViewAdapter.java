@@ -7,16 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.R;
-import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,16 +19,14 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     private final OnRoutineClickListener onRoutineClickListener;
     private List<Routine> routineList;
     private RoutineViewModel routineViewModel;
-    private PeriodViewModel periodViewModel;
     private Context context;
 
     public RoutineRecViewAdapter(List<Routine> routineList, Context context,
-                                 RoutineViewModel routineViewModel, PeriodViewModel periodViewModel,
+                                 RoutineViewModel routineViewModel,
                                  OnRoutineClickListener onRoutineClickListener) {
         this.routineList = routineList;
         this.context = context;
         this.routineViewModel = routineViewModel;
-        this.periodViewModel = periodViewModel;
         this.onRoutineClickListener = onRoutineClickListener;
     }
 
