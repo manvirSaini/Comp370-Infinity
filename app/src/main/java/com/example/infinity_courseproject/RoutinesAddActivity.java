@@ -1,9 +1,11 @@
 package com.example.infinity_courseproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodRecViewAdapter;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
@@ -37,6 +40,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     public static final String START_HOUR_REPLY = "start_hour_reply";
     public static final String START_MINUTE_REPLY = "start_minute_reply";
     public static final String PERIOD_ARRAYLIST_REPLY = "period_arraylist_reply";
+    private static final int MAX_NUM_OF_PERIODS = 10;
 
     private EditText enterTitle;
     private com.nex3z.togglebuttongroup.MultiSelectToggleGroup groupWeekdays;
@@ -114,37 +118,21 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
                         groupWeekdays.check(id);
                     }
                 }
-
-                //other ui components need to be addressed in add/edit view model
-
-            });
-
-            int[] buttonIds = new int[7];
-            for (int i = 0; i < groupWeekdays.getChildCount(); i++) {
-                buttonIds[i] = groupWeekdays.getChildAt(i).getId();
-            }
-
-            Set<Integer> idsOfClicked = groupWeekdays.getCheckedIds();
-            boolean[] weekdays = new boolean[7];
-
-            //determine weekdays routine is to be associated with
-            for (Integer i : idsOfClicked) {
-                for (int k = 0; k < 7; k++) {
-                    if (i == buttonIds[k])
-                        weekdays[k] = true;
+                if (routine.getStartHour() != null) {
+                    routinesAddEditViewModel.setStartHour(routine.getStartHour());
                 }
-            }
+                if (routine.getStartMinute() != null) {
+                    routinesAddEditViewModel.setStartMin(routine.getStartMinute());
+                }
+                routinesAddEditViewModel.setPeriodLiveData(routine.getPeriods());
+            });
         }
+        else
+            routinesAddEditViewModel.addPeriod();
 
-
-
-
-
+        //set up period recyclerview and observe its live data
         periodRecyclerView.setHasFixedSize(true);
         periodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //initialize LiveData list
-        routinesAddEditViewModel.addPeriod();
         routinesAddEditViewModel.getPeriodLiveData().observe(this, periodListUpdateObserver);
 
     }
@@ -156,6 +144,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         //where the magic happens
     }
 
+    //______________________________________________________________________________________________
     /**
      * Onclick function for 'done' button when adding routine.
      * Returns to routine section due to delivery of activity result.
@@ -223,24 +212,30 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         finish();
     }
 
+    //onclicks for incrementing and decrementing
+
+    @SuppressLint("DefaultLocale")
     public void incrementStartHour(View view) {
         routinesAddEditViewModel.incrementStartHour();
-        startHour.setText(String.valueOf(routinesAddEditViewModel.getStartHour()));
+        startHour.setText(String.format("%02d", routinesAddEditViewModel.getStartHour()));
     }
 
+    @SuppressLint("DefaultLocale")
     public void decrementStartHour(View view) {
         routinesAddEditViewModel.decrementStartHour();
-        startHour.setText(String.valueOf(routinesAddEditViewModel.getStartHour()));
+        startHour.setText(String.format("%02d", routinesAddEditViewModel.getStartHour()));
     }
 
+    @SuppressLint("DefaultLocale")
     public void incrementStartMinute(View view) {
         routinesAddEditViewModel.incrementStartMinute();
-        startMinute.setText(String.valueOf(routinesAddEditViewModel.getStartMin()));
+        startMinute.setText(String.format("%02d", routinesAddEditViewModel.getStartMin()));
     }
 
+    @SuppressLint("DefaultLocale")
     public void decrementStartMinute(View view) {
         routinesAddEditViewModel.decrementStartMinute();
-        startMinute.setText(String.valueOf(routinesAddEditViewModel.getStartMin()));
+        startMinute.setText(String.format("%02d", routinesAddEditViewModel.getStartMin()));
     }
 
     /**
@@ -248,7 +243,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
      * @param view - add_period_fab
      */
     public void addPeriod(View view) {
-        routinesAddEditViewModel.addPeriod();
+        if (routinesAddEditViewModel.getPeriodCopiedData().size() == MAX_NUM_OF_PERIODS) {
+            Toast.makeText(this, R.string.max_num_of_periods_reached, Toast.LENGTH_SHORT).show();
+        }
+        else
+            routinesAddEditViewModel.addPeriod();
     }
 
 }

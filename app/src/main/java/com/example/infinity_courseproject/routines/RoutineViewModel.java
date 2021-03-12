@@ -28,34 +28,34 @@ public class RoutineViewModel extends AndroidViewModel {
      * Method for ordering by routines by their total time.
      * @return - the resulting ordered routines list
      */
-    public List<Routine> orderRoutinesByTotalTime(PeriodViewModel periodViewModel) {
-        List<Routine> routines = Objects.requireNonNull(allRoutines.getValue());
-        int[] totalTimeArray = new int[routines.size()];
-        for (int i=0; i < totalTimeArray.length; i++) {
-            totalTimeArray[i] = periodViewModel.getTotalRoutineTime(routines.get(i));
-        }
-
-        //selection sort
-        for (int i = 0; i < totalTimeArray.length-1; i++)
-        {
-            // Find the minimum element in unsorted array
-            int maxIndex = i;
-            for (int j = i+1; j < totalTimeArray.length; j++)
-                if (totalTimeArray[j] > totalTimeArray[maxIndex]) {
-                    maxIndex = j;
-                }
-            //swap maxIndex with idx i for the routines array and the int array
-            Routine longestRoutine = routines.get(maxIndex);
-            routines.set(0, routines.get(i));
-            routines.set(i, longestRoutine);
-
-            int temp = totalTimeArray[maxIndex];
-            totalTimeArray[maxIndex] = totalTimeArray[i];
-            totalTimeArray[i] = temp;
-        }
-
-        return routines;
-    }
+//    public List<Routine> orderRoutinesByTotalTime(PeriodViewModel periodViewModel) {
+//        List<Routine> routines = Objects.requireNonNull(allRoutines.getValue());
+//        int[] totalTimeArray = new int[routines.size()];
+//        for (int i=0; i < totalTimeArray.length; i++) {
+//            totalTimeArray[i] = periodViewModel.getTotalRoutineTime(routines.get(i));
+//        }
+//
+//        //selection sort
+//        for (int i = 0; i < totalTimeArray.length-1; i++)
+//        {
+//            // Find the minimum element in unsorted array
+//            int maxIndex = i;
+//            for (int j = i+1; j < totalTimeArray.length; j++)
+//                if (totalTimeArray[j] > totalTimeArray[maxIndex]) {
+//                    maxIndex = j;
+//                }
+//            //swap maxIndex with idx i for the routines array and the int array
+//            Routine longestRoutine = routines.get(maxIndex);
+//            routines.set(0, routines.get(i));
+//            routines.set(i, longestRoutine);
+//
+//            int temp = totalTimeArray[maxIndex];
+//            totalTimeArray[maxIndex] = totalTimeArray[i];
+//            totalTimeArray[i] = temp;
+//        }
+//
+//        return routines;
+//    }
 
     public LiveData<Routine> get(String routineTitle) {
 

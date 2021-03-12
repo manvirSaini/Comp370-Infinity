@@ -66,14 +66,14 @@ public class DBTestActivity extends AppCompatActivity {
             }
         });
 
-        periodViewModel.getAllPeriods().observe(this, new Observer<List<Period>>() {
-            @Override
-            public void onChanged(List<Period> periods) {
-                if (!periods.isEmpty()) {
-                    textView3.setText(String.valueOf(periods.get(0).getPosition()));
-                }
-            }
-        });
+//        periodViewModel.getAllPeriods().observe(this, new Observer<List<Period>>() {
+//            @Override
+//            public void onChanged(List<Period> periods) {
+//                if (!periods.isEmpty()) {
+//                    textView3.setText(String.valueOf(periods.get(0).getPosition()));
+//                }
+//            }
+//        });
 
         //creating entries
 //        Routine routine = new Routine("routine", new boolean[7]);

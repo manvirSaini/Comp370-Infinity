@@ -18,12 +18,15 @@ public class PeriodRepo {
     public PeriodRepo(Application application) {
         myStudyRoutineDB db = myStudyRoutineDB.getDatabase(application);
         periodDao = db.periodDao();
-
         allPeriods = periodDao.getAllPeriods();
     }
 
     public LiveData<List<Period>> getRoutinePeriods(Routine routine) {
-        return periodDao.getRoutinePeriods(routine.getTitle());
+        List<Period> periods;
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> {
+            periodDao.getRoutinePeriods(routine.getTitle());
+        });
+        return null;
     }
 
     public LiveData<List<Period>> getCoursePeriods(Course course) {

@@ -40,7 +40,6 @@ public class RoutinesActivity extends AppCompatActivity
 
     private RoutineViewModel routineViewModel;
     private PeriodViewModel periodViewModel;
-    private CourseViewModel courseViewModel;
 
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
@@ -59,11 +58,10 @@ public class RoutinesActivity extends AppCompatActivity
                 this.getApplication()).create(RoutineViewModel.class);
         periodViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(PeriodViewModel.class);
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                this.getApplication()).create(CourseViewModel.class);
 
         routineRecyclerView.setHasFixedSize(true);
         routineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         //get and observe routines
         LiveData<List<Routine>> routines = routineViewModel.getAllRoutines();
@@ -71,6 +69,7 @@ public class RoutinesActivity extends AppCompatActivity
         routines.observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {
+
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
                         RoutinesActivity.this, routineViewModel, periodViewModel,
                         RoutinesActivity.this);
@@ -79,30 +78,40 @@ public class RoutinesActivity extends AppCompatActivity
             }
         });
 
-        //initialize spinner
+        //initialize weekday spinner array
         spinner = findViewById(R.id.routine_show_spinner);
-        ArrayList<String> spinnerArray = new ArrayList<>();
-        //populate spinner
-        //List<Course> courses = courseViewModel.getAllCourses().getValue(); //this will be null
-//        for (Course c : courses) {
-//            spinnerArray.add(c.getTitle());
-//        }
-        //spinner adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, spinnerArray);
 
+        //populate weekday spinner array
+        ArrayList<String> spinnerArray = new ArrayList<>();
+        spinnerArray.add("ALL");
+        spinnerArray.add("GENERAL");
+        spinnerArray.add("Sunday");
+        spinnerArray.add("Monday");
+        spinnerArray.add("Tuesday");
+        spinnerArray.add("Wednesday");
+        spinnerArray.add("Thursday");
+        spinnerArray.add("Friday");
+        spinnerArray.add("Saturday");
+
+        //create and set spinner adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
+                        android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //spinner onItemListener
+        //activity starts with "ALL" option selected
+        spinner.setSelection(0);
+
+        //spinner listener
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                                        int position, long id) {
-//                switch(position) {
-//                    case 0:
-//                        //make all other lists disappear
-//                }
+
+                switch(position) {
+                    case 0:
+
+                }
             }
 
             @Override
@@ -111,6 +120,27 @@ public class RoutinesActivity extends AppCompatActivity
 
         });
 
+        /**
+         * Add this commented code to the assignments activity onCreate method
+         */
+        //spinner = findViewById(R.id.routine_show_spinner);
+        //ArrayList<String> spinnerArray = new ArrayList<>();
+//        LiveData<List<Course>> courses = courseViewModel.getAllCourses();
+//        courses.observe(this, new Observer<List<Course>>() {
+//            @Override
+//            public void onChanged(List<Course> courses) {
+//                for (Course c : courses) {
+//                    spinnerArray.add(c.getTitle());
+//                }
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
+//                        android.R.layout.simple_spinner_item, spinnerArray);
+//
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinner.setAdapter(adapter);
+//            }
+//        });
+
+        //spinner onItemListener
 
     }
 
@@ -136,14 +166,6 @@ public class RoutinesActivity extends AppCompatActivity
 
     }
 
-    /**
-     * First you need to find out how to select individual routines
-     */
-//    public void transitionToEditRoutineSubsection() {
-//        Intent intent = new Intent(this, RoutinesAddActivity.class);
-//        startActivityForResult(intent, ADD_ROUTINE_ACTIVITY_REQUEST_CODE);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,13 +178,15 @@ public class RoutinesActivity extends AppCompatActivity
                 startMin = null;
             }
 
-            Routine routine = new Routine(
-                    data.getStringExtra(RoutinesAddActivity.TITLE_REPLY),
-                    data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
-                    startHour, startMin);
+
 
             ArrayList<Period> periods = data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
             Log.d("RR", "onActivityResult: period array list received");
+
+            Routine routine = new Routine(
+                    data.getStringExtra(RoutinesAddActivity.TITLE_REPLY),
+                    data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
+                    startHour, startMin, periods);
 
             RoutineViewModel.insert(routine);
 

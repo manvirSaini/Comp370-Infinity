@@ -108,19 +108,4 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
                     "ON DELETE SET NULL ON UPDATE CASCADE)");
         }
     };
-
-    /* In case we decide to store the questions
-    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE IF NOT EXISTS 'period_table' ('position' INTEGER," +
-                    "'course_title' TEXT, 'routine_title' TEXT," +
-                    "PRIMARY KEY('position', 'routine_title')," +
-                    "FOREIGN KEY('course_title') REFERENCES 'course_table'('title')" +
-                    "ON DELETE SET NULL ON UPDATE CASCADE," +
-                    "FOREIGN KEY('routine_title') REFERENCES 'routine_table'('title')" +
-                    "ON DELETE CASCADE ON UPDATE CASCADE)");
-        }
-    };
-    */
 }

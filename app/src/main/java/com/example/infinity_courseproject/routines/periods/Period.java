@@ -81,6 +81,34 @@ public class Period implements Parcelable {
         dest.writeString(routineTitle);
     }
 
+    public String getStudyTimeInHoursAndMinutes() {
+        String totalTime = null;
+        int hours = studyMinutes/60;
+        int minutes = studyMinutes%60;
+
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else
+            totalTime = hours + "h " + minutes + "min";
+
+        return totalTime;
+
+    }
+
+    public String getBreakTimeInHoursAndMinutes() {
+        String totalTime = null;
+        int hours = breakMinutes/60;
+        int minutes = breakMinutes%60;
+
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else
+            totalTime = hours + "h " + minutes + "min";
+
+        return totalTime;
+
+    }
+
     public int getPosition() {
         return position;
     }

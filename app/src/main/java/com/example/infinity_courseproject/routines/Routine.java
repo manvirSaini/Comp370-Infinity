@@ -6,6 +6,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.example.infinity_courseproject.routines.periods.Period;
+
+import java.util.ArrayList;
+
 /**
  * Entity class defining a routine, where a routine is a sequence of study and break periods. Routines
  * can be associated with 0 or more weekdays, and can have a specified start time (if set,
@@ -31,6 +35,10 @@ public class Routine {
     @Nullable
     private Integer startMinute; //limit options to 15, 30, and 45; only allow to be null if startHour is null
 
+    @ColumnInfo(name = "periods")
+    @NonNull
+    private ArrayList<Period> periods;
+
     /**
      * Constructor for routine class
      * @param title - title of routine
@@ -41,11 +49,33 @@ public class Routine {
      * @param startMinute - an integer or null; if startHour is 24, treat as null
      */
     public Routine(@NonNull String title, @NonNull boolean[] weekdays, @Nullable Integer startHour,
-                   @Nullable Integer startMinute) {
+                   @Nullable Integer startMinute, @NonNull ArrayList<Period> periods) {
         this.title = title;
         this.weekdays = weekdays;
         this.startHour = startHour;
         this.startMinute = startMinute;
+        this.periods = periods;
+    }
+
+    public int getTotalTimeInMinutes() {
+        int sum = 0;
+        for (Period p : periods) {
+            sum += p.getStudyMinutes() + p.getBreakMinutes();
+        }
+        return sum;
+    }
+
+    public String getTotalTimeInHoursAndMinutes() {
+        int totalTimeInMinutes = getTotalTimeInMinutes();
+        String totalTime = null;
+        int hours = totalTimeInMinutes/60;
+        int minutes = totalTimeInMinutes%60;
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else
+            totalTime = hours + "h " + minutes + "min";
+        return totalTime;
+
     }
 
     //getters and setters
@@ -85,5 +115,14 @@ public class Routine {
 
     public void setStartMinute(@Nullable Integer startMinute) {
         this.startMinute = startMinute;
+    }
+
+    @NonNull
+    public ArrayList<Period> getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(@NonNull ArrayList<Period> periods) {
+        this.periods = periods;
     }
 }

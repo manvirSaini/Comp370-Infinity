@@ -1,10 +1,8 @@
 package com.example.infinity_courseproject;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
-
 import java.util.ArrayList;
 
 public class RoutinesAddEditViewModel extends ViewModel {
@@ -17,21 +15,11 @@ public class RoutinesAddEditViewModel extends ViewModel {
     //copy of mutable data contents
     private ArrayList<Period> periodCopiedData;
 
-    //private DecimalFormat formatter = new DecimalFormat("00");
-
     //constructor
     public RoutinesAddEditViewModel() {
         periodLiveData = new MutableLiveData<>();
         periodCopiedData = new ArrayList<>();
     }
-
-    /**
-     * The following will be checked upon adding a routine:
-     * 1 - If startHour is null and startMin is not, startHour = 0
-     * 2 - If startMin is null and startHour is not, startMin = 0
-     * 3 - If both fields are null, startHour = 24, startMin = 0
-     * 4 - If neither are null, proceed as is
-     */
 
     public void incrementStartHour() {
         if (startHour == 24) {
@@ -70,26 +58,30 @@ public class RoutinesAddEditViewModel extends ViewModel {
     }
 
     public String getTotalTimeInHoursAndMinutes() {
+        String totalTime = null;
         int hours = totalTimeInMinutes/60;
         int minutes = totalTimeInMinutes%60;
-
-        return hours + "h " + minutes + "min";
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else
+            totalTime = hours + "h " + minutes + "min";
+        return totalTime;
 
     }
 
-    public Integer getStartHour() {
+    public int getStartHour() {
         return startHour;
     }
 
-    public void setStartHour(Integer startHour) {
+    public void setStartHour(int startHour) {
         this.startHour = startHour;
     }
 
-    public Integer getStartMin() {
+    public int getStartMin() {
         return startMin;
     }
 
-    public void setStartMin(Integer startMin) {
+    public void setStartMin(int startMin) {
         this.startMin = startMin;
     }
 

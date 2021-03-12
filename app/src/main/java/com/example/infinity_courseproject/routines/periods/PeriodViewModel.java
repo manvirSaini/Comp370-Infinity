@@ -1,13 +1,12 @@
 package com.example.infinity_courseproject.routines.periods;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
@@ -34,17 +33,6 @@ public class PeriodViewModel extends AndroidViewModel {
         return repo.getRoutinePeriods(routine);
     }
 
-    public int getTotalRoutineTime(Routine routine) {
-        List<Period> routinePeriods =
-                Objects.requireNonNull(repo.getRoutinePeriods(routine)).getValue();
-
-        int sum = 0;
-//        for (Period p : routinePeriods) {
-//            sum += p.getStudyMinutes() + p.getStudyMinutes();
-//        }
-        return sum;
-    }
-
     /**
      *
      * @param course - if null, returns all periods that do not have a course
@@ -53,6 +41,23 @@ public class PeriodViewModel extends AndroidViewModel {
     public LiveData<List<Period>> getCoursePeriods(Course course) {
         return repo.getCoursePeriods(course);
     }
+
+//    public int getTotalRoutineTime(Routine routine) throws InterruptedException {
+//        List<Period> routinePeriods = null;
+//        CountDownLatch latch = new CountDownLatch(1);
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                LiveData<List<Period>> routinePeriods = getRoutinePeriods(routine);
+//                latch.countDown();
+//            }
+//        });
+//        thread.start();
+//        latch.await();
+//
+//
+//
+//    }
 
     public static void insert(Period period) {
         repo.insert(period);

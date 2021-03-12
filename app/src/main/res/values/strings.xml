@@ -26,4 +26,8 @@
     <string name="add_period_fab_content_description">button for adding periods</string>
     <string name="toast_empty_title">Enter a title.</string>
     <string name="add_routine_fab_content_description">Button for adding routine</string>
+    <string name="period_course_text">Course:</string>
+    <string name="period_study_text">Study Time:</string>
+    <string name="period_break_text">Break Time:</string>
+    <string name="max_num_of_periods_reached">You have the maximum number of periods.</string>
 </resources>

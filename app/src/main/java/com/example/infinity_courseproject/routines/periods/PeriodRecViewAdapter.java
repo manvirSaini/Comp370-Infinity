@@ -23,10 +23,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdapter.ViewHolder> {
-    public static final int MAX_NUM_OF_CHILDREN = 3;
-    private static int numOfVisibleChildren = 0;
 
-    private OnPeriodClickListener onPeriodClickListener;
+    private final OnPeriodClickListener onPeriodClickListener;
     private List<Period> periodList;
     private Context context;
 
@@ -55,46 +53,33 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
     public void onBindViewHolder(@NonNull PeriodRecViewAdapter.ViewHolder holder, int position) {
         Period period = Objects.requireNonNull(periodList).get(position);
         holder.periodLabel.setText("Period " + period.getPosition());
-//        if (holder.childrenDropdown.getVisibility() != ViewGroup.GONE) {
-//            if (position == periodList.size() - 1) {
-//                holder.breakTimeChild.setVisibility(ViewGroup.GONE);
-//            }
-//
-//
-//        }
-//        else {
-//
-//        }
-
+        holder.courseTitle.setText(period.getCourseTitle());
+        holder.studyTime.setText(period.getStudyTimeInHoursAndMinutes());
+        holder.breakTime.setText(period.getBreakTimeInHoursAndMinutes());
     }
 
     @Override
     public int getItemCount() {
         return Objects.requireNonNull(periodList).size();
-       // return Objects.requireNonNull(periodList).size() + numOfVisibleChildren;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         OnPeriodClickListener onPeriodClickListener;
         private final TextView periodLabel;
-//        private final ViewGroup childrenDropdown;
-//        private final ViewGroup breakTimeChild;
-//        private final Spinner courseSpinner;
-//        private final Spinner studyTimeSpinner;
-//        private final Spinner breakTimeSpinner;
+        private final TextView courseTitle;
+        private final TextView studyTime;
+        private final TextView breakTime;
+
 
         public ViewHolder(@NonNull View itemView, OnPeriodClickListener onPeriodClickListener) {
             super(itemView);
             this.onPeriodClickListener = onPeriodClickListener;
             periodLabel = itemView.findViewById(R.id.period_label_textview);
-//            childrenDropdown = itemView.findViewById(R.id.period_recycler_item_dropdown);
-//            breakTimeChild = itemView.findViewById(R.id.period_child_break_recycler_item);
-//            courseSpinner = itemView.findViewById(R.id.period_course_spinner);
-//            studyTimeSpinner = itemView.findViewById(R.id.period_study_spinner);
-//            breakTimeSpinner = itemView.findViewById(R.id.period_break_spinner);
+            courseTitle = itemView.findViewById(R.id.period_course_title);
+            studyTime = itemView.findViewById(R.id.period_study_time_hours_and_minutes);
+            breakTime = itemView.findViewById(R.id.period_break_time_hours_and_minutes);
 
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -105,14 +90,6 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
 
     public interface OnPeriodClickListener {
         void onPeriodClick(int position);
-    }
-
-    public static int getNumOfVisibleChildren() {
-        return numOfVisibleChildren;
-    }
-
-    public static void setNumOfVisibleChildren(int numOfVisibleChildren) {
-        PeriodRecViewAdapter.numOfVisibleChildren = numOfVisibleChildren;
     }
 }
 

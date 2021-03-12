@@ -7,17 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.R;
+import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAdapter.ViewHolder> {
 
-    private OnRoutineClickListener onRoutineClickListener;
+    private final OnRoutineClickListener onRoutineClickListener;
     private List<Routine> routineList;
     private RoutineViewModel routineViewModel;
     private PeriodViewModel periodViewModel;
@@ -45,8 +50,7 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     public void onBindViewHolder(@NonNull RoutineRecViewAdapter.ViewHolder holder, int position) {
         Routine routine = Objects.requireNonNull(routineList).get(position);
         holder.routineName.setText(routine.getTitle());
-        holder.totalTime.setText(String.valueOf(periodViewModel.getTotalRoutineTime(routine)));
-
+        holder.totalTime.setText(routine.getTotalTimeInHoursAndMinutes());
     }
 
     @Override
@@ -77,6 +81,7 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     public interface OnRoutineClickListener {
         void onRoutineClick(int position);
     }
+
 
 
 }
