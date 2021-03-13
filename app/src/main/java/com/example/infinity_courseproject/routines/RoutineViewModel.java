@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -20,9 +19,13 @@ public class RoutineViewModel extends AndroidViewModel {
         allRoutines = repo.getRoutinesOrderByName();
     }
 
-    public LiveData<Routine> get(String routineTitle) {
+    public LiveData<Routine> getByTitle(String routineTitle) {
 
-        return repo.get(routineTitle);
+        return repo.getByTitle(routineTitle);
+    }
+
+    public LiveData<Routine> get(int id) {
+        return repo.get(id);
     }
 
     public LiveData<List<Routine>> getRoutinesOrderByName() {

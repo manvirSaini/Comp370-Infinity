@@ -24,7 +24,10 @@ public interface RoutineDao {
     void update(Routine routine);
 
     @Query("SELECT * FROM routine_table WHERE title LIKE :title")
-    LiveData<Routine> get(String title);
+    LiveData<Routine> getByTitle(String title);
+
+    @Query("SELECT * FROM routine_table WHERE id = :id")
+    LiveData<Routine> get(int id);
 
     @Query("DELETE FROM routine_table")
     void deleteAll();

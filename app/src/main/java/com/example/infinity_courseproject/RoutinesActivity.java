@@ -28,7 +28,7 @@ public class RoutinesActivity extends AppCompatActivity
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
-    public static final String ROUTINE_TITLE = "routine_title";
+    public static final String ROUTINE_ID = "routine_id";
 
     private Spinner showSpinner; //spinner to display filtering options
     public enum FilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
@@ -174,7 +174,7 @@ public class RoutinesActivity extends AppCompatActivity
         Routine routine =
                 Objects.requireNonNull(routineViewModel.getRoutinesOrderByName().getValue()).get(position);
         Intent intent = new Intent(this, RoutinesAddActivity.class);
-        intent.putExtra(ROUTINE_TITLE, routine.getTitle());
+        intent.putExtra(ROUTINE_ID, routine.getId());
         startActivity(intent);
     }
 

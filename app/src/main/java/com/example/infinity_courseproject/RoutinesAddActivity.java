@@ -50,14 +50,10 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     RoutinesAddEditViewModel routinesAddEditViewModel;
     RoutineViewModel routineViewModel;
-    private CourseViewModel courseViewModel;
     private PeriodRecViewAdapter periodRecViewAdapter;
     private RecyclerView periodRecyclerView;
 
-    private Button backButton;
-    private Button doneButton;
-
-    private Observer<ArrayList<Period>> periodListUpdateObserver = new Observer<ArrayList<Period>>() {
+    private final Observer<ArrayList<Period>> periodListUpdateObserver = new Observer<ArrayList<Period>>() {
 
         @Override
         public void onChanged(ArrayList<Period> periods) {
@@ -91,23 +87,18 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         periodRecyclerView = findViewById(R.id.basic_recyclerview);
 
-        doneButton = findViewById(R.id.done_button);
-        backButton = findViewById(R.id.back_button);
-
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                this.getApplication()).create(CourseViewModel.class);
 
         //get data in the case of an edit - startActivity occurs from RoutinesActivity
         Bundle data = getIntent().getExtras();
         if (data != null) {
-            String routineTitle = data.getString(RoutinesActivity.ROUTINE_TITLE);
+            int routineId = data.getInt(RoutinesActivity.ROUTINE_ID);
 
-            routineToBeUpdated = routineViewModel.get(routineTitle).getValue();
+            routineViewModel.get(routineId).observe(this, routine -> {
+                routineToBeUpdated = routine;
 
-            routineViewModel.get(routineTitle).observe(this, routine -> {
                 enterTitle.setText(routine.getTitle());
                 boolean[] weekdays = routine.getWeekdays();
 
@@ -141,9 +132,15 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     @Override
     public void onPeriodClick(int position) {
+        Period period = routinesAddEditViewModel.get(position);
+        Intent intent = new Intent(this, PeriodsEditActivity.class);
+        intent.putExtra("period", period);
+        startActivity(intent);
+    }
 
-
-        //where the magic happens
+    @Override
+    public void onPeriodLongClick(int position) {
+        routinesAddEditViewModel.removePeriod(position);
     }
 
     //______________________________________________________________________________________________
@@ -181,14 +178,12 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             int startMinInt = routinesAddEditViewModel.getStartMin();
             ArrayList<Period> periods = routinesAddEditViewModel.getPeriodCopiedData();
 
-            //prevent a break from occurring if it is the final period
-            periods.get(periods.size()-1).setBreakMinutes(0);
-
             //in the event that this is an update, not a new routine...
             if (routineToBeUpdated != null) {
                 Routine routine = new Routine(title, weekdays, startHourInt, startMinInt, periods);
-                //RoutineViewModel.update(routine);
-                //routineToBeUpdated = null;
+                routine.setId(routineToBeUpdated.getId());
+                RoutineViewModel.update(routine);
+                routineToBeUpdated = null;
             }
             else {
                 replyIntent.putExtra(TITLE_REPLY, title);

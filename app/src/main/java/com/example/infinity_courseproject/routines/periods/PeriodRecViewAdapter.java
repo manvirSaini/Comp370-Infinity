@@ -80,6 +80,14 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
             breakTime = itemView.findViewById(R.id.period_break_time_hours_and_minutes);
 
             itemView.setOnClickListener(this);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onPeriodClickListener.onPeriodLongClick(getAdapterPosition());
+                    return false;
+                }
+            });
         }
 
         @Override
@@ -90,6 +98,7 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
 
     public interface OnPeriodClickListener {
         void onPeriodClick(int position);
+        void onPeriodLongClick(int position);
     }
 }
 

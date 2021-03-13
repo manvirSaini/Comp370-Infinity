@@ -46,7 +46,6 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     public void onBindViewHolder(@NonNull RoutineRecViewAdapter.ViewHolder holder, int position) {
         Routine routine = Objects.requireNonNull(routineList).get(position);
         if (RoutinesActivity.getFilter().equals(RoutinesActivity.FilterBy.ALL))
-            Log.d("filter", "onBindViewHolder: yes");
         if (filterRoutine(routine)) {
             holder.recyclerItem.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }

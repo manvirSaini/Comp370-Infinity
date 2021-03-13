@@ -105,7 +105,8 @@ public class RoutinesAddEditViewModel extends ViewModel {
     }
 
     public void setPeriodLiveData(ArrayList<Period> periodList) {
-        periodLiveData.setValue(periodList);
+        periodCopiedData.addAll(periodList);
+        periodLiveData.setValue(periodCopiedData);
     }
 
     public int getTotalTimeInMinutes() {
@@ -120,8 +121,9 @@ public class RoutinesAddEditViewModel extends ViewModel {
         return periodCopiedData;
     }
 
-    public void setPeriodCopiedData(ArrayList<Period> periodCopiedData) {
-        this.periodCopiedData = periodCopiedData;
+    public Period get(int position) {
+        return periodCopiedData.get(position);
     }
+
 }
 

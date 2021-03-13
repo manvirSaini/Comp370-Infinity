@@ -3,7 +3,6 @@ package com.example.infinity_courseproject.routines;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
@@ -38,8 +37,12 @@ public class RoutineRepo {
         myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> routineDao.deleteAll());
     }
 
-    public LiveData<Routine> get(String routineTitle) {
-        return routineDao.get(routineTitle);
+    public LiveData<Routine> getByTitle(String routineTitle) {
+        return routineDao.getByTitle(routineTitle);
+    }
+
+    public LiveData<Routine> get(int id) {
+        return routineDao.get(id);
     }
 
     public RoutineDao getRoutineDao() {
