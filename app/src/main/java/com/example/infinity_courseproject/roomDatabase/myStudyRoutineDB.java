@@ -15,7 +15,6 @@ import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentDao;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseDao;
-import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineDao;
 
@@ -40,8 +39,8 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
      * Note that this is used to implement insert methods, and currently may lead to poorly ordered
      * thread executions resulting in database failure
      */
-    //this executor is used when the order of inputs matters (useful for testing
-    //and making sure a routine is entered into the DB before its periods
+    //this executor is used when the order of inputs matters (useful for testing,
+    //as it makes sure that a course is entered into the DB before associated assignments)
     public static final ExecutorService inOrderDatabaseWriteExecutor
             = Executors.newFixedThreadPool(THREADS_FOR_IN_ORDER_THREADING);
 
@@ -63,7 +62,6 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
                             myStudyRoutineDB.class, DB_NAME)
                             .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
-
                 }
             }
         }
@@ -75,7 +73,8 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE IF NOT EXISTS 'course_table' " +
-                    "('title' TEXT PRIMARY KEY, 'professor' TEXT, 'description' TEXT)");
+                    "('id' INTEGER PRIMARY KEY, 'title' TEXT NOT NULL, " +
+                    "'professor' TEXT, 'description' TEXT)");
         }
     };
 
@@ -83,10 +82,10 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE IF NOT EXISTS 'assignment_table' ('title' TEXT " +
-                    "PRIMARY KEY, 'course_title' TEXT, 'due_time' TIMESTAMP, " +
+            database.execSQL("CREATE TABLE IF NOT EXISTS 'assignment_table' ('id' INTEGER" +
+                    " PRIMARY KEY, 'title' TEXT NOT NULL, 'course_id' INTEGER, 'due_time' TIMESTAMP, " +
                     "'description' TEXT, 'mark_as_upcoming' INTEGER NOT NULL," +
-                    "FOREIGN KEY('course_title') REFERENCES 'course_table'('title')" +
+                    "FOREIGN KEY('course_id') REFERENCES 'course_table'('id')" +
                     "ON DELETE SET NULL ON UPDATE CASCADE)");
         }
     };

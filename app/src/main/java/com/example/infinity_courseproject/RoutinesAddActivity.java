@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.RoutinesAddEditViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -31,6 +32,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         PeriodRecViewAdapter.OnPeriodClickListener {
 
     private static final int ADD_PERIOD_ACTIVITY_REQUEST_CODE = 1;
+    private static Routine routineToBeUpdated;
 
     public static final String TITLE_REPLY = "title_reply";
     public static final String WEEKDAYS_REPLY = "weekdays_reply";
@@ -102,6 +104,9 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         Bundle data = getIntent().getExtras();
         if (data != null) {
             String routineTitle = data.getString(RoutinesActivity.ROUTINE_TITLE);
+
+            routineToBeUpdated = routineViewModel.get(routineTitle).getValue();
+
             routineViewModel.get(routineTitle).observe(this, routine -> {
                 enterTitle.setText(routine.getTitle());
                 boolean[] weekdays = routine.getWeekdays();
@@ -147,7 +152,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
      * Returns to routine section due to delivery of activity result.
      * @param view - 'done' button
      */
-    public void addRoutine(View view) {
+    public void addOrUpdateRoutine(View view) {
 
         //intent to return to routine section
         Intent replyIntent = new Intent();
@@ -176,15 +181,24 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             int startMinInt = routinesAddEditViewModel.getStartMin();
             ArrayList<Period> periods = routinesAddEditViewModel.getPeriodCopiedData();
 
-            replyIntent.putExtra(TITLE_REPLY, title);
-            replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
-            replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
-            replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
+            //prevent a break from occurring if it is the final period
+            periods.get(periods.size()-1).setBreakMinutes(0);
 
-            replyIntent.putParcelableArrayListExtra(PERIOD_ARRAYLIST_REPLY, periods);
+            //in the event that this is an update, not a new routine...
+            if (routineToBeUpdated != null) {
+                Routine routine = new Routine(title, weekdays, startHourInt, startMinInt, periods);
+                //RoutineViewModel.update(routine);
+                //routineToBeUpdated = null;
+            }
+            else {
+                replyIntent.putExtra(TITLE_REPLY, title);
+                replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
+                replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
+                replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
+                replyIntent.putParcelableArrayListExtra(PERIOD_ARRAYLIST_REPLY, periods);
 
-            setResult(RESULT_OK, replyIntent);
-
+                setResult(RESULT_OK, replyIntent);
+            }
             finish();
         }
         else {

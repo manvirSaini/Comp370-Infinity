@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.example.infinity_courseproject.routines.periods.Period;
 
@@ -16,8 +17,11 @@ import java.util.ArrayList;
  * the app will inform the user by means of a notification). Routines may be ordered by their
  * total time (sum of all of their periods), but the default is alphabetical ordering.
  */
-@Entity(tableName = "routine_table", primaryKeys = {"title"})
+@Entity(tableName = "routine_table")
 public class Routine {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @ColumnInfo(name = "title")
     @NonNull
@@ -124,5 +128,13 @@ public class Routine {
 
     public void setPeriods(@NonNull ArrayList<Period> periods) {
         this.periods = periods;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

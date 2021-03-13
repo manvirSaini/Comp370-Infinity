@@ -26,7 +26,6 @@ public class RoutineViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Routine>> getRoutinesOrderByName() {
-
         return allRoutines;
     }
 

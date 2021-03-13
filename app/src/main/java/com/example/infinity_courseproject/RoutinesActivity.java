@@ -3,7 +3,6 @@ package com.example.infinity_courseproject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,9 +30,11 @@ public class RoutinesActivity extends AppCompatActivity
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
     public static final String ROUTINE_TITLE = "routine_title";
 
-    private Spinner spinner;
+    private Spinner showSpinner; //spinner to display filtering options
     public enum FilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
     private static FilterBy filter = FilterBy.ALL;
+
+    private Spinner masterRoutineSpinner; //spinner to allow selection of master routine
 
     private RoutineViewModel routineViewModel;
 
@@ -55,9 +56,15 @@ public class RoutinesActivity extends AppCompatActivity
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
 
+        /**
+         * The master routine should update upon leaving the routines section
+         * Perhaps shared preferences?
+         */
+        masterRoutineSpinner = findViewById(R.id.master_routine_spinner);
+
+
         routineRecyclerView.setHasFixedSize(true);
         routineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         //get and observe routines
         routineLiveData = routineViewModel.getRoutinesOrderByName();
@@ -72,35 +79,43 @@ public class RoutinesActivity extends AppCompatActivity
                         RoutinesActivity.this);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
+
+                //update master routine spinner
+                ArrayList<String> masterRoutineSpinnerArray = new ArrayList<>();
+                masterRoutineSpinnerArray.add("NONE");
+                for (Routine r : routines) {
+                    masterRoutineSpinnerArray.add(r.getTitle());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
+                        android.R.layout.simple_spinner_item, masterRoutineSpinnerArray);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                masterRoutineSpinner.setAdapter(adapter);
             }
         });
 
-        //initialize weekday spinner array
-        spinner = findViewById(R.id.routine_show_spinner);
+        //initialize filter spinner array
+        showSpinner = findViewById(R.id.routine_show_spinner);
 
-        //populate weekday spinner array
-        ArrayList<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add("ALL");
-        spinnerArray.add("GENERAL");
-        spinnerArray.add("Sunday");
-        spinnerArray.add("Monday");
-        spinnerArray.add("Tuesday");
-        spinnerArray.add("Wednesday");
-        spinnerArray.add("Thursday");
-        spinnerArray.add("Friday");
-        spinnerArray.add("Saturday");
+        //populate filter spinner array
+        ArrayList<String> showSpinnerArray = new ArrayList<>();
+        showSpinnerArray.add("ALL");
+        showSpinnerArray.add("GENERAL");
+        showSpinnerArray.add("Sunday");
+        showSpinnerArray.add("Monday");
+        showSpinnerArray.add("Tuesday");
+        showSpinnerArray.add("Wednesday");
+        showSpinnerArray.add("Thursday");
+        showSpinnerArray.add("Friday");
+        showSpinnerArray.add("Saturday");
 
         //create and set spinner adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
-                        android.R.layout.simple_spinner_item, spinnerArray);
+                        android.R.layout.simple_spinner_item, showSpinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        //activity starts with "ALL" option selected
-        spinner.setSelection(0);
+        showSpinner.setAdapter(adapter);
 
         //spinner listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        showSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                                        int position, long id) {
@@ -147,6 +162,8 @@ public class RoutinesActivity extends AppCompatActivity
         });
 
     }
+
+    //______________________________________________________________________________________________
 
     /**
      * Onclick for routine recyclerview items
