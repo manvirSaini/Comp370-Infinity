@@ -3,6 +3,7 @@ package com.example.infinity_courseproject.routines;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
@@ -16,7 +17,7 @@ public class RoutineRepo {
         myStudyRoutineDB db = myStudyRoutineDB.getDatabase(application);
         routineDao = db.routineDao();
 
-        allRoutines = routineDao.getAllRoutines();
+        allRoutines = routineDao.getRoutinesOrderByName();
     }
 
     public void insert(Routine routine) {
@@ -49,7 +50,7 @@ public class RoutineRepo {
         this.routineDao = routineDao;
     }
 
-    public LiveData<List<Routine>> getAllRoutines() {
+    public LiveData<List<Routine>> getRoutinesOrderByName() {
         return allRoutines;
     }
 

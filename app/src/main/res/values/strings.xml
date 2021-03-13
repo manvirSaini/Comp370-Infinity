@@ -30,4 +30,14 @@
     <string name="period_study_text">Study Time:</string>
     <string name="period_break_text">Break Time:</string>
     <string name="max_num_of_periods_reached">You have the maximum number of periods.</string>
+    <string name="sunday_short_form">Sun</string>
+    <string name="monday_short_form">Mon</string>
+    <string name="tuesday_short_form">Tues</string>
+    <string name="wed_short_form">Wed</string>
+    <string name="thurs_short_form">Thurs</string>
+    <string name="fri_short_form">Fri</string>
+    <string name="sat_short_form">Sat</string>
+    <string name="delete_button_text">Delete</string>
+    <string name="routine_show_text">Show:</string>
+    <string name="master_routine_text">Master Routine:</string>
 </resources>

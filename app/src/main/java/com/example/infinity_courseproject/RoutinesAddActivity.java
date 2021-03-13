@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
+import com.example.infinity_courseproject.routines.RoutinesAddEditViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
 import com.example.infinity_courseproject.routines.periods.PeriodRecViewAdapter;
 
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +29,8 @@ import java.util.Set;
 
 public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
         PeriodRecViewAdapter.OnPeriodClickListener {
+
+    private static final int ADD_PERIOD_ACTIVITY_REQUEST_CODE = 1;
 
     public static final String TITLE_REPLY = "title_reply";
     public static final String WEEKDAYS_REPLY = "weekdays_reply";

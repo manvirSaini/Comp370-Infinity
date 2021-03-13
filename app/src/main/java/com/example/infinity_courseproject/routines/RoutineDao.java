@@ -1,6 +1,7 @@
 package com.example.infinity_courseproject.routines;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -30,8 +31,6 @@ public interface RoutineDao {
 
     //order by title will be default
     @Query("SELECT * FROM routine_table ORDER BY title ASC")
-    LiveData<List<Routine>> getAllRoutines();
-
-
-
+    LiveData<List<Routine>> getRoutinesOrderByName();
+    
 }

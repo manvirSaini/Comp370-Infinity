@@ -51,7 +51,7 @@ public class DBTestActivity extends AppCompatActivity {
             }
         });
 
-        routineViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
+        routineViewModel.getRoutinesOrderByName().observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {
                 if (!routines.isEmpty()) {

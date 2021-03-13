@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject;
+package com.example.infinity_courseproject.routines;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

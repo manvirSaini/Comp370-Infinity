@@ -3,6 +3,7 @@ package com.example.infinity_courseproject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,9 +32,13 @@ public class RoutinesActivity extends AppCompatActivity
     public static final String ROUTINE_TITLE = "routine_title";
 
     private Spinner spinner;
+    public enum FilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
+    private static FilterBy filter = FilterBy.ALL;
 
     private RoutineViewModel routineViewModel;
 
+    private LiveData<List<Routine>> routineLiveData;
+    private List<Routine> routineCopiedData;
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
 
@@ -56,12 +60,13 @@ public class RoutinesActivity extends AppCompatActivity
 
 
         //get and observe routines
-        LiveData<List<Routine>> routines = routineViewModel.getAllRoutines();
+        routineLiveData = routineViewModel.getRoutinesOrderByName();
+        routineCopiedData = routineLiveData.getValue();
 
-        routines.observe(this, new Observer<List<Routine>>() {
+        routineLiveData.observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {
-
+                routineCopiedData = routines;
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
                         RoutinesActivity.this, routineViewModel,
                         RoutinesActivity.this);
@@ -99,11 +104,40 @@ public class RoutinesActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                                        int position, long id) {
-
                 switch(position) {
                     case 0:
-
+                        filter = FilterBy.ALL;
+                        break;
+                    case 1:
+                        filter = FilterBy.GENERAL;
+                        break;
+                    case 2:
+                        filter = FilterBy.SUN;
+                        break;
+                    case 3:
+                        filter = FilterBy.MON;
+                        break;
+                    case 4:
+                        filter = FilterBy.TUES;
+                        break;
+                    case 5:
+                        filter = FilterBy.WED;
+                        break;
+                    case 6:
+                        filter = FilterBy.THURS;
+                        break;
+                    case 7:
+                        filter = FilterBy.FRI;
+                        break;
+                    case 8:
+                        filter = FilterBy.SAT;
                 }
+
+                //trigger livedata onchanged function
+                if (routineCopiedData != null && routineCopiedData.size() != 0) {
+                    RoutineViewModel.update(routineCopiedData.get(0));
+                }
+
             }
 
             @Override
@@ -111,28 +145,6 @@ public class RoutinesActivity extends AppCompatActivity
             }
 
         });
-
-        /**
-         * Add this commented code to the assignments activity onCreate method
-         */
-        //spinner = findViewById(R.id.routine_show_spinner);
-        //ArrayList<String> spinnerArray = new ArrayList<>();
-//        LiveData<List<Course>> courses = courseViewModel.getAllCourses();
-//        courses.observe(this, new Observer<List<Course>>() {
-//            @Override
-//            public void onChanged(List<Course> courses) {
-//                for (Course c : courses) {
-//                    spinnerArray.add(c.getTitle());
-//                }
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
-//                        android.R.layout.simple_spinner_item, spinnerArray);
-//
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spinner.setAdapter(adapter);
-//            }
-//        });
-
-        //spinner onItemListener
 
     }
 
@@ -142,11 +154,18 @@ public class RoutinesActivity extends AppCompatActivity
      */
     @Override
     public void onRoutineClick(int position) {
-        Routine routine = Objects.requireNonNull(routineViewModel.getAllRoutines().getValue()).get(position);
-
+        Routine routine =
+                Objects.requireNonNull(routineViewModel.getRoutinesOrderByName().getValue()).get(position);
         Intent intent = new Intent(this, RoutinesAddActivity.class);
         intent.putExtra(ROUTINE_TITLE, routine.getTitle());
         startActivity(intent);
+    }
+
+    @Override
+    public void onRoutineLongClick(int position) {
+        Routine routine =
+                Objects.requireNonNull(routineViewModel.getRoutinesOrderByName().getValue()).get(position);
+        RoutineViewModel.delete(routine);
     }
 
     /**
@@ -155,7 +174,6 @@ public class RoutinesActivity extends AppCompatActivity
     public void transitionToAddRoutineSubsection(View view) {
         Intent intent = new Intent(this, RoutinesAddActivity.class);
         startActivityForResult(intent, ADD_ROUTINE_ACTIVITY_REQUEST_CODE);
-
     }
 
     @Override
@@ -168,13 +186,11 @@ public class RoutinesActivity extends AppCompatActivity
                 startHour = null;
                 startMin = null;
             }
-
-
-
-            ArrayList<Period> periods = data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
+            ArrayList<Period> periods =
+                    data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
 
             Routine routine = new Routine(
-                    data.getStringExtra(RoutinesAddActivity.TITLE_REPLY),
+                    data.getStringExtra(RoutinesAddActivity.TITLE_REPLY).trim(),
                     data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
                     startHour, startMin, periods);
 
@@ -183,19 +199,11 @@ public class RoutinesActivity extends AppCompatActivity
 
     }
 
-    public void changeOrderMethod(View view) {
-        if (RoutineViewModel.isOrderByTotalTime()) {
-            RoutineViewModel.setOrderByTotalTime(false);
-        }
-        else
-            RoutineViewModel.setOrderByTotalTime(true);
-
+    public static FilterBy getFilter() {
+        return filter;
     }
 
-
-
-
-
-
-
+    public static void setFilter(FilterBy filter) {
+        RoutinesActivity.filter = filter;
+    }
 }
