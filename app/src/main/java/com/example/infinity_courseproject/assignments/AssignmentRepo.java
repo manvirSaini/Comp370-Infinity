@@ -21,16 +21,16 @@ public class AssignmentRepo {
     }
 
     public void insert(Assignment assignment) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> assignmentDao.insert(assignment));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> assignmentDao.insert(assignment));
     }
 
     public void delete(Assignment assignment) {
 
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> assignmentDao.delete(assignment));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> assignmentDao.delete(assignment));
     }
 
     public void deleteAll() {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> assignmentDao.deleteAll());
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> assignmentDao.deleteAll());
     }
 
     public AssignmentDao getAssignmentDao() {

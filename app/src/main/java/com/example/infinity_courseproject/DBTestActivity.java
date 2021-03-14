@@ -13,14 +13,11 @@ import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
-import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodViewModel;
 
 public class DBTestActivity extends AppCompatActivity {
     private static final int ADD_COURSE_ACTIVITY_REQUEST_CODE = 1;
     private CourseViewModel courseViewModel;
     private RoutineViewModel routineViewModel;
-    private PeriodViewModel periodViewModel;
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
@@ -39,12 +36,9 @@ public class DBTestActivity extends AppCompatActivity {
                 this.getApplication()).create(RoutineViewModel.class);
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
-        periodViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                this.getApplication()).create(PeriodViewModel.class);
         //delete all previous entries
         RoutineViewModel.deleteAll();
         CourseViewModel.deleteAll();
-        PeriodViewModel.deleteAll();
 
         //creating observers
         courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
@@ -57,7 +51,7 @@ public class DBTestActivity extends AppCompatActivity {
             }
         });
 
-        routineViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
+        routineViewModel.getRoutinesOrderByName().observe(this, new Observer<List<Routine>>() {
             @Override
             public void onChanged(List<Routine> routines) {
                 if (!routines.isEmpty()) {
@@ -66,28 +60,12 @@ public class DBTestActivity extends AppCompatActivity {
             }
         });
 
-        periodViewModel.getAllPeriods().observe(this, new Observer<List<Period>>() {
-            @Override
-            public void onChanged(List<Period> periods) {
-                if (!periods.isEmpty()) {
-                    textView3.setText(String.valueOf(periods.get(0).getPosition()));
-                }
-            }
-        });
-
-        //creating entries
 //        Routine routine = new Routine("routine", new boolean[7]);
 //        Course course = new Course("course");
 //
 //        //inserting entries
 //        RoutineViewModel.insert(routine);
 //        CourseViewModel.insert(course);
-//
-//        for (int i = 0; i < 4; i++) {
-//            PeriodViewModel.insert(
-//                    new Period(i, course.getTitle(), routine.getTitle()));
-//        }
-
 
     }
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/routines_add_subsection"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="40dp"
-    android:paddingTop="80dp"
-    android:paddingRight="40dp">
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,29 +17,30 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/titleText"
+            android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title:"
+            android:paddingRight="10dp"
+            android:text="@string/add_routine_title"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="101dp"
-            android:paddingRight="10dp"/>
+            tools:layout_editor_absoluteY="101dp" />
 
         <EditText
+            android:id="@+id/add_routine_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="eg. MondayRoutine"
+            android:hint="@string/add_routine_title_hint"
             android:inputType="text" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/weekdaysText"
+        android:id="@+id/weekdays_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:text="Weekdays:"
+        android:text="@string/add_routine_weekdays"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="181dp" />
@@ -55,45 +56,127 @@
             android:id="@+id/sun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S" />
+            android:text="@string/s_for_sunday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/mon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="M" />
+            android:text="@string/m_for_monday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/tues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T" />
+            android:text="@string/t_for_tuesday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/wednes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="W" />
+            android:text="@string/w_for_wednesday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/thurs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T" />
+            android:text="@string/t_for_thursday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/fri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="F" />
+            android:text="@string/f_for_friday" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/sat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S" />
+            android:text="@string/s_for_saturday" />
 
     </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/start_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingRight="10dp"
+            android:text="@string/add_routine_start_time"
+            android:textSize="@dimen/header2"
+            tools:layout_editor_absoluteX="208dp"
+            tools:layout_editor_absoluteY="321dp" />
+
+        <TextView
+            android:id="@+id/start_hour_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/twenty_four_hours_hint"
+            android:textSize="@dimen/header2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/increment_button_hour"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:onClick="incrementStartHour"
+                android:text="@string/plus_sign" />
+
+            <Button
+                android:id="@+id/decrement_button_hour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="decrementStartHour"
+                android:text="@string/minus_sign" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/start_minute_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/zero_minutes_hint"
+            android:textSize="@dimen/header2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/increment_button_minute"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:onClick="incrementStartMinute"
+                android:text="@string/plus_sign" />
+
+            <Button
+                android:id="@+id/decrement_button_minute"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="decrementStartMinute"
+                android:text="@string/minus_sign" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,36 +185,83 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/startTimeText"
+            android:id="@+id/routine_recycler_item_edit_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Time:"
+            android:layout_marginTop="12dp"
+            android:paddingRight="10dp"
+            android:text="@string/add_routine_total_time"
             android:textSize="24sp"
-            tools:layout_editor_absoluteX="208dp"
-            tools:layout_editor_absoluteY="321dp"
-            android:paddingRight="10dp"/>
+            tools:layout_editor_absoluteX="69dp"
+            tools:layout_editor_absoluteY="137dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/add_routine_total_time_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/header2" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/totalTimeText"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/back_and_done_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:text="Total Time:"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="137dp" />
+        android:paddingBottom="10dp">
 
+        <Button
+            android:id="@+id/routine_add_edit_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="transitionToRoutineSection"
+            android:text="@string/back_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/routine_add_edit_done_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <!--include recycler here-->
+        <Button
+            android:id="@+id/routine_add_edit_done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addOrUpdateRoutine"
+            android:text="@string/done_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/routine_add_edit_back_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/periods_title_and_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_period_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:contentDescription="@string/add_period_fab_content_description"
+            android:onClick="addPeriod"/>
 
+        <TextView
+            android:id="@+id/periods_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/add_routine_periods"
+            android:textSize="@dimen/header2" />
 
+    </LinearLayout>
+
+    <include
+        android:id="@+id/add_routine_period_recyclerview"
+        layout="@layout/basic_recyclerview" />
 
 </LinearLayout>

@@ -1,65 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/routines_main_section"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/orderByText"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Order By:"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/orderByToggle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="20dp">
 
-    <ToggleButton
-        android:id="@+id/orderByToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#B1B4C6"
-        android:textOff="@string/routines_order_by_name"
-        android:textOn="@string/routines_order_by_total_time"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/orderByText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/orderByText"
-        app:layout_constraintTop_toTopOf="@+id/orderByText" />
+        <TextView
+            android:id="@+id/master_routine_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/master_routine_text"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/master_routine_spinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/showText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Show:"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/showSpinner"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderByText" />
+        <Spinner
+            android:id="@+id/master_routine_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="@+id/master_routine_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/master_routine_text"
+            app:layout_constraintTop_toTopOf="@+id/master_routine_text" />
 
-    <Spinner
-        android:id="@+id/showSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/showText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/showText"
-        app:layout_constraintTop_toTopOf="@+id/showText" />
+        <TextView
+            android:id="@+id/routine_show_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/routine_show_text"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/routine_show_spinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/master_routine_text" />
 
+        <Spinner
+            android:id="@+id/routine_show_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="@+id/routine_show_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/routine_show_text"
+            app:layout_constraintTop_toTopOf="@+id/routine_show_text" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<!--        <include-->
+<!--            android:id="@+id/routine_recyclerview"-->
+<!--            layout="@layout/basic_recyclerview"-->
+<!--            />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/routine_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_routine_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="transitionToAddRoutineSubsection"
+            android:src="@drawable/ic_add"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/add_routine_fab_content_description" />
+
+    </RelativeLayout>
+
+</LinearLayout>
