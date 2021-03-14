@@ -58,11 +58,13 @@ public class RoutinesAddEditViewModel extends ViewModel {
     }
 
     public String getTotalTimeInHoursAndMinutes() {
-        String totalTime = null;
+        String totalTime = "null";
         int hours = totalTimeInMinutes/60;
         int minutes = totalTimeInMinutes%60;
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
         return totalTime;
@@ -87,17 +89,23 @@ public class RoutinesAddEditViewModel extends ViewModel {
 
     public void addPeriod() {
         Period period = new Period(periodCopiedData.size() + 1,
-                60, 15, null);
+                60, 15, 0);
         periodCopiedData.add(period);
-        periodLiveData.setValue(periodCopiedData);
+        periodLiveData.postValue(periodCopiedData);
+    }
+
+    public void updatePeriod(Period period) {
+        periodCopiedData.set(period.getPosition()-1, period);
+        periodLiveData.postValue(periodCopiedData);
     }
 
     public void removePeriod(int recyclerviewPosition) {
         periodCopiedData.remove(recyclerviewPosition);
         for (int i = recyclerviewPosition; i < periodCopiedData.size(); i++) {
-            periodCopiedData.get(i).setPosition(i-1);
+            Period period = periodCopiedData.get(i);
+            period.setPosition(period.getPosition()-1);
         }
-        periodLiveData.setValue(periodCopiedData);
+        periodLiveData.postValue(periodCopiedData);
     }
 
     public MutableLiveData<ArrayList<Period>> getPeriodLiveData() {
@@ -106,7 +114,7 @@ public class RoutinesAddEditViewModel extends ViewModel {
 
     public void setPeriodLiveData(ArrayList<Period> periodList) {
         periodCopiedData.addAll(periodList);
-        periodLiveData.setValue(periodCopiedData);
+        periodLiveData.postValue(periodCopiedData);
     }
 
     public int getTotalTimeInMinutes() {

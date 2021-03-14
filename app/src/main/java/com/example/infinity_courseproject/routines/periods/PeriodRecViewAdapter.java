@@ -53,7 +53,8 @@ public class PeriodRecViewAdapter extends RecyclerView.Adapter<PeriodRecViewAdap
     public void onBindViewHolder(@NonNull PeriodRecViewAdapter.ViewHolder holder, int position) {
         Period period = Objects.requireNonNull(periodList).get(position);
         holder.periodLabel.setText("Period " + period.getPosition());
-        holder.courseTitle.setText(period.getCourseTitle());
+
+        //holder.courseTitle.setText("");
         holder.studyTime.setText(period.getStudyTimeInHoursAndMinutes());
         holder.breakTime.setText(period.getBreakTimeInHoursAndMinutes());
     }

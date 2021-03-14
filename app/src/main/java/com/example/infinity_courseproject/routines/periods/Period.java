@@ -11,20 +11,20 @@ public class Period implements Parcelable {
 
     private int breakMinutes; //time of break subperiod in minutes
 
-    private String courseTitle;
+    private int courseId; //will be 0 if there is no associated course
 
-    public Period(int position, int studyMinutes, int breakMinutes, String courseTitle) {
+    public Period(int position, int studyMinutes, int breakMinutes, int courseId) {
         this.position = position;
         this.studyMinutes = studyMinutes;
         this.breakMinutes = breakMinutes;
-        this.courseTitle = courseTitle;
+        this.courseId = courseId;
     }
 
     protected Period(Parcel in) {
         position = in.readInt();
         studyMinutes = in.readInt();
         breakMinutes = in.readInt();
-        courseTitle = in.readString();
+        courseId = in.readInt();
     }
 
     public static final Creator<Period> CREATOR = new Creator<Period>() {
@@ -49,7 +49,7 @@ public class Period implements Parcelable {
         dest.writeInt(position);
         dest.writeInt(studyMinutes);
         dest.writeInt(breakMinutes);
-        dest.writeString(courseTitle);
+        dest.writeInt(courseId);
     }
 
     public String getStudyTimeInHoursAndMinutes() {
@@ -59,6 +59,8 @@ public class Period implements Parcelable {
 
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
 
@@ -73,6 +75,8 @@ public class Period implements Parcelable {
 
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
 
@@ -104,11 +108,11 @@ public class Period implements Parcelable {
         this.breakMinutes = breakMinutes;
     }
 
-    public String getCourseTitle() {
-        return courseTitle;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }
