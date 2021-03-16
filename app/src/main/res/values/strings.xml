@@ -40,4 +40,22 @@
     <string name="delete_button_text">Delete</string>
     <string name="routine_show_text">Show:</string>
     <string name="master_routine_text">Master Routine:</string>
+    <string name="assignment_due_date_text">Due Date:</string>
+    <string name="assignment_title_hint">eg. Assignment 1</string>
+    <string name="add_assignment_description_text">Description:</string>
+    <string name="add_assignment_fab_content_description">Button for adding assignment</string>
+    <string name="add_assignment_due_date_text">Due Date:</string>
+    <string name="add_assignment_due_time_text">Due Time:</string>
+    <string name="add_assignment_due_date_confirmation_statement">Assign a due date to this assignment.</string>
+    <string name="add_assignment_upcoming_date_confirmation_statement">Notify me prior to this assignment\'s due date.</string>
+    <string name="add_assignment_notify_me_text">Notify me</string>
+    <string name="add_assignment_days_prior_text">days prior</string>
+    <string name="year_hint">yyyy</string>
+    <string name="slash_symbol_between_day_month_year">/</string>
+    <string name="month_hint">mm</string>
+    <string name="day_hint">dd</string>
+    <string name="toast_invalid_date">Enter a valid date.</string>
+    <string name="toast_past_date">Enter a future date.</string>
+    <string name="add_assignment_mark_assignment_completed_checkbox_text">Mark this assignment as completed.</string>
+    <string name="enter_a_complete_date">Enter a complete date.</string>
 </resources>

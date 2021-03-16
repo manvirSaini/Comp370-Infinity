@@ -1,7 +1,6 @@
 package com.example.infinity_courseproject.routines;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import java.util.Objects;
 
 public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAdapter.ViewHolder> {
 
-    //public static int numberOfFilteredItems = 0;
     private final OnRoutineClickListener onRoutineClickListener;
     private List<Routine> routineList;
     private RoutineViewModel routineViewModel;
@@ -45,7 +43,7 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     @Override
     public void onBindViewHolder(@NonNull RoutineRecViewAdapter.ViewHolder holder, int position) {
         Routine routine = Objects.requireNonNull(routineList).get(position);
-        if (RoutinesActivity.getFilter().equals(RoutinesActivity.FilterBy.ALL))
+
         if (filterRoutine(routine)) {
             holder.recyclerItem.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
@@ -132,7 +130,7 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
     private boolean filterRoutine(Routine r) {
         boolean applyFilter = false;
         boolean[] weekdays = r.getWeekdays();
-        RoutinesActivity.FilterBy filter = RoutinesActivity.getFilter();
+        RoutinesActivity.RoutineFilterBy filter = RoutinesActivity.getFilter();
         switch (filter) {
             case ALL:
                 break;

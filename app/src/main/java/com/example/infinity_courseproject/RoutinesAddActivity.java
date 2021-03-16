@@ -84,7 +84,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         startHour = findViewById(R.id.start_hour_textview);
         startMinute = findViewById(R.id.start_minute_textview);
-        totalTime = findViewById(R.id.add_routine_total_time_textview);
+        totalTime = findViewById(R.id.add_routine_total_time);
 
         periodRecyclerView = findViewById(R.id.basic_recyclerview);
 
