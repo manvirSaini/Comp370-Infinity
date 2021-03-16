@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -72,6 +73,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                         NavigationDrawerActivity.this.startActivity(intent);
                         break;
                 }
+
+                drawer.closeDrawer(GravityCompat.START);
 
                 return true;
             }

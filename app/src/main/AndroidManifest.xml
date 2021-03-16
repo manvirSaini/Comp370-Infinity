@@ -43,6 +43,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".RoutinesAddActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+
         <activity android:name=".AssignmentsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
