@@ -58,4 +58,15 @@
     <string name="toast_past_date">Enter a future date.</string>
     <string name="add_assignment_mark_assignment_completed_checkbox_text">Mark this assignment as completed.</string>
     <string name="enter_a_complete_date">Enter a complete date.</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="nav_header_title">My Study</string>
+    <string name="nav_subtitle">Routine</string>
+    <string name="menu_assignments">Assignments</string>
 </resources>
