@@ -160,10 +160,11 @@ public class AssignmentsAddActivity extends AppCompatActivity {
             int selectedCoursePosition = 0;
             for (int i = 0; i < courses.size(); i++) {
                 courseSpinnerArray.add(courses.get(i).getTitle());
-                if (assignmentToBeUpdated.getCourseId() != null &&
+                if (assignmentToBeUpdated != null && assignmentToBeUpdated.getCourseId() != null &&
                         assignmentToBeUpdated.getCourseId() == courses.get(i).getId()) {
                     //select i + 1 to account for the NONE option at position 0
                     selectedCoursePosition = i+1;
+                    break;
                 }
             }
             ArrayAdapter<String> courseAdapter = new ArrayAdapter<>(
