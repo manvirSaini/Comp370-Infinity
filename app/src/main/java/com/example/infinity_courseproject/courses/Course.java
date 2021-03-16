@@ -6,8 +6,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.litepal.crud.DataSupport;
+
 @Entity(tableName = "course_table")
-public class Course {
+public class Course   {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -25,10 +27,14 @@ public class Course {
     private String description;
 
 
+
     public Course(@NonNull String title, @Nullable String professor, @Nullable String description) {
         this.title = title;
         this.professor = professor;
         this.description = description;
+    }
+
+    public Course() {
     }
 
     @NonNull
