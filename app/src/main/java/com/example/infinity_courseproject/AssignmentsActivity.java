@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends AppCompatActivity
+public class AssignmentsActivity extends NavigationDrawerActivity
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";
@@ -57,6 +59,12 @@ public class AssignmentsActivity extends AppCompatActivity
 
 //        Course c = new Course("I AM ALIVE", "I", "said");
 //        CourseViewModel.insert(c);
+
+        //Attempt at navigation drawer
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.routines_main, null, false);
+        drawer.addView(contentView, 0);
 
         //initialize recyclerview
         assignmentRecyclerView = findViewById(R.id.assignment_recyclerview);

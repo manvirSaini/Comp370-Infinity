@@ -63,7 +63,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_assignment:
-                        Toast.makeText(getApplicationContext(), "ASSIGNMENT", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(NavigationDrawerActivity.this, AssignmentsActivity.class);
+                        NavigationDrawerActivity.this.startActivity(intent);
                         break;
 
                     case R.id.nav_routines:

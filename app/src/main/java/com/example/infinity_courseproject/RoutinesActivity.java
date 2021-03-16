@@ -52,6 +52,7 @@ public class RoutinesActivity extends NavigationDrawerActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_main);
 
+        //Attempt at navigation drawer
         LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.routines_main, null, false);
