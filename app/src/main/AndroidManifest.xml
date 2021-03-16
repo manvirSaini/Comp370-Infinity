@@ -50,7 +50,21 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PeriodsEditActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+
         <activity android:name=".AssignmentsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AssignmentsAddActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
