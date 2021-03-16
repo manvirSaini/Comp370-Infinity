@@ -1,13 +1,18 @@
 package com.example.infinity_courseproject;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,9 +40,40 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 R.id.nav_assignment, R.id.nav_home_screen)
                 .setDrawerLayout(drawer)
                 .build();
+
+        navigationView.bringToFront();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Intent intent;
+
+                switch(item.getItemId()) {
+
+                    case R.id.nav_home_screen:
+                        Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.nav_assignment:
+                        Toast.makeText(getApplicationContext(), "ASSIGNMENT", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.nav_routines:
+                        intent = new Intent(NavigationDrawerActivity.this, RoutinesActivity.class);
+                        NavigationDrawerActivity.this.startActivity(intent);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
     }
 
