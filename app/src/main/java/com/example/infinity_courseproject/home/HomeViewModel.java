@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject.ui.home;
+package com.example.infinity_courseproject.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
