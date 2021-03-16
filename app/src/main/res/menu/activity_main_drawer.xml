@@ -13,5 +13,9 @@
             android:id="@+id/nav_assignment"
             android:icon="@drawable/twotone_assignment_24"
             android:title="@string/menu_assignments" />
+        <item
+            android:id="@+id/nav_routines"
+            android:icon="@android:drawable/ic_lock_idle_alarm"
+            android:title="@string/menu_routines" />
     </group>
 </menu>

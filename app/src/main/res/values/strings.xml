@@ -69,4 +69,5 @@
     <string name="nav_header_title">My Study</string>
     <string name="nav_subtitle">Routine</string>
     <string name="menu_assignments">Assignments</string>
+    <string name="menu_routines">Routines</string>
 </resources>

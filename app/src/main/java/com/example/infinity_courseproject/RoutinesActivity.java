@@ -8,9 +8,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -24,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutinesActivity extends AppCompatActivity
+public class RoutinesActivity extends NavigationDrawerActivity
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
@@ -47,6 +51,11 @@ public class RoutinesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_main);
+
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.routines_main, null, false);
+        drawer.addView(contentView, 0);
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);
@@ -159,6 +168,7 @@ public class RoutinesActivity extends AppCompatActivity
             }
 
         });
+
 
     }
 

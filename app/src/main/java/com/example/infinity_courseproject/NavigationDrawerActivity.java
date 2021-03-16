@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 public class NavigationDrawerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    protected DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +33,12 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_assignment, R.id.nav_home_screen)
+                R.id.nav_assignment, R.id.nav_home_screen, R.id.nav_routines)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -57,7 +58,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
 
-                    case R.id.nav_home_screen:
+                    case R.id.nav_home:
                         Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_SHORT).show();
                         break;
 
