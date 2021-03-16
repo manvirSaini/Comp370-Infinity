@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="BookStore"></dbname>
+    <version value="3"></version>
+    <list>
+        <mapping class="com.example.infinity_courseproject.courses.Course2"></mapping>
+        <!--Add another table-->
+<!--        <mapping class="com.example.meiyelauncher.bean.db.FingerUserInfo"></mapping>-->
+    </list>
+</litepal>
+    <!--
+    <dbname>DB name
+    <version>DB version
+    <list>DB mapping model (database table)
+    <mapping>The address of the database mapping model (database table structure): full class name
+    -->
