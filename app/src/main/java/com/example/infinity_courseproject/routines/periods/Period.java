@@ -1,45 +1,87 @@
 package com.example.infinity_courseproject.routines.periods;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.example.infinity_courseproject.courses.Course;
-import com.example.infinity_courseproject.routines.Routine;
+public class Period implements Parcelable {
 
-@Entity(tableName = "period_table", primaryKeys = {"position", "routine_title"}, foreignKeys =
-        {@ForeignKey(entity = Course.class, parentColumns = "title", childColumns = "course_title",
-                onDelete = ForeignKey.SET_NULL, onUpdate = ForeignKey.CASCADE),
-                @ForeignKey(entity = Routine.class, parentColumns = "title", childColumns = "routine_title",
-                        onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
-public class Period {
-
-    @ColumnInfo(name = "position")
     private int position;
 
-    @ColumnInfo(name = "study_minutes")
     private int studyMinutes; //time of study subperiod in minutes
 
-    @ColumnInfo(name = "break_minutes")
     private int breakMinutes; //time of break subperiod in minutes
 
-    @ColumnInfo(name = "course_title", index = true)
-    @Nullable
-    private String courseTitle;
+    private int courseId; //will be 0 if there is no associated course
 
-    @ColumnInfo(name = "routine_title", index = true)
-    @NonNull
-    private String routineTitle;
-
-    public Period(int position, int studyMinutes, int breakMinutes,
-                  @Nullable String courseTitle, @NonNull String routineTitle) {
+    public Period(int position, int studyMinutes, int breakMinutes, int courseId) {
         this.position = position;
         this.studyMinutes = studyMinutes;
         this.breakMinutes = breakMinutes;
-        this.courseTitle = courseTitle;
-        this.routineTitle = routineTitle;
+        this.courseId = courseId;
+    }
+
+    protected Period(Parcel in) {
+        position = in.readInt();
+        studyMinutes = in.readInt();
+        breakMinutes = in.readInt();
+        courseId = in.readInt();
+    }
+
+    public static final Creator<Period> CREATOR = new Creator<Period>() {
+        @Override
+        public Period createFromParcel(Parcel in) {
+            return new Period(in);
+        }
+
+        @Override
+        public Period[] newArray(int size) {
+            return new Period[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(position);
+        dest.writeInt(studyMinutes);
+        dest.writeInt(breakMinutes);
+        dest.writeInt(courseId);
+    }
+
+    public String getStudyTimeInHoursAndMinutes() {
+        String totalTime = null;
+        int hours = studyMinutes/60;
+        int minutes = studyMinutes%60;
+
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
+        else
+            totalTime = hours + "h " + minutes + "min";
+
+        return totalTime;
+
+    }
+
+    public String getBreakTimeInHoursAndMinutes() {
+        String totalTime = null;
+        int hours = breakMinutes/60;
+        int minutes = breakMinutes%60;
+
+        if (hours == 0)
+            totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
+        else
+            totalTime = hours + "h " + minutes + "min";
+
+        return totalTime;
+
     }
 
     public int getPosition() {
@@ -66,21 +108,11 @@ public class Period {
         this.breakMinutes = breakMinutes;
     }
 
-    @Nullable
-    public String getCourseTitle() {
-        return courseTitle;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourseTitle(@Nullable String courseTitle) {
-        this.courseTitle = courseTitle;
-    }
-
-    @NonNull
-    public String getRoutineTitle() {
-        return routineTitle;
-    }
-
-    public void setRoutineTitle(@NonNull String routineTitle) {
-        this.routineTitle = routineTitle;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }

@@ -6,22 +6,25 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import com.example.infinity_courseproject.courses.Course;
 
-@Entity(tableName = "assignment_table", primaryKeys = {"title"},
-foreignKeys = {@ForeignKey(entity = Course.class, parentColumns = "title",
-        childColumns = "course_title", onDelete = ForeignKey.SET_NULL,
+@Entity(tableName = "assignment_table", foreignKeys = {@ForeignKey(entity = Course.class,
+        parentColumns = "id", childColumns = "course_id", onDelete = ForeignKey.SET_NULL,
         onUpdate = ForeignKey.CASCADE)})
 public class Assignment {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @ColumnInfo(name = "title")
     @NonNull
     private String title;
 
-    @ColumnInfo(name = "course_title", index = true)
+    @ColumnInfo(name = "course_id", index = true)
     @Nullable
-    private String courseTitle;
+    private Integer courseId;
 
     @ColumnInfo(name = "due_time")
     @Nullable
@@ -34,10 +37,10 @@ public class Assignment {
     @ColumnInfo(name = "mark_as_upcoming") //this int value corresponds to days
     private int markAsUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
 
-    public Assignment(@NonNull String title, @Nullable String courseTitle, @Nullable Long dueTime,
+    public Assignment(@NonNull String title, @Nullable Integer courseId, @Nullable Long dueTime,
                       @Nullable String description, int markAsUpcoming) {
         this.title = title;
-        this.courseTitle = courseTitle;
+        this.courseId = courseId;
         this.dueTime = dueTime;
         this.description = description;
         this.markAsUpcoming = markAsUpcoming;
@@ -53,12 +56,12 @@ public class Assignment {
     }
 
     @Nullable
-    public String getCourseTitle() {
-        return courseTitle;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourseTitle(@Nullable String courseTitle) {
-        this.courseTitle = courseTitle;
+    public void setCourseId(@Nullable Integer courseId) {
+        this.courseId = courseId;
     }
 
     @Nullable
@@ -85,5 +88,13 @@ public class Assignment {
 
     public void setMarkAsUpcoming(int markAsUpcoming) {
         this.markAsUpcoming = markAsUpcoming;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

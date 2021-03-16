@@ -16,10 +16,19 @@ public class RoutineViewModel extends AndroidViewModel {
     public RoutineViewModel(@NonNull Application application) {
         super(application);
         repo = new RoutineRepo(application);
-        allRoutines = repo.getAllRoutines();
+        allRoutines = repo.getRoutinesOrderByName();
     }
 
-    public LiveData<List<Routine>> getAllRoutines() {
+    public LiveData<Routine> getByTitle(String routineTitle) {
+
+        return repo.getByTitle(routineTitle);
+    }
+
+    public LiveData<Routine> get(int id) {
+        return repo.get(id);
+    }
+
+    public LiveData<List<Routine>> getRoutinesOrderByName() {
         return allRoutines;
     }
 
@@ -29,6 +38,10 @@ public class RoutineViewModel extends AndroidViewModel {
 
     public static void delete(Routine routine) {
         repo.delete(routine);
+    }
+
+    public static void update(Routine routine) {
+        repo.update(routine);
     }
 
     public static void deleteAll() {

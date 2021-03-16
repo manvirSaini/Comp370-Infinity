@@ -5,4 +5,5 @@
     <dimen name="item_to_item_padding">10dp</dimen>
     <dimen name="header1">28sp</dimen>
     <dimen name="header2">24sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
