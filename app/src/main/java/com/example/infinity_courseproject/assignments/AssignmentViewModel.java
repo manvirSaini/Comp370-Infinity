@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,10 +17,10 @@ public class AssignmentViewModel extends AndroidViewModel {
     public AssignmentViewModel(@NonNull Application application) {
         super(application);
         repo = new AssignmentRepo(application);
-        allAssignments = repo.getAllAssignments();
+        allAssignments = repo.getAssignmentsOrderByDueTime();
     }
 
-    public LiveData<List<Assignment>> getAllAssignments() {
+    public LiveData<List<Assignment>> getAssignmentsOrderByDueTime() {
         return allAssignments;
     }
 
@@ -34,4 +35,21 @@ public class AssignmentViewModel extends AndroidViewModel {
     public static void deleteAll() {
         repo.deleteAll();
     }
+
+    public static void update(Assignment assignment) {
+        repo.update(assignment);
+    }
+
+    public LiveData<Assignment> getByTitle(String title) {
+        return repo.getByTitle(title);
+    }
+
+    public LiveData<Assignment> get(int id) {
+        return repo.get(id);
+    }
+
+    public Assignment getImmediate(int id) {
+        return repo.getImmediate(id);
+    }
+
 }
