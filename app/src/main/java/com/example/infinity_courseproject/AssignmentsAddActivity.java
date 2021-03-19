@@ -79,14 +79,19 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
         //initialize UI components
         enterTitle = findViewById(R.id.add_assignment_title_edittext);
+
         courseSpinner = findViewById(R.id.add_assignment_course_spinner);
+
         enterYear = findViewById(R.id.add_assignment_year_edittext);
         enterMonth = findViewById(R.id.add_assignment_month_edittext);
         enterDay = findViewById(R.id.add_assignment_day_edittext);
         dueHour = findViewById(R.id.add_assignment_due_hour_textview);
         dueMinute = findViewById(R.id.add_assignment_due_minute_textview);
+
         description = findViewById(R.id.add_assignment_description_edittext);
+
         daysPriorToUpcoming = findViewById(R.id.add_assignment_prior_days_value);
+
         daysPriorContainer = findViewById(R.id.add_assignment_days_prior_container);
         dueTimeAndDaysPriorContainer = findViewById(R.id.add_assignment_due_time_and_days_prior_container);
 
@@ -100,6 +105,9 @@ public class AssignmentsAddActivity extends AppCompatActivity {
                 this.getApplication()).create(AssignmentViewModel.class);
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
+
+        //preset daysPrior
+        daysPriorToUpcoming.setText("01");
 
         //get data in the case of an edit - startActivity occurs from AssignmentsActivity
         Bundle data = getIntent().getExtras();
@@ -124,14 +132,14 @@ public class AssignmentsAddActivity extends AppCompatActivity {
                     assignmentsAddEditViewModel.setDueHour(hour);
                     assignmentsAddEditViewModel.setDueMin(minute);
 
-                    if (assignment.getMarkAsUpcoming() == 0) {
+                    if (assignment.getDaysPriorToUpcoming() == 0) {
                         daysPriorCheckbox.setChecked(false);
                         daysPriorContainer.setVisibility(View.GONE);
                         daysPriorToUpcoming.setText("01");
                     }
                     else {
-                        daysPriorToUpcoming.setText(String.format("%02d", assignment.getMarkAsUpcoming()));
-                        assignmentsAddEditViewModel.setDaysPrior(assignment.getMarkAsUpcoming());
+                        daysPriorToUpcoming.setText(String.format("%02d", assignment.getDaysPriorToUpcoming()));
+                        assignmentsAddEditViewModel.setDaysPrior(assignment.getDaysPriorToUpcoming());
                     }
                 }
                 else {
@@ -145,9 +153,6 @@ public class AssignmentsAddActivity extends AppCompatActivity {
                     assignmentsAddEditViewModel.setMarkedAsComplete(true);
                     markCompleteCheckbox.setChecked(true);
                 }
-
-
-
             });
         }
 
@@ -182,8 +187,8 @@ public class AssignmentsAddActivity extends AppCompatActivity {
         //intent to return to routine section
         Intent replyIntent = new Intent();
         if (!TextUtils.isEmpty(enterTitle.getText())) {
-            //title, course, due date, description, duedate,
-            String title = enterTitle.getText().toString();
+            //title, course, due date, description, duedate, complete
+            String title = enterTitle.getText().toString().trim();
             Integer courseId = null;
             String dateStr = null;
             int daysPrior = 0;

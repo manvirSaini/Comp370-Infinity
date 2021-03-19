@@ -29,7 +29,6 @@
     <string name="period_course_text">Course:</string>
     <string name="period_study_text">Study Time:</string>
     <string name="period_break_text">Break Time:</string>
-    <string name="max_num_of_periods_reached">You have the maximum number of periods.</string>
     <string name="sunday_short_form">Sun</string>
     <string name="monday_short_form">Mon</string>
     <string name="tuesday_short_form">Tues</string>
@@ -58,4 +57,7 @@
     <string name="toast_past_date">Enter a future date.</string>
     <string name="add_assignment_mark_assignment_completed_checkbox_text">Mark this assignment as completed.</string>
     <string name="enter_a_complete_date">Enter a complete date.</string>
+    <string name="title_already_exists">Title already exists.</string>
+    <string name="minimum_of_one_event">Minimum of one event.</string>
+    <string name="max_num_of_events_reached">You have the maximum number of events.</string>
 </resources>

@@ -6,15 +6,11 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.infinity_courseproject.courses.Course;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @Entity(tableName = "assignment_table", foreignKeys = {@ForeignKey(entity = Course.class,
         parentColumns = "id", childColumns = "course_id", onDelete = ForeignKey.SET_NULL,
@@ -41,7 +37,7 @@ public class Assignment {
     private String description;
 
     @ColumnInfo(name = "mark_as_upcoming") //this int value corresponds to days
-    private int markAsUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
+    private int daysPriorToUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
 
     @ColumnInfo(name = "complete")
     private boolean complete;
@@ -49,12 +45,12 @@ public class Assignment {
     public enum Status {NEUTRAL, COMPLETE, UPCOMING, OVERDUE}
 
     public Assignment(@NonNull String title, @Nullable Integer courseId, @Nullable LocalDateTime dueTime,
-                      @Nullable String description, int markAsUpcoming, boolean complete) {
+                      @Nullable String description, int daysPriorToUpcoming, boolean complete) {
         this.title = title;
         this.courseId = courseId;
         this.dueTime = dueTime;
         this.description = description;
-        this.markAsUpcoming = markAsUpcoming;
+        this.daysPriorToUpcoming = daysPriorToUpcoming;
         this.complete = complete;
     }
 
@@ -65,8 +61,8 @@ public class Assignment {
             status = Status.COMPLETE;
         else if (dueTime != null) {
             if (dueTime.isAfter(currentDate)) {
-                if (markAsUpcoming != 0) {
-                    LocalDateTime upcomingDate = dueTime.minusDays(markAsUpcoming);
+                if (daysPriorToUpcoming != 0) {
+                    LocalDateTime upcomingDate = dueTime.minusDays(daysPriorToUpcoming);
                     if(upcomingDate.isBefore(currentDate))
                         status = Status.UPCOMING;
                 }
@@ -134,12 +130,12 @@ public class Assignment {
         this.description = description;
     }
 
-    public int getMarkAsUpcoming() {
-        return markAsUpcoming;
+    public int getDaysPriorToUpcoming() {
+        return daysPriorToUpcoming;
     }
 
-    public void setMarkAsUpcoming(int markAsUpcoming) {
-        this.markAsUpcoming = markAsUpcoming;
+    public void setDaysPriorToUpcoming(int daysPriorToUpcoming) {
+        this.daysPriorToUpcoming = daysPriorToUpcoming;
     }
 
     public boolean isComplete() {

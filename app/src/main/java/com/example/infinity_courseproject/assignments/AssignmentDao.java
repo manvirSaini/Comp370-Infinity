@@ -35,6 +35,6 @@ public interface AssignmentDao {
     @Query("SELECT * FROM assignment_table WHERE id = :id")
     Assignment getImmediate(int id);
 
-    @Query("SELECT * FROM assignment_table ORDER BY due_time DESC")
+    @Query("SELECT * FROM assignment_table ORDER BY due_time IS NULL, due_time ASC, title")
     LiveData<List<Assignment>> getAssignmentsOrderByDueTime();
 }
