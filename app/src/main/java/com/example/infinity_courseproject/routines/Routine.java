@@ -7,15 +7,16 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
 
 /**
- * Entity class defining a routine, where a routine is a sequence of study and break periods. Routines
- * can be associated with 0 or more weekdays, and can have a specified start time (if set,
- * the app will inform the user by means of a notification). Routines may be ordered by their
- * total time (sum of all of their periods), but the default is alphabetical ordering.
+ * Entity class defining a routine, where a routine is a sequence of events, which are themselves
+ * composed of study and break periods. Routines can be associated with 0 or more weekdays,
+ * and can have a specified start time (if set, the app will inform the user by means of a
+ * notification at this time).
  */
 @Entity(tableName = "routine_table")
 public class Routine {
@@ -33,15 +34,15 @@ public class Routine {
 
     @ColumnInfo(name = "start_hour")
     @Nullable
-    private Integer startHour; //24h clock; limit options to 0 - 23
+    private Integer startHour; //24h clock; limit options to 0 - 23; 24 is ignored
 
     @ColumnInfo(name = "start_minute")
     @Nullable
-    private Integer startMinute; //limit options to 15, 30, and 45; only allow to be null if startHour is null
+    private Integer startMinute; //only allow to be null if startHour is null
 
-    @ColumnInfo(name = "periods")
+    @ColumnInfo(name = "events")
     @NonNull
-    private ArrayList<Period> periods;
+    private ArrayList<Event> events;
 
     /**
      * Constructor for routine class
@@ -53,18 +54,18 @@ public class Routine {
      * @param startMinute - an integer or null; if startHour is 24, treat as null
      */
     public Routine(@NonNull String title, @NonNull boolean[] weekdays, @Nullable Integer startHour,
-                   @Nullable Integer startMinute, @NonNull ArrayList<Period> periods) {
+                   @Nullable Integer startMinute, @NonNull ArrayList<Event> events) {
         this.title = title;
         this.weekdays = weekdays;
         this.startHour = startHour;
         this.startMinute = startMinute;
-        this.periods = periods;
+        this.events = events;
     }
 
     public int getTotalTimeInMinutes() {
         int sum = 0;
-        for (Period p : periods) {
-            sum += p.getStudyMinutes() + p.getBreakMinutes();
+        for (Event e : events) {
+            sum += e.getTotalTimeInMinutes();
         }
         return sum;
     }
@@ -122,12 +123,12 @@ public class Routine {
     }
 
     @NonNull
-    public ArrayList<Period> getPeriods() {
-        return periods;
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
-    public void setPeriods(@NonNull ArrayList<Period> periods) {
-        this.periods = periods;
+    public void setEvents(@NonNull ArrayList<Event> events) {
+        this.events = events;
     }
 
     public int getId() {

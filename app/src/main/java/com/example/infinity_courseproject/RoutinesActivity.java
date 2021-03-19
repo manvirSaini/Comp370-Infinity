@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class RoutinesActivity extends AppCompatActivity
             public void onChanged(List<Routine> routines) {
                 routineCopiedData = routines;
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
-                        RoutinesActivity.this, routineViewModel,
+                        RoutinesActivity.this,
                         RoutinesActivity.this);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
@@ -202,13 +203,13 @@ public class RoutinesActivity extends AppCompatActivity
                 startHour = null;
                 startMin = null;
             }
-            ArrayList<Period> periods =
-                    data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
+            ArrayList<Event> events =
+                    data.getParcelableArrayListExtra(RoutinesAddActivity.EVENT_ARRAYLIST_REPLY);
 
             Routine routine = new Routine(
                     data.getStringExtra(RoutinesAddActivity.TITLE_REPLY).trim(),
                     data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
-                    startHour, startMin, periods);
+                    startHour, startMin, events);
 
             RoutineViewModel.insert(routine);
         }
