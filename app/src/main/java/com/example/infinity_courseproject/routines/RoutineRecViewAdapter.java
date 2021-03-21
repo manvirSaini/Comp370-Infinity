@@ -19,15 +19,12 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
 
     private final OnRoutineClickListener onRoutineClickListener;
     private List<Routine> routineList;
-    private RoutineViewModel routineViewModel;
     private Context context;
 
     public RoutineRecViewAdapter(List<Routine> routineList, Context context,
-                                 RoutineViewModel routineViewModel,
                                  OnRoutineClickListener onRoutineClickListener) {
         this.routineList = routineList;
         this.context = context;
-        this.routineViewModel = routineViewModel;
         this.onRoutineClickListener = onRoutineClickListener;
     }
 
@@ -66,9 +63,6 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
             if (weekdays[6])
                 holder.sat.setVisibility(View.VISIBLE);
         }
-
-
-
     }
 
     @Override

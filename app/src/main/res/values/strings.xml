@@ -29,7 +29,6 @@
     <string name="period_course_text">Course:</string>
     <string name="period_study_text">Study Time:</string>
     <string name="period_break_text">Break Time:</string>
-    <string name="max_num_of_periods_reached">You have the maximum number of periods.</string>
     <string name="sunday_short_form">Sun</string>
     <string name="monday_short_form">Mon</string>
     <string name="tuesday_short_form">Tues</string>
@@ -70,4 +69,7 @@
     <string name="nav_subtitle">Routine</string>
     <string name="menu_assignments">Assignments</string>
     <string name="menu_routines">Routines</string>
+    <string name="title_already_exists">Title already exists.</string>
+    <string name="minimum_of_one_event">Minimum of one event.</string>
+    <string name="max_num_of_events_reached">You have the maximum number of events.</string>
 </resources>

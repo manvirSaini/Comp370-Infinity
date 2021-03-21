@@ -3,6 +3,7 @@ package com.example.infinity_courseproject.roomDatabase;
 import androidx.room.TypeConverter;
 
 import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,13 +29,13 @@ public class Converters {
     }
 
     @TypeConverter
-    public static ArrayList<Period> fromStringToPeriodArrayList(String value) {
-        Type listType = new TypeToken<ArrayList<Period>>() {}.getType();
+    public static ArrayList<Event> fromStringToEventArrayList(String value) {
+        Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromPeriodArrayListToString(ArrayList<Period> list) {
+    public static String fromEventArrayListToString(ArrayList<Event> list) {
         Gson gson = new Gson();
         return gson.toJson(list);
     }
