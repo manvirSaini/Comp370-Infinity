@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutinesActivity extends NavigationDrawerActivity
+public class RoutinesActivity extends AppCompatActivity
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
@@ -54,10 +54,10 @@ public class RoutinesActivity extends NavigationDrawerActivity
         setContentView(R.layout.routines_main);
 
         //Attempt at navigation drawer
-        LayoutInflater inflater = (LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.routines_main, null, false);
-        drawer.addView(contentView, 0);
+//        LayoutInflater inflater = (LayoutInflater) this
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View contentView = inflater.inflate(R.layout.routines_main, null, false);
+//        drawer.addView(contentView, 0);
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);

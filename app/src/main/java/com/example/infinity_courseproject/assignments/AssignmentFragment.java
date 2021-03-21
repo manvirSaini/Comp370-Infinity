@@ -24,7 +24,7 @@ public class AssignmentFragment extends Fragment {
         assignmentViewModel =
                 new ViewModelProvider(this).get(AssignmentViewModel.class);
         View root = inflater.inflate(R.layout.fragment_assignment, container, false);
-        final TextView textView = root.findViewById(R.id.text_assignment);
+
 
         return root;
     }

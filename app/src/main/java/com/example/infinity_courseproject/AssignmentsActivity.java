@@ -2,6 +2,8 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,6 +25,7 @@ import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
@@ -52,19 +55,18 @@ public class AssignmentsActivity extends NavigationDrawerActivity
     private AssignmentRecViewAdapter assignmentRecViewAdapter;
     private RecyclerView assignmentRecyclerView;
 
+    DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignments_main);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+
 //        Course c = new Course("I AM ALIVE", "I", "said");
 //        CourseViewModel.insert(c);
-
-        //Attempt at navigation drawer
-        LayoutInflater inflater = (LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.routines_main, null, false);
-        drawer.addView(contentView, 0);
 
         //initialize recyclerview
         assignmentRecyclerView = findViewById(R.id.assignment_recyclerview);
@@ -144,6 +146,25 @@ public class AssignmentsActivity extends NavigationDrawerActivity
             }
         });
 
+    }
+
+    public void clickMenu(View view){
+        NavigationDrawerActivity.openDrawer(drawer);
+    }
+
+    public void clickIcon(View view){
+        NavigationDrawerActivity.closeDrawer(drawer);
+    }
+
+    public void clickHome(View view){
+        NavigationDrawerActivity.redirectActivity(this, Home.class);
+    }
+    public void clickAssignment(View view){
+        recreate();
+    }
+
+    public void clickRoutine(View view){
+        NavigationDrawerActivity.redirectActivity(this, RoutinesActivity.class);
     }
 
     @Override

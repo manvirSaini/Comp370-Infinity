@@ -36,39 +36,37 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RoutinesActivity">
+        <activity
+            android:name=".RoutinesActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
             </intent-filter>
         </activity>
 
-        <activity android:name=".RoutinesAddActivity">
+        <activity android:name=".RoutinesAddActivity"
+            android:parentActivityName=".RoutinesActivity">
+        </activity>
+
+<!--        <activity android:name=".PeriodsEditActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+        <activity
+            android:name=".AssignmentsActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
             </intent-filter>
         </activity>
 
-        <activity android:name=".PeriodsEditActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".AssignmentsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".AssignmentsAddActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-            </intent-filter>
+        <activity android:name=".AssignmentsAddActivity"
+            android:parentActivityName=".AssignmentsActivity">
         </activity>
 
     </application>

@@ -1,6 +1,7 @@
 package com.example.infinity_courseproject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,75 +25,89 @@ import androidx.appcompat.widget.Toolbar;
 
 public class NavigationDrawerActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    protected DrawerLayout drawer;
+    protected static DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer3);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_assignment, R.id.nav_home_screen, R.id.nav_routines)
-                .setDrawerLayout(drawer)
-                .build();
 
-        navigationView.bringToFront();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                Intent intent;
-
-                switch(item.getItemId()) {
-
-                    case R.id.nav_home:
-                        Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case R.id.nav_assignment:
-                        intent = new Intent(NavigationDrawerActivity.this, AssignmentsActivity.class);
-                        NavigationDrawerActivity.this.startActivity(intent);
-                        break;
-
-                    case R.id.nav_routines:
-                        intent = new Intent(NavigationDrawerActivity.this, RoutinesActivity.class);
-                        NavigationDrawerActivity.this.startActivity(intent);
-                        break;
-                }
-
-                drawer.closeDrawer(GravityCompat.START);
-
-                return true;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @SuppressLint("NonConstantResourceId")
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                Intent intent;
+//
+//                switch(item.getItemId()) {
+//
+//                    case R.id.nav_home:
+//                        Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_SHORT).show();
+//                        break;
+//
+//                    case R.id.nav_assignment:
+//                        intent = new Intent(NavigationDrawerActivity.this, AssignmentsActivity.class);
+//                        NavigationDrawerActivity.this.startActivity(intent);
+//                        break;
+//
+//                    case R.id.nav_routines:
+//                        intent = new Intent(NavigationDrawerActivity.this, RoutinesActivity.class);
+//                        NavigationDrawerActivity.this.startActivity(intent);
+//                        break;
+//                }
+//
+//                drawer.closeDrawer(GravityCompat.START);
+//
+//                return true;
+//            }
+//        });
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.navigation_drawer, menu);
-        return true;
+    public void clickMenu(View view){
+
+        openDrawer(drawer);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clickHome(View view){
+        recreate();
+    }
+
+    public void clickAssignment(View view){
+        redirectActivity(this, AssignmentsActivity.class);
+    }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
     }
 }
