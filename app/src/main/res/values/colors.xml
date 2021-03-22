@@ -10,4 +10,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="icon_colour">#2196F3</color>
     <color name="Clear">#00FFFFFF</color>
+    <color name="grey">#575757</color>
 </resources>
