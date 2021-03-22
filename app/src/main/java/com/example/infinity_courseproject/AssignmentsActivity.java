@@ -1,8 +1,10 @@
 package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -10,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,14 +59,15 @@ public class AssignmentsActivity extends MainActivity
     private AssignmentRecViewAdapter assignmentRecViewAdapter;
     private RecyclerView assignmentRecyclerView;
 
-    DrawerLayout drawerLayout;
+    static DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignments_main);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        //initialize navigation drawer
+        drawer = findViewById(R.id.drawer_layout);
 
 
 //        Course c = new Course("I AM ALIVE", "I", "said");
@@ -148,25 +153,6 @@ public class AssignmentsActivity extends MainActivity
 
     }
 
-    public void clickMenu(View view){
-        NavigationDrawerActivity.openDrawer(drawer);
-    }
-
-    public void clickIcon(View view){
-        NavigationDrawerActivity.closeDrawer(drawer);
-    }
-
-    public void clickHome(View view){
-        NavigationDrawerActivity.redirectActivity(this, Home.class);
-    }
-    public void clickAssignment(View view){
-        recreate();
-    }
-
-    public void clickRoutine(View view){
-        NavigationDrawerActivity.redirectActivity(this, RoutinesActivity.class);
-    }
-
     @Override
     public void onAssignmentClick(int position) {
         Assignment assignment =
@@ -191,6 +177,7 @@ public class AssignmentsActivity extends MainActivity
         startActivityForResult(intent, ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -228,4 +215,47 @@ public class AssignmentsActivity extends MainActivity
         AssignmentsActivity.filter = filter;
     }
 
+    //Navigation drawer function START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
+    }
+
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    //   TODO: change mainactivity to home
+    public void clickHome(View view){
+        redirectActivity(this, MainActivity.class);
+    }
+
+    public void clickAssignment(View view){ recreate(); }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 }

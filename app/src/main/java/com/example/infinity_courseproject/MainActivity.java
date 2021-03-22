@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Navigation drawer function START:
     public void clickMenu(View view){
 
         openDrawer(drawer);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         closeDrawer(drawer);
     }
+    //END of navigation drawer functions
 
 }
 

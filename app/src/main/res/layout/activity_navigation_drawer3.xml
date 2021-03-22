@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="275dp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/drawer_layout">
+    android:orientation="vertical">
 
 <!--    <include-->
 <!--        layout="@layout/main_toolbar"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent" />-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Study"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -108,7 +111,6 @@
                 />
 
         </LinearLayout>
-    </LinearLayout>
 
 
 
@@ -128,4 +130,4 @@
 <!--        app:itemTextAppearance="@style/TextAppearance.AppCompat.Medium"-->
 <!--        app:itemTextColor="@color/white"-->
 <!--        app:menu="@menu/activity_main_drawer" />-->
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>
