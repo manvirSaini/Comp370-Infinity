@@ -81,6 +81,10 @@
             android:parentActivityName=".AssignmentsActivity">
         </activity>
 
+        <activity android:name=".EventsEditActivity"
+            android:parentActivityName=".RoutinesAddActivity">
+        </activity>
+
     </application>
 
 </manifest>
