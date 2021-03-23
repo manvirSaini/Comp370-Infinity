@@ -17,14 +17,15 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/title_text"
+            android:id="@+id/add_routine_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
             android:text="@string/add_routine_title"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="101dp" />
+            tools:layout_editor_absoluteY="101dp"
+            android:paddingEnd="10dp" />
 
         <EditText
             android:id="@+id/add_routine_title_edittext"
@@ -110,7 +111,8 @@
             android:text="@string/add_routine_start_time"
             android:textSize="@dimen/header2"
             tools:layout_editor_absoluteX="208dp"
-            tools:layout_editor_absoluteY="321dp" />
+            tools:layout_editor_absoluteY="321dp"
+            android:paddingEnd="10dp" />
 
         <TextView
             android:id="@+id/start_hour_textview"
@@ -185,7 +187,7 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/routine_recycler_item_edit_delete"
+            android:id="@+id/add_routine_total_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -193,10 +195,11 @@
             android:text="@string/add_routine_total_time"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="137dp" />
+            tools:layout_editor_absoluteY="137dp"
+            android:paddingEnd="10dp" />
 
         <TextView
-            android:id="@+id/add_routine_total_time_textview"
+            android:id="@+id/add_routine_total_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -235,21 +238,21 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/periods_title_and_add_fab"
+        android:id="@+id/events_title_and_add_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_period_fab"
+            android:id="@+id/add_event_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
             android:contentDescription="@string/add_period_fab_content_description"
-            android:onClick="addPeriod"/>
+            android:onClick="addEvent"/>
 
         <TextView
-            android:id="@+id/periods_text"
+            android:id="@+id/events_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -261,7 +264,7 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/add_routine_period_recyclerview"
+        android:id="@+id/add_routine_event_recyclerview"
         layout="@layout/basic_recyclerview" />
 
 </LinearLayout>

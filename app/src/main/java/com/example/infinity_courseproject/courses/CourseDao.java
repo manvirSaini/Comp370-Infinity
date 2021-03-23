@@ -6,6 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
+
+import com.example.infinity_courseproject.assignments.Assignment;
 
 import java.util.List;
 
@@ -23,4 +26,16 @@ public interface CourseDao {
 
     @Query("SELECT * FROM course_table ORDER BY title ASC")
     LiveData<List<Course>> getAllCourses();
+
+    @Update
+    void update(Course course);
+
+    @Query("SELECT * FROM course_table WHERE title LIKE :title")
+    LiveData<Course> getByTitle(String title);
+
+    @Query("SELECT * FROM course_table WHERE id = :id")
+    LiveData<Course> get(int id);
+
+    @Query("SELECT * FROM course_table WHERE id = :id")
+    Course getImmediate(int id);
 }

@@ -2,40 +2,45 @@ package com.example.infinity_courseproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeriodsEditActivity extends AppCompatActivity {
-    public static final String PERIOD_REPLY = "period_reply";
+public class EventsEditActivity extends AppCompatActivity {
+    public static final String EVENT_REPLY = "event_reply";
+    public static final String INDEX_REPLY = "index_reply";
+    private TextView eventLabel;
     private Spinner courseSpinner;
     private Spinner studySpinner;
     private Spinner breakSpinner;
 
     private CourseViewModel courseViewModel;
     private List<Course> courseList;
-    private Period periodToEdit;
+    private Event eventToEdit;
+    private int indexOfEventToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.periods_edit);
+        setContentView(R.layout.events_edit);
 
         //initialize spinners
-        courseSpinner = findViewById(R.id.period_course_spinner);
-        studySpinner = findViewById(R.id.period_study_spinner);
-        breakSpinner = findViewById(R.id.period_break_spinner);
+        eventLabel = findViewById(R.id.event_edit_label_text);
+        courseSpinner = findViewById(R.id.event_course_spinner);
+        studySpinner = findViewById(R.id.event_study_spinner);
+        breakSpinner = findViewById(R.id.event_break_spinner);
 
         //course viewmodel
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -43,7 +48,11 @@ public class PeriodsEditActivity extends AppCompatActivity {
 
         //the bundle to be received from RoutinesAddActivity
         Bundle data = getIntent().getExtras();
-        periodToEdit = data.getParcelable(RoutinesAddActivity.PERIOD_TO_EDIT);
+        eventToEdit = data.getParcelable(RoutinesAddActivity.EVENT_TO_EDIT);
+        indexOfEventToEdit = data.getInt(RoutinesAddActivity.EVENT_TO_EDIT_INDEX);
+
+        //fill label
+        eventLabel.setText("Event " + indexOfEventToEdit);
 
         //populate course spinner through observing course live data
         LiveData<List<Course>> courseLiveData = courseViewModel.getAllCourses();
@@ -54,13 +63,13 @@ public class PeriodsEditActivity extends AppCompatActivity {
             int selectedCoursePosition = 0;
             for (int i = 0; i < courses.size(); i++) {
                 courseSpinnerArray.add(courses.get(i).getTitle());
-                if (periodToEdit.getCourseId() == courses.get(i).getId()) {
-                    //select i - 1 to account for the NONE option at position 0
-                    selectedCoursePosition = i-1;
+                if (eventToEdit.getCourseId() == courses.get(i).getId()) {
+                    //select i + 1 to account for the NONE option at position 0
+                    selectedCoursePosition = i+1;
                 }
             }
             ArrayAdapter<String> courseAdapter = new ArrayAdapter<>(
-                    PeriodsEditActivity.this,
+                    EventsEditActivity.this,
                     android.R.layout.simple_spinner_item, courseSpinnerArray);
 
             courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,12 +107,12 @@ public class PeriodsEditActivity extends AppCompatActivity {
         breakSpinner.setAdapter(breakAdapter);
 
         //initial selections for study and break spinners
-        String studyTime = periodToEdit.getStudyTimeInHoursAndMinutes();
+        String studyTime = eventToEdit.getStudyTimeInHoursAndMinutes();
         for (int i = 0; i < studySpinnerArray.size(); i++) {
             if (studyTime.equals(studySpinnerArray.get(i)))
                 studySpinner.setSelection(i);
         }
-        String breakTime = periodToEdit.getBreakTimeInHoursAndMinutes();
+        String breakTime = eventToEdit.getBreakTimeInHoursAndMinutes();
         for (int i = 0; i < studySpinnerArray.size(); i++) {
             if (breakTime.equals(breakSpinnerArray.get(i))) {
                 breakSpinner.setSelection(i);
@@ -127,8 +136,16 @@ public class PeriodsEditActivity extends AppCompatActivity {
         int studyTime = parseHourMinuteStringIntoMinutes(studySpinner.getSelectedItem().toString());
         int breakTime = parseHourMinuteStringIntoMinutes(breakSpinner.getSelectedItem().toString());
 
-        Period period = new Period(periodToEdit.getPosition(), studyTime, breakTime, courseId);
-        replyIntent.putExtra(PERIOD_REPLY, period);
+        Period studyPeriod = new Period(Period.Devotion.STUDY, studyTime);
+        Period breakPeriod = new Period(Period.Devotion.BREAK, breakTime);
+        ArrayList<Period> periods = new ArrayList<>();
+        periods.add(studyPeriod);
+        periods.add(breakPeriod);
+        Event event = new Event(periods, courseId);
+
+        replyIntent.putExtra(EVENT_REPLY, event);
+        replyIntent.putExtra(INDEX_REPLY, indexOfEventToEdit);
+
         setResult(RESULT_OK, replyIntent);
 
         finish();

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.RoutinesAddEditViewModel;
-import com.example.infinity_courseproject.routines.periods.Period;
-import com.example.infinity_courseproject.routines.periods.PeriodRecViewAdapter;
+import com.example.infinity_courseproject.routines.events.Event;
+import com.example.infinity_courseproject.routines.events.EventRecViewAdapter;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,45 +26,62 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+/**
+ * The RoutinesAddActivity is the UI controller for the UI presented in the routines_add.xml file.
+ * Author - David Semke
+ */
 public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
-        PeriodRecViewAdapter.OnPeriodClickListener {
+        EventRecViewAdapter.OnEventClickListener {
 
-    private static final int EDIT_PERIOD_ACTIVITY_REQUEST_CODE = 1;
-    public static final String PERIOD_TO_EDIT = "period";
+    private static final int EDIT_EVENT_ACTIVITY_REQUEST_CODE = 1;
+    private static final int MAX_NUM_OF_EVENTS = 10;
+    public static final String EVENT_TO_EDIT = "event";
+    public static final String EVENT_TO_EDIT_INDEX = "index";
+
+
+    //routineToBeUpdated is null if an edit is not taking place, not null otherwise
     private static Routine routineToBeUpdated;
 
+    //intent reply constants
     public static final String TITLE_REPLY = "title_reply";
     public static final String WEEKDAYS_REPLY = "weekdays_reply";
     public static final String START_HOUR_REPLY = "start_hour_reply";
     public static final String START_MINUTE_REPLY = "start_minute_reply";
-    public static final String PERIOD_ARRAYLIST_REPLY = "period_arraylist_reply";
-    private static final int MAX_NUM_OF_PERIODS = 10;
+    public static final String EVENT_ARRAYLIST_REPLY = "period_arraylist_reply";
 
+    //UI elements
     private EditText enterTitle;
     private com.nex3z.togglebuttongroup.MultiSelectToggleGroup groupWeekdays;
     private TextView startHour;
     private TextView startMinute;
     private TextView totalTime;
 
+    //non-livedata list of routines
+    List<Routine> routineList;
 
+    //view models
     RoutinesAddEditViewModel routinesAddEditViewModel;
     RoutineViewModel routineViewModel;
-    private PeriodRecViewAdapter periodRecViewAdapter;
-    private RecyclerView periodRecyclerView;
+    private RecyclerView eventRecyclerView;
 
-    private final Observer<ArrayList<Period>> periodListUpdateObserver = new Observer<ArrayList<Period>>() {
+    //adapters
+    private EventRecViewAdapter eventRecViewAdapter;
+
+    //observer for the periods
+    private final Observer<ArrayList<Event>> eventListUpdateObserver = new Observer<ArrayList<Event>>() {
 
         @Override
-        public void onChanged(ArrayList<Period> periods) {
-            periodRecViewAdapter = new PeriodRecViewAdapter(
-                    periods, RoutinesAddActivity.this,
+        public void onChanged(ArrayList<Event> events) {
+            eventRecViewAdapter = new EventRecViewAdapter(
+                    events, RoutinesAddActivity.this,
                     RoutinesAddActivity.this);
-            periodRecyclerView.setAdapter(periodRecViewAdapter);
+            eventRecyclerView.setAdapter(eventRecViewAdapter);
 
             //update total time
-            routinesAddEditViewModel.updateTotalTime(periods);
+            routinesAddEditViewModel.updateTotalTime(events);
             totalTime.setText(routinesAddEditViewModel.getTotalTimeInHoursAndMinutes());
         }
     };
@@ -84,13 +101,16 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         startHour = findViewById(R.id.start_hour_textview);
         startMinute = findViewById(R.id.start_minute_textview);
-        totalTime = findViewById(R.id.add_routine_total_time_textview);
+        totalTime = findViewById(R.id.add_routine_total_time);
 
-        periodRecyclerView = findViewById(R.id.basic_recyclerview);
+        eventRecyclerView = findViewById(R.id.basic_recyclerview);
 
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
+
+        //set the routineList to get all routines
+        routineList = routineViewModel.getRoutinesOrderByName().getValue();
 
         //get data in the case of an edit - startActivity occurs from RoutinesActivity
         Bundle data = getIntent().getExtras();
@@ -118,45 +138,50 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
                     routinesAddEditViewModel.setStartMin(routine.getStartMinute());
                     startMinute.setText(String.format("%02d", routinesAddEditViewModel.getStartMin()));
                 }
-                routinesAddEditViewModel.setPeriodLiveData(routine.getPeriods());
+                routinesAddEditViewModel.setEventLiveData(routine.getEvents());
             });
         }
         else
-            routinesAddEditViewModel.addPeriod();
+            routinesAddEditViewModel.addEvent();
 
         //set up period recyclerview and observe its live data
-        periodRecyclerView.setHasFixedSize(true);
-        periodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        routinesAddEditViewModel.getPeriodLiveData().observe(this, periodListUpdateObserver);
+        eventRecyclerView.setHasFixedSize(true);
+        eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        routinesAddEditViewModel.getEventLiveData().observe(this, eventListUpdateObserver);
 
     }
 
     @Override
-    public void onPeriodClick(int position) {
-        Period period = routinesAddEditViewModel.get(position);
-        Intent intent = new Intent(this, PeriodsEditActivity.class);
-        intent.putExtra(PERIOD_TO_EDIT, period);
-        startActivityForResult(intent, EDIT_PERIOD_ACTIVITY_REQUEST_CODE);
+    public void onEventClick(int position) {
+        Event event = routinesAddEditViewModel.get(position);
+        Intent intent = new Intent(this, EventsEditActivity.class);
+        intent.putExtra(EVENT_TO_EDIT, event);
+        intent.putExtra(EVENT_TO_EDIT_INDEX, position);
+        startActivityForResult(intent, EDIT_EVENT_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
-    public void onPeriodLongClick(int position) {
-        routinesAddEditViewModel.removePeriod(position);
+    public void onEventLongClick(int position) {
+        if (routinesAddEditViewModel.getEventCopiedData().size() == 1) {
+            Toast.makeText(this, R.string.minimum_of_one_event, Toast.LENGTH_SHORT).show();
+        }
+        else
+            routinesAddEditViewModel.removeEvent(position);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("update", "onActivityResult: " + resultCode);
-        if (requestCode == EDIT_PERIOD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-
-            Period period = data.getParcelableExtra(PeriodsEditActivity.PERIOD_REPLY);
-            routinesAddEditViewModel.updatePeriod(period);
+        if (requestCode == EDIT_EVENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            assert data != null;
+            Event event = data.getParcelableExtra(EventsEditActivity.EVENT_REPLY);
+            int index = data.getIntExtra(EventsEditActivity.INDEX_REPLY, 0);
+            routinesAddEditViewModel.updateEvent(index, event);
         }
 
     }
 
-    //______________________________________________________________________________________________
     /**
      * Onclick function for 'done' button when adding routine.
      * Returns to routine section due to delivery of activity result.
@@ -166,9 +191,20 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
         //intent to return to routine section
         Intent replyIntent = new Intent();
+
         if (!TextUtils.isEmpty(enterTitle.getText())) {
             //title, weekdays, startHour, startMin
-            String title = enterTitle.getText().toString();
+            String title = enterTitle.getText().toString().trim();
+
+            if (routineList != null) {
+                for (Routine r : routineList) {
+                    if (r.getTitle().equals(title)) {
+                        Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+
 
             //first index will be the id for sunday button...
             int[] buttonIds = new int[7];
@@ -189,11 +225,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
             int startHourInt = routinesAddEditViewModel.getStartHour();
             int startMinInt = routinesAddEditViewModel.getStartMin();
-            ArrayList<Period> periods = routinesAddEditViewModel.getPeriodCopiedData();
+            ArrayList<Event> events = routinesAddEditViewModel.getEventCopiedData();
 
             //in the event that this is an update, not a new routine...
             if (routineToBeUpdated != null) {
-                Routine routine = new Routine(title, weekdays, startHourInt, startMinInt, periods);
+                Routine routine = new Routine(title, weekdays, startHourInt, startMinInt, events);
                 routine.setId(routineToBeUpdated.getId());
                 RoutineViewModel.update(routine);
                 routineToBeUpdated = null;
@@ -203,7 +239,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
                 replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
                 replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
                 replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
-                replyIntent.putParcelableArrayListExtra(PERIOD_ARRAYLIST_REPLY, periods);
+                replyIntent.putParcelableArrayListExtra(EVENT_ARRAYLIST_REPLY, events);
 
                 setResult(RESULT_OK, replyIntent);
             }
@@ -253,15 +289,15 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     }
 
     /**
-     * Onclick method for fab button used for adding periods
-     * @param view - add_period_fab
+     * Onclick method for fab button used for adding events
+     * @param view - add_event_fab
      */
-    public void addPeriod(View view) {
-        if (routinesAddEditViewModel.getPeriodCopiedData().size() == MAX_NUM_OF_PERIODS) {
-            Toast.makeText(this, R.string.max_num_of_periods_reached, Toast.LENGTH_SHORT).show();
+    public void addEvent(View view) {
+        if (routinesAddEditViewModel.getEventCopiedData().size() == MAX_NUM_OF_EVENTS) {
+            Toast.makeText(this, R.string.max_num_of_events_reached, Toast.LENGTH_SHORT).show();
         }
         else
-            routinesAddEditViewModel.addPeriod();
+            routinesAddEditViewModel.addEvent();
     }
 
 }

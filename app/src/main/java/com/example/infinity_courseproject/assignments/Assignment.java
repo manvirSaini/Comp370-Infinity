@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey;
 
 import com.example.infinity_courseproject.courses.Course;
 
+import java.time.LocalDateTime;
+
 @Entity(tableName = "assignment_table", foreignKeys = {@ForeignKey(entity = Course.class,
         parentColumns = "id", childColumns = "course_id", onDelete = ForeignKey.SET_NULL,
         onUpdate = ForeignKey.CASCADE)})
@@ -28,22 +30,68 @@ public class Assignment {
 
     @ColumnInfo(name = "due_time")
     @Nullable
-    private Long dueTime;
+    private LocalDateTime dueTime;
 
     @ColumnInfo(name = "description")
     @Nullable
     private String description;
 
     @ColumnInfo(name = "mark_as_upcoming") //this int value corresponds to days
-    private int markAsUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
+    private int daysPriorToUpcoming; //0 if never mark as upcoming, 1 if mark as upcoming 1 day prior...
 
-    public Assignment(@NonNull String title, @Nullable Integer courseId, @Nullable Long dueTime,
-                      @Nullable String description, int markAsUpcoming) {
+    @ColumnInfo(name = "complete")
+    private boolean complete;
+
+    public enum Status {NEUTRAL, COMPLETE, UPCOMING, OVERDUE}
+
+    public Assignment(@NonNull String title, @Nullable Integer courseId, @Nullable LocalDateTime dueTime,
+                      @Nullable String description, int daysPriorToUpcoming, boolean complete) {
         this.title = title;
         this.courseId = courseId;
         this.dueTime = dueTime;
         this.description = description;
-        this.markAsUpcoming = markAsUpcoming;
+        this.daysPriorToUpcoming = daysPriorToUpcoming;
+        this.complete = complete;
+    }
+
+    public Status determineStatus() {
+        Status status = Status.NEUTRAL;
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (complete)
+            status = Status.COMPLETE;
+        else if (dueTime != null) {
+            if (dueTime.isAfter(currentDate)) {
+                if (daysPriorToUpcoming != 0) {
+                    LocalDateTime upcomingDate = dueTime.minusDays(daysPriorToUpcoming);
+                    if(upcomingDate.isBefore(currentDate))
+                        status = Status.UPCOMING;
+                }
+            }
+            else
+                status = Status.OVERDUE;
+        }
+
+        return status;
+    }
+
+    public String stringifyStatus() {
+        Status status = determineStatus();
+        String stringStatus = null;
+        switch(status) {
+            case NEUTRAL:
+                stringStatus = "Neutral";
+                break;
+            case COMPLETE:
+                stringStatus = "Complete";
+                break;
+            case OVERDUE:
+                stringStatus = "Overdue";
+                break;
+            case UPCOMING:
+                stringStatus = "Upcoming";
+                break;
+        }
+        return stringStatus;
     }
 
     @NonNull
@@ -65,11 +113,11 @@ public class Assignment {
     }
 
     @Nullable
-    public Long getDueTime() {
+    public LocalDateTime getDueTime() {
         return dueTime;
     }
 
-    public void setDueTime(@Nullable Long dueTime) {
+    public void setDueTime(@Nullable LocalDateTime dueTime) {
         this.dueTime = dueTime;
     }
 
@@ -82,12 +130,20 @@ public class Assignment {
         this.description = description;
     }
 
-    public int getMarkAsUpcoming() {
-        return markAsUpcoming;
+    public int getDaysPriorToUpcoming() {
+        return daysPriorToUpcoming;
     }
 
-    public void setMarkAsUpcoming(int markAsUpcoming) {
-        this.markAsUpcoming = markAsUpcoming;
+    public void setDaysPriorToUpcoming(int daysPriorToUpcoming) {
+        this.daysPriorToUpcoming = daysPriorToUpcoming;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     public int getId() {

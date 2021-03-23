@@ -8,6 +8,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,8 +24,9 @@ import com.example.infinity_courseproject.routines.RoutineDao;
         version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class myStudyRoutineDB extends RoomDatabase {
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    private static final String DB_NAME = "mystudy_routine_DB";
+    public static final String DB_NAME = "mystudy_routine_DB";
 
     public static final int THREADS_FOR_IN_ORDER_THREADING = 1;
     public static final int THREADS_FOR_ANY_ORDER_THREADING = 4;
@@ -61,6 +64,7 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             myStudyRoutineDB.class, DB_NAME)
                             .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                            .allowMainThreadQueries()
                             .build();
                 }
             }
@@ -83,8 +87,9 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE IF NOT EXISTS 'assignment_table' ('id' INTEGER" +
-                    " PRIMARY KEY, 'title' TEXT NOT NULL, 'course_id' INTEGER, 'due_time' TIMESTAMP, " +
+                    " PRIMARY KEY, 'title' TEXT NOT NULL, 'course_id' INTEGER, 'due_time' TEXT, " +
                     "'description' TEXT, 'mark_as_upcoming' INTEGER NOT NULL," +
+                    " 'complete' TINYINT NOT NULL, " +
                     "FOREIGN KEY('course_id') REFERENCES 'course_table'('id')" +
                     "ON DELETE SET NULL ON UPDATE CASCADE)");
         }

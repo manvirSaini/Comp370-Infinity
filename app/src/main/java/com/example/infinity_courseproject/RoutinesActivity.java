@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class RoutinesActivity extends AppCompatActivity
     public static final String ROUTINE_ID = "routine_id";
 
     private Spinner showSpinner; //spinner to display filtering options
-    public enum FilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
-    private static FilterBy filter = FilterBy.ALL;
+    public enum RoutineFilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
+    private static RoutineFilterBy filter = RoutineFilterBy.ALL;
 
     private Spinner masterRoutineSpinner; //spinner to allow selection of master routine
 
@@ -49,7 +50,6 @@ public class RoutinesActivity extends AppCompatActivity
         setContentView(R.layout.routines_main);
 
         //initialize recyclerview
-        //routineRecyclerView = findViewById(R.id.basic_recyclerview);
         routineRecyclerView = findViewById(R.id.routine_recyclerview);
 
         //initialize viewmodels
@@ -75,7 +75,7 @@ public class RoutinesActivity extends AppCompatActivity
             public void onChanged(List<Routine> routines) {
                 routineCopiedData = routines;
                 routineRecViewAdapter = new RoutineRecViewAdapter(routines,
-                        RoutinesActivity.this, routineViewModel,
+                        RoutinesActivity.this,
                         RoutinesActivity.this);
 
                 routineRecyclerView.setAdapter(routineRecViewAdapter);
@@ -121,31 +121,31 @@ public class RoutinesActivity extends AppCompatActivity
                                        int position, long id) {
                 switch(position) {
                     case 0:
-                        filter = FilterBy.ALL;
+                        filter = RoutineFilterBy.ALL;
                         break;
                     case 1:
-                        filter = FilterBy.GENERAL;
+                        filter = RoutineFilterBy.GENERAL;
                         break;
                     case 2:
-                        filter = FilterBy.SUN;
+                        filter = RoutineFilterBy.SUN;
                         break;
                     case 3:
-                        filter = FilterBy.MON;
+                        filter = RoutineFilterBy.MON;
                         break;
                     case 4:
-                        filter = FilterBy.TUES;
+                        filter = RoutineFilterBy.TUES;
                         break;
                     case 5:
-                        filter = FilterBy.WED;
+                        filter = RoutineFilterBy.WED;
                         break;
                     case 6:
-                        filter = FilterBy.THURS;
+                        filter = RoutineFilterBy.THURS;
                         break;
                     case 7:
-                        filter = FilterBy.FRI;
+                        filter = RoutineFilterBy.FRI;
                         break;
                     case 8:
-                        filter = FilterBy.SAT;
+                        filter = RoutineFilterBy.SAT;
                 }
 
                 //trigger livedata onchanged function
@@ -203,24 +203,24 @@ public class RoutinesActivity extends AppCompatActivity
                 startHour = null;
                 startMin = null;
             }
-            ArrayList<Period> periods =
-                    data.getParcelableArrayListExtra(RoutinesAddActivity.PERIOD_ARRAYLIST_REPLY);
+            ArrayList<Event> events =
+                    data.getParcelableArrayListExtra(RoutinesAddActivity.EVENT_ARRAYLIST_REPLY);
 
             Routine routine = new Routine(
                     data.getStringExtra(RoutinesAddActivity.TITLE_REPLY).trim(),
                     data.getBooleanArrayExtra(RoutinesAddActivity.WEEKDAYS_REPLY),
-                    startHour, startMin, periods);
+                    startHour, startMin, events);
 
             RoutineViewModel.insert(routine);
         }
 
     }
 
-    public static FilterBy getFilter() {
+    public static RoutineFilterBy getFilter() {
         return filter;
     }
 
-    public static void setFilter(FilterBy filter) {
+    public static void setFilter(RoutineFilterBy filter) {
         RoutinesActivity.filter = filter;
     }
 }

@@ -2,23 +2,28 @@ package com.example.infinity_courseproject.routines;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 import java.util.ArrayList;
 
+/**
+ * This is the viewmodel corresponding to the RoutinesAddActivity.
+ */
 public class RoutinesAddEditViewModel extends ViewModel {
 
     private int startHour = 24;
     private int startMin = 0;
     private int totalTimeInMinutes;
 
-    private MutableLiveData<ArrayList<Period>> periodLiveData;
+    private MutableLiveData<ArrayList<Event>> eventLiveData;
     //copy of mutable data contents
-    private ArrayList<Period> periodCopiedData;
+    private ArrayList<Event> eventCopiedData;
 
     //constructor
     public RoutinesAddEditViewModel() {
-        periodLiveData = new MutableLiveData<>();
-        periodCopiedData = new ArrayList<>();
+        eventLiveData = new MutableLiveData<>();
+        eventCopiedData = new ArrayList<>();
     }
 
     public void incrementStartHour() {
@@ -51,10 +56,10 @@ public class RoutinesAddEditViewModel extends ViewModel {
             startMin--;
     }
 
-    public void updateTotalTime(ArrayList<Period> periods) {
+    public void updateTotalTime(ArrayList<Event> events) {
         totalTimeInMinutes = 0;
-        for (Period p : periods)
-            totalTimeInMinutes += p.getBreakMinutes() + p.getStudyMinutes();
+        for (Event e : events)
+            totalTimeInMinutes += e.getTotalTimeInMinutes();
     }
 
     public String getTotalTimeInHoursAndMinutes() {
@@ -87,34 +92,35 @@ public class RoutinesAddEditViewModel extends ViewModel {
         this.startMin = startMin;
     }
 
-    public void addPeriod() {
-        Period period = new Period(periodCopiedData.size() + 1,
-                60, 15, 0);
-        periodCopiedData.add(period);
-        periodLiveData.postValue(periodCopiedData);
+    public void addEvent() {
+        Period studyPeriod = new Period(Period.Devotion.STUDY, 60);
+        Period breakPeriod = new Period(Period.Devotion.BREAK, 15);
+        ArrayList<Period> periods = new ArrayList<>();
+        periods.add(studyPeriod);
+        periods.add(breakPeriod);
+
+        Event event = new Event(periods, 0);
+        eventCopiedData.add(event);
+        eventLiveData.postValue(eventCopiedData);
     }
 
-    public void updatePeriod(Period period) {
-        periodCopiedData.set(period.getPosition()-1, period);
-        periodLiveData.postValue(periodCopiedData);
+    public void updateEvent(int index, Event event) {
+        eventCopiedData.set(index, event);
+        eventLiveData.postValue(eventCopiedData);
     }
 
-    public void removePeriod(int recyclerviewPosition) {
-        periodCopiedData.remove(recyclerviewPosition);
-        for (int i = recyclerviewPosition; i < periodCopiedData.size(); i++) {
-            Period period = periodCopiedData.get(i);
-            period.setPosition(period.getPosition()-1);
-        }
-        periodLiveData.postValue(periodCopiedData);
+    public void removeEvent(int recyclerviewPosition) {
+        eventCopiedData.remove(recyclerviewPosition);
+        eventLiveData.postValue(eventCopiedData);
     }
 
-    public MutableLiveData<ArrayList<Period>> getPeriodLiveData() {
-        return periodLiveData;
+    public MutableLiveData<ArrayList<Event>> getEventLiveData() {
+        return eventLiveData;
     }
 
-    public void setPeriodLiveData(ArrayList<Period> periodList) {
-        periodCopiedData.addAll(periodList);
-        periodLiveData.postValue(periodCopiedData);
+    public void setEventLiveData(ArrayList<Event> eventList) {
+        eventCopiedData.addAll(eventList);
+        eventLiveData.postValue(eventCopiedData);
     }
 
     public int getTotalTimeInMinutes() {
@@ -125,12 +131,12 @@ public class RoutinesAddEditViewModel extends ViewModel {
         this.totalTimeInMinutes = totalTimeInMinutes;
     }
 
-    public ArrayList<Period> getPeriodCopiedData() {
-        return periodCopiedData;
+    public ArrayList<Event> getEventCopiedData() {
+        return eventCopiedData;
     }
 
-    public Period get(int position) {
-        return periodCopiedData.get(position);
+    public Event get(int index) {
+        return eventCopiedData.get(index);
     }
 
 }
