@@ -72,4 +72,5 @@
     <string name="title_already_exists">Title already exists.</string>
     <string name="minimum_of_one_event">Minimum of one event.</string>
     <string name="max_num_of_events_reached">You have the maximum number of events.</string>
+    <string name="toolbar_text">Home</string>
 </resources>

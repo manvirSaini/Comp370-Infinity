@@ -13,12 +13,12 @@
         android:src="@drawable/ic__menu_icon"/>
 
     <TextView
+        android:id="@+id/toolbar_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:text="Home"
-        android:textAlignment="center"
+        android:text="@string/toolbar_text"
+        android:paddingLeft="24dp"
         android:textSize="20sp"
         android:textStyle="bold" />
 

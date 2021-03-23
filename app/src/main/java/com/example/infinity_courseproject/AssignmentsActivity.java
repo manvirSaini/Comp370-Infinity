@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
@@ -59,7 +60,9 @@ public class AssignmentsActivity extends MainActivity
     private AssignmentRecViewAdapter assignmentRecViewAdapter;
     private RecyclerView assignmentRecyclerView;
 
+    //navigation drawer stuff
     static DrawerLayout drawer;
+    TextView toolbarName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class AssignmentsActivity extends MainActivity
 
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Assignments");
 
 
 //        Course c = new Course("I AM ALIVE", "I", "said");

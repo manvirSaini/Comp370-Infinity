@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
@@ -51,7 +52,9 @@ public class RoutinesActivity extends MainActivity
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
 
+    //navigation drawer stuff
     static DrawerLayout drawer;
+    TextView toolbarName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class RoutinesActivity extends MainActivity
 
         //Initialize Navigation Drawer
         drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Routines");
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);

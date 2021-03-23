@@ -6,11 +6,6 @@
     android:orientation="vertical"
     android:background="@drawable/layout_round">
 
-<!--    <include-->
-<!--        layout="@layout/main_toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="30dp" />
