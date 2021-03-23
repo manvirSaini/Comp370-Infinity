@@ -64,12 +64,16 @@ public class Home extends AppCompatActivity {
                     Log.d("TAG","Period : "+i.getStudyMinutes());
                     Log.d("TAG","Period : "+i.getBreakMinutes());
                     Log.d("TAG","Period : "+i.getStudyTimeInHoursAndMinutes());
+                    // get total times of all the periods -- and set that to max of progres bar
+                    //progressBar.setMax(100);
                     // get the countdown to start
                     CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             updateTimer((int)millisUntilFinished/1000);
-                            // progressBar.setProgress((int) (100/totalPeriods)/60);
+                            int prog = (int) millisUntilFinished/1000;
+                            progressBar.setProgress(prog);
+                            //progressBar. .Increment(1);
                         }
 
                         @Override
