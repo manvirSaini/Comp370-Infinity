@@ -29,7 +29,8 @@
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:background="@color/Clear">
 
         <include
             layout="@layout/activity_navigation_drawer3"/>

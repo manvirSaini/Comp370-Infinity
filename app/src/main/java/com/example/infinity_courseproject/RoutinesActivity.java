@@ -2,12 +2,15 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,16 +51,15 @@ public class RoutinesActivity extends MainActivity
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
 
+    static DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_main);
 
-        //Attempt at navigation drawer
-//        LayoutInflater inflater = (LayoutInflater) this
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View contentView = inflater.inflate(R.layout.routines_main, null, false);
-//        drawer.addView(contentView, 0);
+        //Initialize Navigation Drawer
+        drawer = findViewById(R.id.drawer_layout);
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);
@@ -234,4 +236,47 @@ public class RoutinesActivity extends MainActivity
     public static void setFilter(RoutineFilterBy filter) {
         RoutinesActivity.filter = filter;
     }
+
+    //Navigation drawer functions START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
+    }
+
+    public static void openDrawer(DrawerLayout drawer) {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    //   TODO: change mainactivity to home
+    public void clickHome(View view){
+        redirectActivity(this, MainActivity.class);
+    }
+
+    public void clickAssignment(View view){
+        redirectActivity(this, AssignmentsActivity.class);
+    }
+
+    public void clickRoutine(View view){
+        recreate();
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 }

@@ -1,66 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="275dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/layout_round">
 
 <!--    <include-->
 <!--        layout="@layout/main_toolbar"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent" />-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="My Study"
-            android:textSize="32dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="My Study"
-            android:textSize="32dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@color/grey"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:text="My Study"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="32sp" />
 
-        <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Routine"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:onClick="clickHome">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp"
-                android:layout_marginRight="48dp"
-                android:src="@drawable/twotone_home_24" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/twotone_home_24"
+            android:tint="@color/icon_colour"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Home"
-                android:padding="12dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="Home"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         </LinearLayout>
 
-        <LinearLayout
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="7dp" />
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -68,23 +80,30 @@
             android:onClick="clickAssignment">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp"
-                android:layout_marginRight="48dp"
-                android:src="@drawable/twotone_assignment_24" />
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:src="@drawable/twotone_assignment_24"
+                android:tint="@color/icon_colour"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Assignments"
-                android:padding="12dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 />
 
         </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,40 +113,25 @@
             android:onClick="clickRoutine">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp"
-                android:layout_marginRight="48dp"
-                android:src="@drawable/ic_baseline_timer" />
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:src="@drawable/ic_baseline_timer"
+                android:tint="@color/icon_colour"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Routines"
-                android:padding="12dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="9dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 />
 
         </LinearLayout>
 
-
-
-
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/nav_view"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:background="@color/cardview_dark_background"-->
-<!--        android:fadingEdge="horizontal"-->
-<!--        android:fadingEdgeLength="30dp"-->
-<!--        android:fitsSystemWindows="true"-->
-<!--        app:headerLayout="@layout/nav_header_main"-->
-<!--        app:itemIconSize="30dp"-->
-<!--        app:itemIconTint="@color/icon_colour"-->
-<!--        app:itemTextAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--        app:itemTextColor="@color/white"-->
-<!--        app:menu="@menu/activity_main_drawer" />-->
 </LinearLayout>
