@@ -47,7 +47,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:src="@drawable/twotone_home_24"
-            android:tint="@color/icon_colour"/>
+            app:tint="@color/icon_colour" />
 
         <TextView
             android:layout_width="0dp"
@@ -80,7 +80,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:src="@drawable/twotone_assignment_24"
-                android:tint="@color/icon_colour"/>
+                app:tint="@color/icon_colour" />
 
             <TextView
                 android:layout_width="0dp"
@@ -113,7 +113,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:src="@drawable/ic_baseline_timer"
-                android:tint="@color/icon_colour"/>
+                app:tint="@color/icon_colour" />
 
             <TextView
                 android:layout_width="0dp"

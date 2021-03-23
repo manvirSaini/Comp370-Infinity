@@ -27,6 +27,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
     protected static DrawerLayout drawer;
 
+    //TODO: Delete class for good copy
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
