@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -34,58 +35,58 @@ public class Home extends AppCompatActivity {
     private Spinner  menuSpinText;
     private int progress = 0;
     private int totalPeriods = 0;
-    private int currentRoutineID;
+    private int currentRoutineID = 0;
     private List<Routine> routineList;
     ArrayList<Period> pr;//  //declare periods arraylist
 
 
-
     public void buttonClicked(View view) {
-
-
 
         progressBar = findViewById(R.id.progress_bar);
         timerTextView = findViewById(R.id.countDownTextView);
 
-
 //         get routine from the the id
 //         then get periods array
 //         iterate over the different periods using countdown timer
+        if(currentRoutineID==0){
+            // toast message please select the routine first
+            Toast.makeText(Home.this, "Please select the routine First!",
+                    Toast.LENGTH_LONG).show();
+        }
+        else{
+                homeViewModel.get(currentRoutineID).observe(this, routine -> {
+                pr = new ArrayList<Period>();
+                pr = routine.getPeriods(); // populate the Periods Array List
+                totalPeriods = pr.size();
+                for(Period i :pr){
 
+                    Log.d("TAG","Period : "+i.getPosition());
+                    Log.d("TAG","Period : "+i.getStudyMinutes());
+                    Log.d("TAG","Period : "+i.getBreakMinutes());
+                    Log.d("TAG","Period : "+i.getStudyTimeInHoursAndMinutes());
+                    // get the countdown to start
+                    CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            updateTimer((int)millisUntilFinished/1000);
+                            // progressBar.setProgress((int) (100/totalPeriods)/60);
+                        }
 
-        homeViewModel.get(1).observe(this, routine -> {
-            pr = new ArrayList<Period>();
-            pr = routine.getPeriods(); // populate the Periods Array List
-            totalPeriods = pr.size();
-            for(Period i :pr){
+                        @Override
+                        public void onFinish() {
+                            Log.i("On finish","Timer for "+i.getStudyMinutes());
+                            progressBar.setProgress((int) 100/totalPeriods);
+                        }
+                    }.start();
 
-                Log.d("TAG","Period : "+i.getPosition());
-                Log.d("TAG","Period : "+i.getStudyMinutes());
-                Log.d("TAG","Period : "+i.getBreakMinutes());
-                Log.d("TAG","Period : "+i.getStudyTimeInHoursAndMinutes());
-                // get the countdown to start
-                CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        updateTimer((int)millisUntilFinished/1000);
-                       // progressBar.setProgress((int) (100/totalPeriods)/60);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        Log.i("On finish","Timer for "+i.getStudyMinutes());
-                        progressBar.setProgress((int) 100/totalPeriods);
-                    }
-                }.start();
-
-            }
-        });
+                }
+            });
 
 //
-        //progressBar.setMax(100);
-        // divide the progress so that it is a sum of study period intervals
-        // get the total length of periods array like how many
-        // arrange or sort by priority value
+            //progressBar.setMax(100);
+            // divide the progress so that it is a sum of study period intervals
+            // get the total length of periods array like how many
+            // arrange or sort by priority value
 
 
 //        // try to iterate over the elements
@@ -116,9 +117,10 @@ public class Home extends AppCompatActivity {
 //            }
 //        });
 
-        //progressBar.setProgress(50);
+            //progressBar.setProgress(50);
+        }
 
-}
+    }
 
     public void updateTimer (int secondsLeft){
         int minutes = secondsLeft/60;
@@ -142,34 +144,34 @@ public class Home extends AppCompatActivity {
                 Home.this.getApplication()).create(HomeViewModel.class);
 
         // insert values into database
-//        Period p1 = new Period(1, 1, 1, 1);
-//        Period p2 = new Period(2, 1, 2, 2);
-//        Period p3 = new Period(3, 2, 1, 1);
-//
-//        ArrayList<Period> arr = new ArrayList<Period>();
-//        arr.add(p1);
-//        arr.add(p2);
-//        arr.add(p3);
-//
-//        boolean[] week = {false, true, false, true, false, false, true};
+        Period p1 = new Period(1, 1, 1, 1);
+        Period p2 = new Period(2, 1, 2, 2);
+        Period p3 = new Period(3, 2, 1, 1);
 
-//        Routine r = new Routine("Routine1", week, 14, 15, arr);
-//        Routine r2 = new Routine("Routine2", week, 13, 05, arr);
-//        Routine r3 = new Routine("Routine3", week, 15, 15, arr);
-//        Routine r4 = new Routine("Routine4", week, 10, 25, arr);
+        ArrayList<Period> arr = new ArrayList<Period>();
+        arr.add(p1);
+        arr.add(p2);
+        arr.add(p3);
+
+        boolean[] week = {false, true, false, true, false, false, true};
+
+        Routine r = new Routine("Routine1", week, 14, 15, arr);
+        Routine r2 = new Routine("Routine2", week, 13, 05, arr);
+        Routine r3 = new Routine("Routine3", week, 15, 15, arr);
+        Routine r4 = new Routine("Routine4", week, 10, 25, arr);
 //        //inserting routines
-//        homeViewModel.deleteAll();
-//        homeViewModel.insert(r);
-//        homeViewModel.insert(r2);
-//        homeViewModel.insert(r3);
-//        homeViewModel.insert(r4);
+        homeViewModel.deleteAll();
+        homeViewModel.insert(r);
+        homeViewModel.insert(r2);
+        homeViewModel.insert(r3);
+        homeViewModel.insert(r4);
 
         LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
         ArrayList<Integer> listId = new ArrayList<>();
         routineLiveData.observe(this, routines -> {
                     routineList = routines;
                     ArrayList<String> routineSpinnerArray = new ArrayList<>();
-                    routineSpinnerArray.add("NONE");
+                    //routineSpinnerArray.add("NONE");
                     //int selectedRoutinePosition = 0;
                     for (int i = 0; i < routines.size(); i++) {
                         Log.d("TAG", String.valueOf(routines.get(i)));
@@ -192,9 +194,9 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
-                    Log.i("list1 id :", String.valueOf(listId.get(position-1)));
+                    Log.i("list1 id :", String.valueOf(listId.get(position)));
                     Log.i("parent getting id :", String.valueOf(parent.getSelectedItemId()));
-                    currentRoutineID = listId.get(position-1); // set the current routine's ID according to the selected routine
+                    currentRoutineID = listId.get(position); // set the current routine's ID according to the selected routine
                 }
 
                 @Override
