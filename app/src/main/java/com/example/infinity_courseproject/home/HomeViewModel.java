@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRepo;
@@ -15,6 +16,7 @@ public class HomeViewModel extends AndroidViewModel {
 
     public static RoutineRepo respository;
     public final  LiveData<List<Routine>> allRoutines;
+    private  MutableLiveData<List<Routine>> listRoutines;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -37,5 +39,7 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData <Routine> get(int id){
         return respository.get(id);
     }
+
+
 
 }
