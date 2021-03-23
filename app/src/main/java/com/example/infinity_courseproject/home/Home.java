@@ -2,6 +2,7 @@ package com.example.infinity_courseproject.home;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,9 +39,10 @@ public class Home extends AppCompatActivity {
     private int currentRoutineID = 0;
     private List<Routine> routineList;
     ArrayList<Period> pr;//  //declare periods arraylist
-
+    private int mNbOfRounds= 0;
 
     public void buttonClicked(View view) {
+
 
         progressBar = findViewById(R.id.progress_bar);
         timerTextView = findViewById(R.id.countDownTextView);
@@ -58,15 +60,18 @@ public class Home extends AppCompatActivity {
                 pr = new ArrayList<Period>();
                 pr = routine.getPeriods(); // populate the Periods Array List
                 totalPeriods = pr.size();
+                // i want total time for studyperiods
+                int MAX_NB_ROUNDS_VALUE = pr.size();
                 for(Period i :pr){
-
-                    Log.d("TAG","Period : "+i.getPosition());
-                    Log.d("TAG","Period : "+i.getStudyMinutes());
-                    Log.d("TAG","Period : "+i.getBreakMinutes());
-                    Log.d("TAG","Period : "+i.getStudyTimeInHoursAndMinutes());
+                    //j++;
+                    //Log.d("This loop time ", String.valueOf(j));
+                    Log.d("TAG","Period Position: "+i.getPosition());
+                    Log.d("TAG","Period StudyMinutes : "+i.getStudyMinutes());
+                    Log.d("TAG","Period BreakMinutes: "+i.getBreakMinutes());
+                    Log.d("TAG","Period StudytimeInHoursnMin: "+i.getStudyTimeInHoursAndMinutes());
                     // get total times of all the periods -- and set that to max of progres bar
-                    //progressBar.setMax(100);
-                    // get the countdown to start
+                    //progressBar.setMax(100)
+                    //countDownTimer.count
                     CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
@@ -78,13 +83,29 @@ public class Home extends AppCompatActivity {
 
                         @Override
                         public void onFinish() {
+                            if( mNbOfRounds <= MAX_NB_ROUNDS_VALUE )
+                            {
+
+                                Handler handler=new Handler();
+                                handler.postDelayed(new Runnable() {
+
+                                    @Override
+                                    public void run() {start(); }},1000);
+
+                            }
+                            //Don't forget to increment the nb of rounds:
+                            mNbOfRounds+= 1;
                             Log.i("On finish","Timer for "+i.getStudyMinutes());
-                            progressBar.setProgress((int) 100/totalPeriods);
+                            //progressBar.setProgress((int) 100/totalPeriods);
                         }
+
                     }.start();
 
                 }
             });
+
+
+
 
 //
             //progressBar.setMax(100);
@@ -164,11 +185,11 @@ public class Home extends AppCompatActivity {
         Routine r3 = new Routine("Routine3", week, 15, 15, arr);
         Routine r4 = new Routine("Routine4", week, 10, 25, arr);
 //        //inserting routines
-        homeViewModel.deleteAll();
-        homeViewModel.insert(r);
-        homeViewModel.insert(r2);
-        homeViewModel.insert(r3);
-        homeViewModel.insert(r4);
+////       homeViewModel.deleteAll();
+//        homeViewModel.insert(r);
+//        homeViewModel.insert(r2);
+//        homeViewModel.insert(r3);
+//        homeViewModel.insert(r4);
 
         LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
         ArrayList<Integer> listId = new ArrayList<>();
@@ -216,6 +237,42 @@ public class Home extends AppCompatActivity {
         // probably some other text
     }
 
+//    public class MyCount extends CountDownTimer {
+//
+//        public MyCount(long millisUntilFinished, long countDownInterval) {
+//            super(millisUntilFinished, countDownInterval);
+//        }
+//
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            updateTimer((int)millisUntilFinished/1000);
+//            int prog = (int) millisUntilFinished/1000;
+//            progressBar.setProgress(prog);
+//            //progressBar. .Increment(1);
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//            Log.i("On finish","Timer for "+i.getStudyMinutes());
+//            //progressBar.setProgress((int) 100/totalPeriods);
+//        }
+//
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//
+//            millisUntilFinishedInt = millisUntilFinished;
+//            seconds = millisUntilFinishedInt/1000;
+//            milliseconds = millisUntilFinishedInt-(millisUntilFinishedInt/1000)*1000;
+//            countDownTimer = "TIME: " + seconds + "." + milliseconds ;
+//            text1.setText(countDownTimer);
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//            countDownTimer = "TIME'S UP!";
+//            text1.setText(countDownTimer);
+//        }
+//    }
 
 }
 
