@@ -40,7 +40,7 @@ public class CourseDialog extends BaseDialog {
         et_1 = window.findViewById(R.id.et_1);
         et_2 = window.findViewById(R.id.et_2);
         tv_commit = window.findViewById(R.id.tv_commit);
-        tv_cannal = window.findViewById(R.id.tv_cannal);
+        tv_cannal = window.findViewById(R.id.tv_cancel);
         tv_title = window.findViewById(R.id.tv_title);
         //set view
         if (bean == null) {
