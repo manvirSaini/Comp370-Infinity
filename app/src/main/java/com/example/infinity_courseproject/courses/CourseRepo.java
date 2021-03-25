@@ -3,7 +3,6 @@ package com.example.infinity_courseproject.courses;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.util.List;
@@ -20,16 +19,32 @@ public class CourseRepo {
     }
 
     public void insert(Course course) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.insert(course));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.insert(course));
     }
 
     public void delete(Course course) {
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.delete(course));
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.delete(course));
     }
 
     public void deleteAll() {
 
-        myStudyRoutineDB.databaseWriteExecutor.execute(() -> courseDao.deleteAll());
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.deleteAll());
+    }
+
+    public void update(Course course) {
+        myStudyRoutineDB.anyOrderDatabaseWriteExecutor.execute(() -> courseDao.update(course));
+    }
+
+    public LiveData<Course> getByTitle(String title) {
+        return courseDao.getByTitle(title);
+    }
+
+    public LiveData<Course> get(int id) {
+        return courseDao.get(id);
+    }
+
+    public Course getImmediate(int id) {
+        return courseDao.getImmediate(id);
     }
 
     public CourseDao getCourseDao() {

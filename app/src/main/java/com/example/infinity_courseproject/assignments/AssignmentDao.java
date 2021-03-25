@@ -6,6 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
+
+import com.example.infinity_courseproject.routines.Routine;
 
 import java.util.List;
 
@@ -20,6 +23,18 @@ public interface AssignmentDao {
     @Query("DELETE FROM assignment_table")
     void deleteAll();
 
-    @Query("SELECT * FROM assignment_table")
-    LiveData<List<Assignment>> getAllAssignments();
+    @Update
+    void update(Assignment assignment);
+
+    @Query("SELECT * FROM assignment_table WHERE title LIKE :title")
+    LiveData<Assignment> getByTitle(String title);
+
+    @Query("SELECT * FROM assignment_table WHERE id = :id")
+    LiveData<Assignment> get(int id);
+
+    @Query("SELECT * FROM assignment_table WHERE id = :id")
+    Assignment getImmediate(int id);
+
+    @Query("SELECT * FROM assignment_table ORDER BY due_time IS NULL, due_time ASC, title")
+    LiveData<List<Assignment>> getAssignmentsOrderByDueTime();
 }
