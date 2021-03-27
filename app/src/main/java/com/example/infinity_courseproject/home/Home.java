@@ -18,10 +18,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.infinity_courseproject.PeriodsEditActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
+import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 
@@ -40,6 +40,84 @@ public class Home extends AppCompatActivity {
     private List<Routine> routineList;
     ArrayList<Period> pr;//  //declare periods arraylist
     private int mNbOfRounds= 0;
+    //// parent.getItemAtPosition(pos)
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+
+        menuSpinText = findViewById(R.id.spinner1);
+        //initialize view models
+        homeViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                Home.this.getApplication()).create(HomeViewModel.class);
+
+        // insert values into database
+        Period studyPeriod = new Period(Period.Devotion.STUDY, 60);
+        Period breakPeriod = new Period(Period.Devotion.BREAK, 15);
+
+        ArrayList<Period> arr = new ArrayList<>();
+        arr.add(studyPeriod);
+        arr.add(breakPeriod);
+
+        Event event = new Event(arr, 0);
+        Event event1 = new Event(arr, 1);
+
+        ArrayList<Event> ev = new ArrayList<>();
+
+        boolean[] week = {false, true, false, true, false, false, true};
+
+        Routine r = new Routine("Routine1", week,13,05, ev);
+        Routine r2 = new Routine("Routine2", week, 13, 05, ev);
+        Routine r3 = new Routine("Routine3", week, 15, 15, ev);
+        Routine r4 = new Routine("Routine4", week, 10, 25, ev);
+//        //inserting routines
+        homeViewModel.deleteAll();
+        homeViewModel.insert(r);
+        homeViewModel.insert(r2);
+        homeViewModel.insert(r3);
+        homeViewModel.insert(r4);
+
+        LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
+        ArrayList<Integer> listId = new ArrayList<>();
+        routineLiveData.observe(this, routines -> {
+            routineList = routines;
+            ArrayList<String> routineSpinnerArray = new ArrayList<>();
+            //routineSpinnerArray.add("NONE");
+            //int selectedRoutinePosition = 0;
+            for (int i = 0; i < routines.size(); i++) {
+                Log.d("TAG", String.valueOf(routines.get(i)));
+                routineSpinnerArray.add(routines.get(i).getTitle());
+                int id = routines.get(i).getId();
+                Log.d("This id for routine", String.valueOf(id));
+                listId.add(id);
+            }
+            Log.d("TAG", String.valueOf(routineSpinnerArray));
+
+            ArrayAdapter routineAdapter = new ArrayAdapter(Home.this,
+                    android.R.layout.simple_spinner_dropdown_item,routineSpinnerArray);
+
+            routineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            menuSpinText.setAdapter(routineAdapter);
+            menuSpinText.setSelected(false);  // must
+            menuSpinText.setSelection(0,false);
+            menuSpinText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
+                    Log.i("list1 id :", String.valueOf(listId.get(position)));
+                    Log.i("parent getting id :", String.valueOf(parent.getSelectedItemId()));
+                    currentRoutineID = listId.get(position); // set the current routine's ID according to the selected routine
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    // probably method to setup default value for this part
+                }
+            });
+        });
+    }
 
     public void buttonClicked(View view) {
 
@@ -57,61 +135,59 @@ public class Home extends AppCompatActivity {
         }
         else{
                 homeViewModel.get(currentRoutineID).observe(this, routine -> {
-                pr = new ArrayList<Period>();
-                pr = routine.getPeriods(); // populate the Periods Array List
-                totalPeriods = pr.size();
-                // i want total time for studyperiods
-                int MAX_NB_ROUNDS_VALUE = pr.size();
-                for(Period i :pr){
-                    //j++;
-                    //Log.d("This loop time ", String.valueOf(j));
-                    Log.d("TAG","Period Position: "+i.getPosition());
-                    Log.d("TAG","Period StudyMinutes : "+i.getStudyMinutes());
-                    Log.d("TAG","Period BreakMinutes: "+i.getBreakMinutes());
-                    Log.d("TAG","Period StudytimeInHoursnMin: "+i.getStudyTimeInHoursAndMinutes());
-                    // get total times of all the periods -- and set that to max of progres bar
-                    //progressBar.setMax(100)
-                    //countDownTimer.count
-                    CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            updateTimer((int)millisUntilFinished/1000);
-                            int prog = (int) millisUntilFinished/1000;
-                            progressBar.setProgress(prog);
-                            //progressBar. .Increment(1);
-                        }
+                            pr = new ArrayList<Period>();
+//                pr = routine.getPeriods(); // populate the Periods Array List
+                            totalPeriods = pr.size();
+                            // i want total time for studyperiods
+                            int MAX_NB_ROUNDS_VALUE = pr.size();
+                            for (Period i : pr) {
+                                //j++;
+//                    //Log.d("This loop time ", String.valueOf(j));
+//                    Log.d("TAG","Period Position: "+i.getPosition());
+//                    Log.d("TAG","Period StudyMinutes : "+i.getStudyMinutes());
+//                    Log.d("TAG","Period BreakMinutes: "+i.getBreakMinutes());
+//                    Log.d("TAG","Period StudytimeInHoursnMin: "+i.getStudyTimeInHoursAndMinutes());
+//                    // get total times of all the periods -- and set that to max of progres bar
+//                    //progressBar.setMax(100)
+//                    //countDownTimer.count
+//                    CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
+//                        @Override
+//                        public void onTick(long millisUntilFinished) {
+//                            updateTimer((int)millisUntilFinished/1000);
+//                            int prog = (int) millisUntilFinished/1000;
+//                            progressBar.setProgress(prog);
+//                            //progressBar. .Increment(1);
+//                        }
+//
+//                        @Override
+//                        public void onFinish() {
+//                            if( mNbOfRounds <= MAX_NB_ROUNDS_VALUE )
+//                            {
+//
+//                                Handler handler=new Handler();
+//                                handler.postDelayed(new Runnable() {
+//
+//                                    @Override
+//                                    public void run() {start(); }},1000);
+//
+//                            }
+//                            //Don't forget to increment the nb of rounds:
+//                            mNbOfRounds+= 1;
+//                            Log.i("On finish","Timer for "+i.getStudyMinutes());
+//                            //progressBar.setProgress((int) 100/totalPeriods);
+//                        }
 
-                        @Override
-                        public void onFinish() {
-                            if( mNbOfRounds <= MAX_NB_ROUNDS_VALUE )
-                            {
-
-                                Handler handler=new Handler();
-                                handler.postDelayed(new Runnable() {
-
-                                    @Override
-                                    public void run() {start(); }},1000);
-
-                            }
-                            //Don't forget to increment the nb of rounds:
-                            mNbOfRounds+= 1;
-                            Log.i("On finish","Timer for "+i.getStudyMinutes());
-                            //progressBar.setProgress((int) 100/totalPeriods);
-                        }
-
-                    }.start();
-
-                }
-            });
-
-
+//                    }.start();
+//
+//                }
+//            });
 
 
 //
-            //progressBar.setMax(100);
-            // divide the progress so that it is a sum of study period intervals
-            // get the total length of periods array like how many
-            // arrange or sort by priority value
+                                //progressBar.setMax(100);
+                                // divide the progress so that it is a sum of study period intervals
+                                // get the total length of periods array like how many
+                                // arrange or sort by priority value
 
 
 //        // try to iterate over the elements
@@ -142,100 +218,30 @@ public class Home extends AppCompatActivity {
 //            }
 //        });
 
-            //progressBar.setProgress(50);
-        }
+                                //progressBar.setProgress(50);
+//        }
 
-    }
-
-    public void updateTimer (int secondsLeft){
-        int minutes = secondsLeft/60;
-        int seconds = secondsLeft - (minutes*60);
-        String secondString = Integer.toString(seconds);
-        if(secondString.equals("0")){
-            secondString = "00";
-        }
-
-        timerTextView.setText(Integer.toString(minutes)+":"+ Integer.toString(seconds));
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
-
-        menuSpinText = findViewById(R.id.spinner1);
-        //initialize view models
-        homeViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                Home.this.getApplication()).create(HomeViewModel.class);
-
-        // insert values into database
-        Period p1 = new Period(1, 1, 1, 1);
-        Period p2 = new Period(2, 1, 2, 2);
-        Period p3 = new Period(3, 2, 1, 1);
-
-        ArrayList<Period> arr = new ArrayList<Period>();
-        arr.add(p1);
-        arr.add(p2);
-        arr.add(p3);
-
-        boolean[] week = {false, true, false, true, false, false, true};
-
-        Routine r = new Routine("Routine1", week, 14, 15, arr);
-        Routine r2 = new Routine("Routine2", week, 13, 05, arr);
-        Routine r3 = new Routine("Routine3", week, 15, 15, arr);
-        Routine r4 = new Routine("Routine4", week, 10, 25, arr);
-//        //inserting routines
-////       homeViewModel.deleteAll();
-//        homeViewModel.insert(r);
-//        homeViewModel.insert(r2);
-//        homeViewModel.insert(r3);
-//        homeViewModel.insert(r4);
-
-        LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
-        ArrayList<Integer> listId = new ArrayList<>();
-        routineLiveData.observe(this, routines -> {
-                    routineList = routines;
-                    ArrayList<String> routineSpinnerArray = new ArrayList<>();
-                    //routineSpinnerArray.add("NONE");
-                    //int selectedRoutinePosition = 0;
-                    for (int i = 0; i < routines.size(); i++) {
-                        Log.d("TAG", String.valueOf(routines.get(i)));
-                        routineSpinnerArray.add(routines.get(i).getTitle());
-                        int id = routines.get(i).getId();
-                        Log.d("This id for routine", String.valueOf(id));
-                        listId.add(id);
-                }
-                    Log.d("TAG", String.valueOf(routineSpinnerArray));
-
-            ArrayAdapter routineAdapter = new ArrayAdapter(Home.this,
-                    android.R.layout.simple_spinner_dropdown_item,routineSpinnerArray);
-
-            routineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            menuSpinText.setAdapter(routineAdapter);
-            menuSpinText.setSelected(false);  // must
-            menuSpinText.setSelection(0,false);
-            menuSpinText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
-                    Log.i("list1 id :", String.valueOf(listId.get(position)));
-                    Log.i("parent getting id :", String.valueOf(parent.getSelectedItemId()));
-                    currentRoutineID = listId.get(position); // set the current routine's ID according to the selected routine
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    // probably method to setup default value for this part
                 }
                 });
-        });
+        }
     }
 
-    private void updateProgress(){
-        progressBar.setProgress(progress);
-        // probably some other text
-    }
+//    public void updateTimer (int secondsLeft){
+//        int minutes = secondsLeft/60;
+//        int seconds = secondsLeft - (minutes*60);
+//        String secondString = Integer.toString(seconds);
+//        if(secondString.equals("0")){
+//            secondString = "00";
+//        }
+//
+//        timerTextView.setText(Integer.toString(minutes)+":"+ Integer.toString(seconds));
+//    }
+
+
+                    private void updateProgress () {
+                        progressBar.setProgress(progress);
+                        // probably some other text
+                    }
 
 //    public class MyCount extends CountDownTimer {
 //
@@ -271,8 +277,6 @@ public class Home extends AppCompatActivity {
 //        public void onFinish() {
 //            countDownTimer = "TIME'S UP!";
 //            text1.setText(countDownTimer);
-//        }
-//    }
-
-}
-
+//            }
+ //   }
+    }

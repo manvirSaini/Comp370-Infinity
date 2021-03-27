@@ -9,7 +9,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRepo;
+import com.example.infinity_courseproject.routines.events.Event;
+import com.example.infinity_courseproject.routines.periods.Period;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
@@ -17,6 +20,10 @@ public class HomeViewModel extends AndroidViewModel {
     public static RoutineRepo respository;
     public final  LiveData<List<Routine>> allRoutines;
     private  MutableLiveData<List<Routine>> listRoutines;
+
+    private MutableLiveData<ArrayList<Event>> eventLiveData;
+    //copy of mutable data contents
+    private ArrayList<Event> eventCopiedData;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -39,6 +46,7 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData <Routine> get(int id){
         return respository.get(id);
     }
+
 
 
 
