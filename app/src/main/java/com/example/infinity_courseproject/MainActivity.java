@@ -2,9 +2,11 @@ package com.example.infinity_courseproject;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -26,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView lv;
-    TextView tvadd;
+
     private List<Course2> itemBeanList = new ArrayList();
     private MyAdapter myAdapter;
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
 
         lv = findViewById(R.id.lv);
-        tvadd = findViewById(R.id.tvadd);
+
         @SuppressLint("WrongConstant")
         LinearLayoutManager manager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         if (null == manager)
@@ -59,10 +61,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tvadd.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CourseDialog(MainActivity.this, null, 0).showDialog();
+//                new CourseDialog(MainActivity.this, null, 0).showDialog();
+                Intent intent = new Intent(MainActivity.this,AddActivity.class);
+//                intent.putExtra("bean",null);
+                intent.putExtra("pos",0);
+                startActivity(intent);
             }
         });
 
@@ -149,18 +155,21 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_1 = holder.getView(R.id.tv_1);
             TextView tv_2 = holder.getView(R.id.tv_2);
             TextView tv_3 = holder.getView(R.id.tv_3);
-            TextView tv_4 = holder.getView(R.id.tv_4);
+            LinearLayout layout_item = holder.getView(R.id.layout_item);
 
             //set view
             tv_1.setText(bean.getTitle());
             tv_2.setText(bean.getProfessor());
             tv_3.setText(bean.getDescription());
 
-            tv_4.setOnClickListener(new View.OnClickListener() {
+            layout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new CourseDialog(MainActivity.this, bean, position).showDialog();
-
+//                    new CourseDialog(MainActivity.this, bean, position).showDialog();
+                    Intent intent = new Intent(MainActivity.this,AddActivity.class);
+                    intent.putExtra("bean",bean);
+                    intent.putExtra("pos",position);
+                    startActivity(intent);
                 }
             });
         }
