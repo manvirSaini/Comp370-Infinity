@@ -1,7 +1,9 @@
 package com.example.infinity_courseproject.courses;
 
 
-public class Course2 {
+import java.io.Serializable;
+
+public class Course2 implements Serializable {
 
     private String mId;
     private String title;
