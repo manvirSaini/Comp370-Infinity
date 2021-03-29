@@ -242,9 +242,8 @@ public class AssignmentsActivity extends MainActivity
         }
     }
 
-    //   TODO: change mainactivity to home
     public void clickHome(View view){
-        redirectActivity(this, MainActivity.class);
+        redirectActivity(this, Home.class);
     }
 
     public void clickAssignment(View view){ recreate(); }

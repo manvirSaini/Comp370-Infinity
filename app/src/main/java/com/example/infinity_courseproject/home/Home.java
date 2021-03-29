@@ -1,5 +1,7 @@
 package com.example.infinity_courseproject.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -14,11 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.infinity_courseproject.AssignmentsActivity;
+import com.example.infinity_courseproject.MainActivity;
 import com.example.infinity_courseproject.R;
+import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
@@ -42,10 +49,19 @@ public class Home extends AppCompatActivity {
     private int mNbOfRounds= 0;
     //// parent.getItemAtPosition(pos)
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        //initialize navigation drawer
+        drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Home");
 
         menuSpinText = findViewById(R.id.spinner1);
         //initialize view models
@@ -279,4 +295,49 @@ public class Home extends AppCompatActivity {
 //            text1.setText(countDownTimer);
 //            }
  //   }
+
+
+    //Navigation drawer function START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
+    }
+
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    //   TODO: change mainactivity to home
+    public void clickHome(View view){
+        recreate();
+    }
+
+    public void clickAssignment(View view){ redirectActivity(this, AssignmentsActivity.class); }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
     }

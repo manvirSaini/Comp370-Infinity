@@ -11,7 +11,7 @@
         android:theme="@style/Theme.InfinityCourseProject">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".home.Home"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
