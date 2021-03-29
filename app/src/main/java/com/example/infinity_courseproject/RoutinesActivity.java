@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
@@ -55,6 +58,10 @@ public class RoutinesActivity extends MainActivity
     //navigation drawer stuff
     static DrawerLayout drawer;
     TextView toolbarName;
+
+    //For setting master routine
+    public static final String SHARED_ROUTINE = "routine_id";
+    public static final String ID = "text";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,8 +249,19 @@ public class RoutinesActivity extends MainActivity
         RoutinesActivity.filter = filter;
     }
 
+    // TODO: remove toast
+    public  void saveData(){
+        SharedPreferences prefs = getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        Toast.makeText(this, masterRoutineSpinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+
+        editor.putString(ID, masterRoutineSpinner.getSelectedItem().toString());
+    }
+
     //Navigation drawer functions START:
     public void clickMenu(View view){
+        saveData();
         openDrawer(drawer);
     }
 
@@ -261,9 +279,8 @@ public class RoutinesActivity extends MainActivity
         }
     }
 
-    //   TODO: change mainactivity to home
     public void clickHome(View view){
-        redirectActivity(this, MainActivity.class);
+        redirectActivity(this, Home.class);
     }
 
     public void clickAssignment(View view){

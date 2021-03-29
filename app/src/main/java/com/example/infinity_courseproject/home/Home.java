@@ -2,6 +2,7 @@ package com.example.infinity_courseproject.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -52,6 +53,10 @@ public class Home extends AppCompatActivity {
     //navigation drawer stuff
     static DrawerLayout drawer;
     TextView toolbarName;
+
+    // Shared prefs
+    public static final String SHARED_ROUTINE = "routine_id";
+    public static final String ID = "text";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -296,6 +301,12 @@ public class Home extends AppCompatActivity {
 //            }
  //   }
 
+
+    //Shared Prefs
+    public void loadSaved(){
+        SharedPreferences prefs = getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
+        String routine =  prefs.getString(ID,"None");
+    }
 
     //Navigation drawer function START:
     public void clickMenu(View view){
