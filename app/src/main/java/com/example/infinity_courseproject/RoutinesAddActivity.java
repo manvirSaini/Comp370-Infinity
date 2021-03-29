@@ -2,6 +2,7 @@ package com.example.infinity_courseproject;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.example.infinity_courseproject.routines.Routine;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;

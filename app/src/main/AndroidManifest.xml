@@ -9,13 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
-        <activity android:name=".home.Home">
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+<!--        <activity-->
+<!--            android:name=".NavigationDrawerActivity"-->
+<!--            android:label="@string/title_activity_navigation_drawer"-->
+<!--            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
 <!--        <activity android:name=".DBTestActivity">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -23,6 +39,7 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
 <!--        </activity>-->
+
 <!--        <activity android:name=".MainActivity">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -30,6 +47,45 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
 <!--        </activity>-->
+
+        <activity
+            android:name=".RoutinesActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".RoutinesAddActivity"
+            android:parentActivityName=".RoutinesActivity">
+        </activity>
+
+<!--        <activity android:name=".PeriodsEditActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+        <activity
+            android:name=".AssignmentsActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AssignmentsAddActivity"
+            android:parentActivityName=".AssignmentsActivity">
+        </activity>
+
+        <activity android:name=".EventsEditActivity"
+            android:parentActivityName=".RoutinesAddActivity">
+        </activity>
+
     </application>
 
 </manifest>
