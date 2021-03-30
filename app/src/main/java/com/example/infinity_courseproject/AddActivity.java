@@ -14,7 +14,7 @@ import com.example.infinity_courseproject.courses.Course2;
 import org.greenrobot.eventbus.EventBus;
 
 public class AddActivity extends AppCompatActivity {
-    TextView tv_commit, tv_cancel, tv_title;
+    TextView tv_done, tv_cancel, tv_title;
     EditText et_0, et_1, et_2;
     Course2 bean;
     int posi;
@@ -28,7 +28,7 @@ public class AddActivity extends AppCompatActivity {
         et_0 = findViewById(R.id.et_0);
         et_1 = findViewById(R.id.et_1);
         et_2 = findViewById(R.id.et_2);
-        tv_commit = findViewById(R.id.tv_commit);
+        tv_done = findViewById(R.id.tv_done);
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_title = findViewById(R.id.tv_title);
         //set view
@@ -50,7 +50,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        tv_commit.setOnClickListener(new View.OnClickListener() {
+        tv_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
