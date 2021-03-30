@@ -46,52 +46,25 @@
                 android:layout_marginBottom="142dp"
                 android:background="@android:drawable/btn_dropdown"
                 android:spinnerMode="dropdown"
+                android:prompt="@string/select"
                 app:layout_constraintBottom_toTopOf="@+id/progress_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toTopOf="parent" />
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="285dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="142dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:prompt="@string/select"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
             <Button
                 android:id="@+id/datesButton"
                 android:layout_width="246dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="16dp"
-                android:text="Upcoming/Overdue Dates"
+                android:text="@string/upcoming_overdue_dates"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.521"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/GoButton"
                 app:layout_constraintVertical_bias="0.336" />
-    <Button
-        android:id="@+id/datesButton"
-        android:layout_width="246dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/upcoming_overdue_dates"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GoButton"
-        app:layout_constraintVertical_bias="0.336" />
 
             <TextView
                 android:id="@+id/countDownTextView"
@@ -106,40 +79,29 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
+
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="240dp"
                 android:layout_height="240dp"
                 android:indeterminateOnly="false"
                 android:progressDrawable="@drawable/circle"
-                tools:progress="60"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:indeterminateOnly="false"
-        android:progressDrawable="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-
-        <Button
-            android:id="@+id/GoButton"
-            android:layout_width="202dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="24dp"
-            android:onClick="buttonClicked"
-            android:text="@string/begin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+            <Button
+                android:id="@+id/GoButton"
+                android:layout_width="202dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="24dp"
+                android:onClick="buttonClicked"
+                android:text="@string/begin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
