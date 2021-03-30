@@ -57,10 +57,6 @@ public class Home extends AppCompatActivity {
     static DrawerLayout drawer;
     TextView toolbarName;
 
-    // Shared prefs
-//    public static final String SHARED_ROUTINE = "routine_id";
-//    public static final String ID = "text";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -306,6 +302,7 @@ public class Home extends AppCompatActivity {
 
 
     //Shared Prefs
+    //TODO: Remove toast
     public void loadSaved(){
         SharedPreferences prefs = this.getSharedPreferences(SHARED_ROUTINE ,MODE_PRIVATE);
 
