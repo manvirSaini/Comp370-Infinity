@@ -48,7 +48,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="5dp"
-        android:text="事件"
+        android:text="Things"
         android:textColor="@color/colorAccent"
         android:textSize="17sp" />
 
@@ -62,7 +62,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="5dp"
-        android:text="事件"
+        android:text="Items"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp" />
 

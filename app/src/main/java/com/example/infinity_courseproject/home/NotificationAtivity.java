@@ -80,7 +80,7 @@ public class NotificationAtivity extends BaseActivity {
         if (null == manager)
             return;
         lv.setLayoutManager(manager);
-        myAdapter = new MyAdapter(NotificationAtivity.this, itemBeanList, R.layout.item_tongzhi);
+        myAdapter = new MyAdapter(NotificationAtivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
 
 

@@ -25,15 +25,15 @@ public class DateUtil {
 
     //get the current time yyyy-MM-dd HH:mm
     public static String getTodayData_2() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-        String str = df.format(new Date());// new Date()为获取当前系统时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//
+        String str = df.format(new Date());// new Date()
         return str;
     }
 
     //get the current time yyyy-MM-dd HH:mm:ss
     public static String getTodayData_3() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String str = df.format(new Date());// new Date()为获取当前系统时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//
+        String str = df.format(new Date());// new Date()
         return str;
     }
 
@@ -174,7 +174,7 @@ public class DateUtil {
     /*
      *
      *
-     *  10:00:01  -> xxx 秒
+     *  10:00:01  -> xxx
      * */
     public static long formatTurnSecond(String time) {
         String s = time;
