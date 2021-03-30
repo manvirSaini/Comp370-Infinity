@@ -38,20 +38,21 @@ public class Home extends AppCompatActivity {
     Button showDueButton;
     ProgressBar progressBar;
     TextView countdownText;
-    private Spinner  menuSpinText;
+    private Spinner menuSpinText;
     private Handler mHandler = new Handler();
     private Boolean timerRunning = false;
     private long leftTime;
-    private static long MILL_IN_FUTURE ;
+    private long mEndTime;
+    private static long MILL_IN_FUTURE;
 
     private int currentRoutineID = 0;
     private List<Routine> routineList;
     ArrayList<Event> eve;
     private CountDownTimer countDownTimer;
-    int counter_arr [] = {1,2,3};
+    int counter_arr[] = {1, 2, 3};
     int timer_counter, progress_counter = 0;
 
- // when begin button is clicked
+    // when begin button is clicked
     public void buttonClicked(View View) {
         String ButtonText = beginButton.getText().toString();
         Log.i("ButtonText", "The text of this button");
@@ -70,7 +71,7 @@ public class Home extends AppCompatActivity {
             progressBar.setProgress(0);
             beginButton.setText("BEGIN");
         } else {
-            Log.i("BEGIN","When button text does not match anyone!");
+            Log.i("BEGIN", "When button text does not match anyone!");
 
             if (currentRoutineID == 0) {
                 // toast message please select the routine first
@@ -122,7 +123,7 @@ public class Home extends AppCompatActivity {
 
         boolean[] week = {false, true, false, true, false, false, true};
 
-        Routine r = new Routine("Routine1", week,13,05, ev);
+        Routine r = new Routine("Routine1", week, 13, 05, ev);
         Routine r2 = new Routine("Routine2", week, 13, 05, ev);
         Routine r3 = new Routine("Routine3", week, 15, 15, ev);
         Routine r4 = new Routine("Routine4", week, 10, 25, ev);
@@ -150,13 +151,13 @@ public class Home extends AppCompatActivity {
             Log.d("TAG", String.valueOf(routineSpinnerArray));
 
             ArrayAdapter routineAdapter = new ArrayAdapter(Home.this,
-                    android.R.layout.simple_spinner_dropdown_item,routineSpinnerArray);
+                    android.R.layout.simple_spinner_dropdown_item, routineSpinnerArray);
 
             routineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             menuSpinText.setAdapter(routineAdapter);
             menuSpinText.setSelected(false);  // must
-            menuSpinText.setSelection(0,false);
+            menuSpinText.setSelection(0, false);
             menuSpinText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -185,11 +186,13 @@ public class Home extends AppCompatActivity {
 
                             Log.i("HOME", "Period study: " + i.getStudyMinutes());
                             Log.i("HOME", "Period break: " + i.getBreakMinutes());
-                        } });
 
-                      // when item is selected
+                        }
+                    });
+
+                    // when item is selected
                     // reset progress, timer
-                    if(timerRunning){
+                    if (timerRunning) {
                         countDownTimer.cancel();
                     }
                     leftTime = 0;
@@ -210,7 +213,7 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    public void datesButton(View view){
+    public void datesButton(View view) {
         // stop repeating task
     }
 
@@ -219,18 +222,19 @@ public class Home extends AppCompatActivity {
         public void run() {
             //Log.i("RUN","To see if it still runs when timer is stopped");
             timerRunning = false;
-            MILL_IN_FUTURE = (counter_arr[timer_counter])*60*1000;
+            MILL_IN_FUTURE = (counter_arr[timer_counter]) * 60 * 1000;
             progress_counter = 0;
-            progressBar.setMax((int)(counter_arr[timer_counter]*60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of secomds in set time
             startTimer(MILL_IN_FUTURE);
             // I want to run the timer back to back
 //            int arr [] = {1,3,4,5}; (* 60 * 1000)
         }
     };
 
-    public void startTimer(long millis){
+    public void startTimer(long millis) {
 
-        if(!timerRunning) {
+        if (!timerRunning) {
+            mEndTime = System.currentTimeMillis() + leftTime;
             timerRunning = true;
             long time = (leftTime == 0 || leftTime == millis) ? millis : leftTime;
             timerRunning = true;
@@ -238,9 +242,9 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onTick(long tick) {
                     leftTime = tick;
-                    Log.i("TICK","leftTime = "+leftTime);
+                    Log.i("TICK", "leftTime = " + leftTime);
                     progress_counter = progress_counter + 1;
-                    Log.i("TICK","progres_counter = "+progress_counter);
+                    Log.i("TICK", "progres_counter = " + progress_counter);
                     // update the progress
                     progressBar.setProgress(progress_counter);
                     Log.i("Timer", "Time Left : " + tick / 1000);
@@ -251,7 +255,7 @@ public class Home extends AppCompatActivity {
                 public void onFinish() {
                     // what should be done on finish
                     timerRunning = false;
-                    leftTime =0;
+                    leftTime = 0;
                     // reset progress
                     Log.i("Timer", "Timer Done !!");
                     timer_counter++;
@@ -267,10 +271,8 @@ public class Home extends AppCompatActivity {
         }
     }
 
-//
-
-
-    public void updateTimer (int mTimeLeftInMillis) {
+    //
+    public void updateTimer(int mTimeLeftInMillis) {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
         Log.d("minutes: ", String.valueOf(minutes));
@@ -280,14 +282,12 @@ public class Home extends AppCompatActivity {
         countdownText.setText(secondString);
     }
 
-    public void pauseTimer () {
+    public void pauseTimer() {
         countDownTimer.cancel();
         timerRunning = false;
         //updateButtons();
     }
 
-
-}
 
 // TO-DO
 // Activity to be restored when destroyed using shared pref
@@ -298,41 +298,46 @@ public class Home extends AppCompatActivity {
 // Try progress to update only once
 
 // methods for saving the state and getting it back
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = prefs.edit();
-//        editor.putLong("MILLIS_LEFT", leftTime);
-//        editor.putBoolean("TIMER_RUNNING", timerRunning);
-//        editor.putLong("END_TIME", mEndTime);
-//        editor.apply();
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
-//    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("MILLIS_LEFT", leftTime);
+        editor.putBoolean("TIMER_RUNNING", timerRunning);
+        editor.putLong("END_TIME", mEndTime);
+        editor.putInt("PROGRESS", progress_counter);
+        editor.apply();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
-//        leftTime = prefs.getLong("MILLIS_LEFT", START_TIME_IN_MILLIS);
-//        timerRunning = prefs.getBoolean("TIMER_RUNNING", false);
-//        //updateTimer();
-//        //updateButtons();
-//        if (timerRunning) {
-//            mEndTime = prefs.getLong(END_TIME, 0);
-//            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
-//            if (mTimeLeftInMillis < 0) {
-//                mTimeLeftInMillis = 0;
-//                timerRunning = false;
-//                updateTimer();
-//                updateButtons();
-//            } else {
-//                startTimer();
-//            }
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+        leftTime = prefs.getLong("MILLIS_LEFT", 0);
+        timerRunning = prefs.getBoolean("TIMER_RUNNING", false);
+        progress_counter = prefs.getInt("PROGRESS",0);
+        //updateTimer();
+        //updateButtons();
+        if (timerRunning) {
+            mEndTime = prefs.getLong("END_TIME", 0);
+            leftTime = mEndTime - System.currentTimeMillis();
+            if (leftTime < 0) {
+                leftTime = 0;
+                timerRunning = false;
+                updateTimer((int) leftTime);
+                //updateButtons();
+            } else {
+                progressBar.setProgress(progress_counter);
+                startTimer(leftTime);
+            }
+        }
+    }
+
+}
 
 
 
