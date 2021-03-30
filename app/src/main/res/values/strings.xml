@@ -65,4 +65,5 @@
     <string name="routineSelected">Routine:</string>
     <string name="upcoming_overdue_dates">Upcoming/Overdue Dates</string>
     <string name="begin">BEGIN</string>
+    <string name="select">home spinner</string>
 </resources>

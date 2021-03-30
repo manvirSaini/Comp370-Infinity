@@ -39,7 +39,7 @@ public class Home extends AppCompatActivity {
     TextView countdownText;
     private Spinner  menuSpinText;
     private Handler mHandler = new Handler();
-    private Boolean timerRunning;
+    private Boolean timerRunning = false;
     private long leftTime;
     private static long MILL_IN_FUTURE ;
 
@@ -187,17 +187,23 @@ public class Home extends AppCompatActivity {
                         } });
 
                       // when item is selected
-                    // reste progress, timer
+                    // reset progress, timer
                     if(timerRunning){
                         countDownTimer.cancel();
-                        leftTime = 0;
                     }
-                    countdownText.setText("BEGIN");
+                    leftTime = 0;
+                    //mHandler.removeCallbacks(timer);
+                    progressBar.setProgress(0);
+                    progress_counter = 0;
+                    timer_counter = 0;
+                    beginButton.setText("BEGIN");
+                    countdownText.setText("00:00");
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     // probably method to setup default value for this part
+
                 }
             });
         });
@@ -287,26 +293,6 @@ public class Home extends AppCompatActivity {
 
 }
 
-//    public void startTimer(int minutes){
-//        // passed in minutes and boolean for break time
-//      countDownTimer =  new CountDownTimer((minutes * 60 * 1000), 1000) {
-//            @Override
-//            public void onTick(long tick) {
-//                // update the progress
-//                Log.i("Timer","Time Left : "+tick/1000);
-//                updateTimer((int)tick);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                // what should be done on finish
-//                Log.i("Timer","Timer Done !!");
-//
-//            }
-//
-//        }.start();
-//
-//    }
     // i want total time for studyperiods
     //int MAX_NB_ROUNDS_VALUE = eve.size();
     //for (Event i : eve) {

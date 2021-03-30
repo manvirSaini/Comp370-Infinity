@@ -32,6 +32,7 @@
         android:layout_marginBottom="142dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
+        android:prompt="@string/select"
         app:layout_constraintBottom_toTopOf="@+id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
