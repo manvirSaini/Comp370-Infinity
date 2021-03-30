@@ -1,5 +1,6 @@
 package com.example.infinity_courseproject.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -286,76 +287,58 @@ public class Home extends AppCompatActivity {
     }
 
 
-//        private void updateProgress () {
-//            progressBar.setProgress(progress);
-//            // probably some other text
-//        }
-
 }
 
-    // i want total time for studyperiods
-    //int MAX_NB_ROUNDS_VALUE = eve.size();
-    //for (Event i : eve) {
-    //j++;
-//                    //Log.d("This loop time ", String.valueOf(j));
-//                    Log.d("TAG","Period Position: "+i.getPosition());
-//                    Log.d("TAG","Period StudyMinutes : "+i.getStudyMinutes());
-//                    Log.d("TAG","Period BreakMinutes: "+i.getBreakMinutes());
-//                    Log.d("TAG","Period StudytimeInHoursnMin: "+i.getStudyTimeInHoursAndMinutes());
-//                    // get total times of all the periods -- and set that to max of progres bar
-//                    //progressBar.setMax(100)
-//                    //countDownTimer.count
-//                    CountDownTimer countDownTimer =  new CountDownTimer(i.getStudyMinutes()*60*1000,1000) {
-//                        @Override
-//                        public void onTick(long millisUntilFinished) {
-//                            updateTimer((int)millisUntilFinished/1000);
-//                            int prog = (int) millisUntilFinished/1000;
-//                            progressBar.setProgress(prog);
-//                            //progressBar. .Increment(1);
-//                        }
-//
-//                        @Override
-//                        public void onFinish() {
-//                            if( mNbOfRounds <= MAX_NB_ROUNDS_VALUE )
-//                            {
-//
-//                                Handler handler=new Handler();
-//                                handler.postDelayed(new Runnable() {
-//
-//                                    @Override
-//                                    public void run() {start(); }},1000);
-//
-//                            }
-//                            //Don't forget to increment the nb of rounds:
-//                            mNbOfRounds+= 1;
-//                            Log.i("On finish","Timer for "+i.getStudyMinutes());
-//                            //progressBar.setProgress((int) 100/totalPeriods);
-//                        }
+// TO-DO
+// Activity to be restored when destroyed using shared pref
+// other landscape layout
+// events data iteration
+// TEXT to show which item is being pulled out
+// Alarm manager things
+// Try progress to update only once
 
-//                    }.start();
-//
-//                }
-//            });
+// methods for saving the state and getting it back
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putLong("MILLIS_LEFT", leftTime);
+//        editor.putBoolean("TIMER_RUNNING", timerRunning);
+//        editor.putLong("END_TIME", mEndTime);
+//        editor.apply();
+//        if (countDownTimer != null) {
+//            countDownTimer.cancel();
+//        }
+//    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+//        leftTime = prefs.getLong("MILLIS_LEFT", START_TIME_IN_MILLIS);
+//        timerRunning = prefs.getBoolean("TIMER_RUNNING", false);
+//        //updateTimer();
+//        //updateButtons();
+//        if (timerRunning) {
+//            mEndTime = prefs.getLong(END_TIME, 0);
+//            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+//            if (mTimeLeftInMillis < 0) {
+//                mTimeLeftInMillis = 0;
+//                timerRunning = false;
+//                updateTimer();
+//                updateButtons();
+//            } else {
+//                startTimer();
+//            }
+//        }
+//    }
 
 
-//
-    //progressBar.setMax(100);
+
     // divide the progress so that it is a sum of study period intervals
     // get the total length of periods array like how many
     // arrange or sort by priority value
-
-
-//        // try to iterate over the elements
-
-
-//        homeViewModel.getAllRoutines().observe(this, routines ->{
-//            for(Routine routine: routines){
-//                Log.d("TAG","onButtonClicked ID = "+routine.getId());
-//                Log.d("TAG","onButtonClicked TITLE = "+routine.getTitle());
-//                Log.d("TAG","onButtonClicked Total time = "+routine.getTotalTimeInHoursAndMinutes());
-//                Log.d("TAG","onButtonClicked All periods = "+routine.getPeriods());
-//            }
-//        });
 
 //        homeViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
 //            @Override
@@ -373,47 +356,7 @@ public class Home extends AppCompatActivity {
 //            }
 //        });
 
-    //progressBar.setProgress(50);
-//        }
 
-    //        }
-
-//    public class MyCount extends CountDownTimer {
-//
-//        public MyCount(long millisUntilFinished, long countDownInterval) {
-//            super(millisUntilFinished, countDownInterval);
-//        }
-//
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            updateTimer((int)millisUntilFinished/1000);
-//            int prog = (int) millisUntilFinished/1000;
-//            progressBar.setProgress(prog);
-//            //progressBar. .Increment(1);
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            Log.i("On finish","Timer for "+i.getStudyMinutes());
-//            //progressBar.setProgress((int) 100/totalPeriods);
-//        }
-//
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//
-//            millisUntilFinishedInt = millisUntilFinished;
-//            seconds = millisUntilFinishedInt/1000;
-//            milliseconds = millisUntilFinishedInt-(millisUntilFinishedInt/1000)*1000;
-//            countDownTimer = "TIME: " + seconds + "." + milliseconds ;
-//            text1.setText(countDownTimer);
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            countDownTimer = "TIME'S UP!";
-//            text1.setText(countDownTimer);
-//            }
- //   }
 //public void buttonClicked(View view) {
 //
 ////         get routine from the the id
