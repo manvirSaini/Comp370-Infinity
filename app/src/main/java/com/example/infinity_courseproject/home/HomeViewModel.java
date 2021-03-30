@@ -47,6 +47,30 @@ public class HomeViewModel extends AndroidViewModel {
         return respository.get(id);
     }
 
+    public MutableLiveData<ArrayList<Event>> getEventLiveData() {
+        return eventLiveData;
+    }
+
+    public void setEventLiveData(ArrayList<Event> eventList) {
+        eventCopiedData.addAll(eventList);
+        eventLiveData.postValue(eventCopiedData);
+    }
+
+    public void addEvent() {
+        Period studyPeriod = new Period(Period.Devotion.STUDY, 60);
+        Period breakPeriod = new Period(Period.Devotion.BREAK, 15);
+        ArrayList<Period> periods = new ArrayList<>();
+        periods.add(studyPeriod);
+        periods.add(breakPeriod);
+
+        Event event = new Event(periods, 0);
+        eventCopiedData.add(event);
+        eventLiveData.postValue(eventCopiedData);
+    }
+
+    public ArrayList<Event> getEventCopiedData() {
+        return eventCopiedData;
+    }
 
 
 
