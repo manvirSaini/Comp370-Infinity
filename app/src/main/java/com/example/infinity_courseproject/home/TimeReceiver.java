@@ -6,8 +6,13 @@ import android.content.Intent;
 
 public class TimeReceiver extends BroadcastReceiver {
 
+    Home home;
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        home = new Home();
+
 
     }
 }

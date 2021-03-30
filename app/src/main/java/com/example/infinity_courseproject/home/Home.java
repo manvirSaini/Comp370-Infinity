@@ -36,6 +36,9 @@ import com.example.infinity_courseproject.routines.periods.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.infinity_courseproject.RoutinesActivity.ID;
+import static com.example.infinity_courseproject.RoutinesActivity.SHARED_ROUTINE;
+
 public class Home extends AppCompatActivity {
 
     private HomeViewModel homeViewModel;
@@ -55,8 +58,8 @@ public class Home extends AppCompatActivity {
     TextView toolbarName;
 
     // Shared prefs
-    public static final String SHARED_ROUTINE = "routine_id";
-    public static final String ID = "text";
+//    public static final String SHARED_ROUTINE = "routine_id";
+//    public static final String ID = "text";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,12 +307,16 @@ public class Home extends AppCompatActivity {
 
     //Shared Prefs
     public void loadSaved(){
-        SharedPreferences prefs = getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
+        SharedPreferences prefs = this.getSharedPreferences(SHARED_ROUTINE ,MODE_PRIVATE);
+
         String routine =  prefs.getString(ID,"None");
+
+        Toast.makeText(this,  routine, Toast.LENGTH_LONG).show();
     }
 
     //Navigation drawer function START:
     public void clickMenu(View view){
+        loadSaved();
         openDrawer(drawer);
     }
 
