@@ -19,7 +19,7 @@ public class MyApplication extends Application {
 
     public static String curUser;
 
-    //单例模式获取MyApplication
+    //
     public static MyApplication getInstance() {
         return singleton;
     }
