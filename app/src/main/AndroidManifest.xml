@@ -36,7 +36,7 @@
             <!--             </intent-filter>-->
         </activity>
         <activity android:name=".DBTestActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".CourseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
