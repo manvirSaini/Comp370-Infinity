@@ -56,7 +56,7 @@ public class Home extends AppCompatActivity {
     private long mEndTime;
     private static long MILL_IN_FUTURE;
 
-    private int currentRoutineID = 0;
+    private String currentRoutine = "";
     private List<Routine> routineList;
     ArrayList<Event> eve;
     private CountDownTimer countDownTimer;
@@ -84,7 +84,7 @@ public class Home extends AppCompatActivity {
         } else {
             Log.i("BEGIN", "When button text does not match anyone!");
 
-            if (currentRoutineID == 0) {
+            if (currentRoutine == "") {
                 // toast message please select the routine first
                 Toast.makeText(Home.this, "Please select the routine First!",
                         Toast.LENGTH_LONG).show();
@@ -126,47 +126,15 @@ public class Home extends AppCompatActivity {
         homeViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 Home.this.getApplication()).create(HomeViewModel.class);
 
-        // insert values into database
-        Period studyPeriod = new Period(Period.Devotion.STUDY, 60);
-        Period breakPeriod = new Period(Period.Devotion.BREAK, 15);
-
-        ArrayList<Period> arr = new ArrayList<>();
-        arr.add(studyPeriod);
-        arr.add(breakPeriod);
-
-        Event event = new Event(arr, 0);
-        Event event1 = new Event(arr, 1);
-//        eve.add(event);
-//        eve.add(event1);
-
-        ArrayList<Event> ev = new ArrayList<>();
-
-        boolean[] week = {false, true, false, true, false, false, true};
-
-        Routine r = new Routine("Routine1", week, 13, 05, ev);
-        Routine r2 = new Routine("Routine2", week, 13, 05, ev);
-        Routine r3 = new Routine("Routine3", week, 15, 15, ev);
-        Routine r4 = new Routine("Routine4", week, 10, 25, ev);
-        //inserting routines
-//        homeViewModel.deleteAll();
-//        homeViewModel.insert(r);
-//        homeViewModel.insert(r2);
-//        homeViewModel.insert(r3);
-//        homeViewModel.insert(r4);
 
         LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
-        ArrayList<Integer> listId = new ArrayList<>();
         routineLiveData.observe(this, routines -> {
             routineList = routines;
             ArrayList<String> routineSpinnerArray = new ArrayList<>();
-            //routineSpinnerArray.add("NONE");
-            //int selectedRoutinePosition = 0;
-            for (int i = 0; i < routines.size(); i++) {
+            routineSpinnerArray.add("NONE");
+            for(int i = 0; i < routines.size(); i++) {
                 Log.d("TAG", String.valueOf(routines.get(i)));
                 routineSpinnerArray.add(routines.get(i).getTitle());
-                int id = routines.get(i).getId();
-                Log.d("This id for routine", String.valueOf(id));
-                listId.add(id);
             }
             Log.d("TAG", String.valueOf(routineSpinnerArray));
 
@@ -182,31 +150,17 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
-                    Log.i("list1 id :", String.valueOf(listId.get(position)));
                     Log.i("parent getting id :", String.valueOf(parent.getSelectedItemId()));
-                    currentRoutineID = listId.get(position); // set the current routine's ID according to the selected routine
+                    currentRoutine = (String) parent.getItemAtPosition(position); // set the current routine's ID according to the selected routine
 
-                    homeViewModel.get(currentRoutineID).observe(Home.this, routine -> {
+                    homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
                         Log.i("HOME", "Inside of current routine");
                         eve = new ArrayList<Event>();
-//                    eve = routine.getEvents(); // populate the Periods Array List
-                        Period studyPeriod = new Period(Period.Devotion.STUDY, 60);
-                        Period breakPeriod = new Period(Period.Devotion.BREAK, 15);
-
-                        ArrayList<Period> arr = new ArrayList<>();
-                        arr.add(studyPeriod);
-                        arr.add(breakPeriod);
-                        Event event = new Event(arr, 0);
-                        Event event1 = new Event(arr, 1);
-                        eve.add(event);
-                        eve.add(event1);
+                        eve = routine.getEvents();
                         for (Event i : eve) {
-                            //startTimer(i.getStudyMinutes());
-                            //startTimer(i.getBreakMinutes());
-
                             Log.i("HOME", "Period study: " + i.getStudyMinutes());
+                            Log.i("HOME", "Period study: " + i.describeContents());
                             Log.i("HOME", "Period break: " + i.getBreakMinutes());
-
                         }
                     });
 
