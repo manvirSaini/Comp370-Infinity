@@ -432,17 +432,20 @@ public class Home extends AppCompatActivity {
 
     //Shared Prefs
     //TODO: Remove toast
-    public void loadSaved(){
-        SharedPreferences prefs = this.getSharedPreferences(SHARED_ROUTINE ,MODE_PRIVATE);
+    public void loadSavedRoutine(){
 
-        String routine =  prefs.getString(ID,"None");
+        if(!timerRunning){
+            SharedPreferences prefs = this.getSharedPreferences(SHARED_ROUTINE ,MODE_PRIVATE);
 
-        Toast.makeText(this,  routine, Toast.LENGTH_LONG).show();
+            String routine =  prefs.getString(ID,"None");
+
+            Toast.makeText(this,  routine, Toast.LENGTH_LONG).show();
+        } 
     }
 
     //Navigation drawer function START:
     public void clickMenu(View view){
-        loadSaved();
+        loadSavedRoutine();
         openDrawer(drawer);
     }
 
@@ -484,7 +487,4 @@ public class Home extends AppCompatActivity {
         closeDrawer(drawer);
     }
     //END of navigation drawer functions
-    }
-//                });
-//        }
-//    }
+}
