@@ -20,34 +20,6 @@
             </intent-filter>
         </activity>
 
-
-<!--        <activity-->
-<!--            android:name=".NavigationDrawerActivity"-->
-<!--            android:label="@string/title_activity_navigation_drawer"-->
-<!--            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
-<!--        <activity android:name=".DBTestActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
-<!--        <activity android:name=".MainActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
         <activity
             android:name=".RoutinesActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -60,19 +32,11 @@
             android:parentActivityName=".RoutinesActivity">
         </activity>
 
-<!--        <activity android:name=".PeriodsEditActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
         <activity
             android:name=".AssignmentsActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
 
@@ -84,8 +48,13 @@
             android:parentActivityName=".RoutinesAddActivity">
         </activity>
 
-        <activity android:name=".CourseActivity"
-            android:parentActivityName=".RoutinesAddActivity">
+        <activity
+            android:name=".CourseActivity"
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
+        </activity>
+
+        <activity android:name=".AddActivity"
+            android:parentActivityName=".CourseActivity">
         </activity>
 
     </application>
