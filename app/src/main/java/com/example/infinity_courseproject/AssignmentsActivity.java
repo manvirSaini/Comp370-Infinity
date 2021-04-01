@@ -254,7 +254,7 @@ public class AssignmentsActivity extends Home
 
     //TODO: Make sure redirects go to desired activity
     public void clickCourse(View view){
-        redirectActivity(this, Home.class);
+        redirectActivity(this, CourseActivity.class);
     }
 
     public void clickSetting(View view){

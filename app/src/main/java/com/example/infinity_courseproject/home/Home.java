@@ -26,6 +26,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
+import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.courses.Course;
@@ -474,6 +475,10 @@ public class Home extends AppCompatActivity {
 
     public void clickRoutine(View view){
         redirectActivity(this, RoutinesActivity.class);
+    }
+
+    public void clickCourse(View view){
+        redirectActivity(this, CourseActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

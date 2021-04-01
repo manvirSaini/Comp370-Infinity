@@ -293,6 +293,10 @@ public class RoutinesActivity extends Home
         recreate();
     }
 
+    public void clickCourse(View view){
+        redirectActivity(this, Home.class);
+    }
+
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag
