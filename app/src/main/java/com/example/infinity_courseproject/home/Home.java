@@ -89,7 +89,7 @@ public class Home extends AppCompatActivity {
                 Toast.makeText(Home.this, "Please select the routine First!",
                         Toast.LENGTH_LONG).show();
             } else {
-                // this is begin button which will get data from datbase and begin the timer
+                // this is begin button which will get data from database and begin the timer
                 timer.run();
                 beginButton.setText("PAUSE");
             }
@@ -244,7 +244,7 @@ public class Home extends AppCompatActivity {
             timerRunning = false;
             MILL_IN_FUTURE = (counter_arr[timer_counter]) * 60 * 1000;
             progress_counter = 0;
-            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
             startTimer(MILL_IN_FUTURE);
             // I want to run the timer back to back
 //            int arr [] = {1,3,4,5}; (* 60 * 1000)

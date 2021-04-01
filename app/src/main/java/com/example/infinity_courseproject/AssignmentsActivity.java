@@ -252,6 +252,15 @@ public class AssignmentsActivity extends MainActivity
         redirectActivity(this, RoutinesActivity.class);
     }
 
+    //TODO: Make sure redirects go to desired activity
+    public void clickCourse(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, Home.class);
+    }
+
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag
