@@ -55,6 +55,7 @@ dependencies {
     //local date time
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-
+ 
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
 }
