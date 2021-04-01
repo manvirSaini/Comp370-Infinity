@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends MainActivity
+public class AssignmentsActivity extends Home
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";

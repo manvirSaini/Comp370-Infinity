@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutinesActivity extends MainActivity
+public class RoutinesActivity extends Home
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;

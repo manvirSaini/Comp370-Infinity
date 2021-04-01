@@ -26,7 +26,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
-import com.example.infinity_courseproject.MainActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.courses.Course;
