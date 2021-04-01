@@ -154,13 +154,13 @@ public class MainActivity extends AppCompatActivity {
             //init view
             TextView tv_1 = holder.getView(R.id.tv_1);
             TextView tv_2 = holder.getView(R.id.tv_2);
-            TextView tv_3 = holder.getView(R.id.tv_3);
+
             LinearLayout layout_item = holder.getView(R.id.layout_item);
 
             //set view
             tv_1.setText(bean.getTitle());
             tv_2.setText(bean.getProfessor());
-            tv_3.setText(bean.getDescription());
+
 
             layout_item.setOnClickListener(new View.OnClickListener() {
                 @Override

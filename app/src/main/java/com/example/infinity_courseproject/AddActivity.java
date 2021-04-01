@@ -1,7 +1,9 @@
 package com.example.infinity_courseproject;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +16,7 @@ import com.example.infinity_courseproject.courses.Course2;
 import org.greenrobot.eventbus.EventBus;
 
 public class AddActivity extends AppCompatActivity {
-    TextView tv_done, tv_cancel, tv_title;
+    TextView   tv_title;
     EditText et_0, et_1, et_2;
     Course2 bean;
     int posi;
@@ -28,29 +30,27 @@ public class AddActivity extends AppCompatActivity {
         et_0 = findViewById(R.id.et_0);
         et_1 = findViewById(R.id.et_1);
         et_2 = findViewById(R.id.et_2);
-        tv_done = findViewById(R.id.tv_done);
-        tv_cancel = findViewById(R.id.tv_cancel);
         tv_title = findViewById(R.id.tv_title);
         //set view
         posi = getIntent().getIntExtra("pos", 0);
         bean = (Course2) getIntent().getSerializableExtra("bean");
         if (bean == null) {
-            tv_title.setText("add");
+            tv_title.setText("Add");
         } else {
-            tv_title.setText("modify");
+            tv_title.setText("Modify");
             et_0.setText(bean.getTitle());
             et_1.setText(bean.getProfessor());
             et_2.setText(bean.getDescription());
         }
 
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        tv_done.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
