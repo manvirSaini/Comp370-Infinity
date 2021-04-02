@@ -21,11 +21,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="divider_line_d8d8d8">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">#D8D8D8</item>
-    </style>
 
     <style name="Theme.InfinityCourseProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
