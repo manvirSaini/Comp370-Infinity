@@ -3,7 +3,6 @@ package com.example.infinity_courseproject.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,14 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
-import com.example.infinity_courseproject.MainActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
-import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -50,6 +45,7 @@ public class Home extends AppCompatActivity {
     ProgressBar progressBar;
     TextView countdownText;
     private Spinner menuSpinText;
+    TextView periodStatus;
     private Handler mHandler = new Handler();
     private Boolean timerRunning = false;
     private long leftTime;
@@ -61,6 +57,7 @@ public class Home extends AppCompatActivity {
     ArrayList<Event> eve;
     private CountDownTimer countDownTimer;
     int counter_arr[] = {1, 2, 3};
+    private ArrayList<Period> periods;
     int timer_counter, progress_counter = 0;
 
     // when begin button is clicked
@@ -84,7 +81,7 @@ public class Home extends AppCompatActivity {
         } else {
             Log.i("BEGIN", "When button text does not match anyone!");
 
-            if (currentRoutine == "") {
+            if (currentRoutine == "" || currentRoutine == "NONE") {
                 // toast message please select the routine first
                 Toast.makeText(Home.this, "Please select the routine First!",
                         Toast.LENGTH_LONG).show();
@@ -116,7 +113,7 @@ public class Home extends AppCompatActivity {
         countdownText = findViewById(R.id.countDownTextView);
         beginButton = findViewById(R.id.GoButton);
         showDueButton = findViewById(R.id.datesButton);
-
+        periodStatus = findViewById(R.id.statusTextView);
 
         // timer handler
 
@@ -126,8 +123,8 @@ public class Home extends AppCompatActivity {
         homeViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 Home.this.getApplication()).create(HomeViewModel.class);
 
-
         LiveData<List<Routine>> routineLiveData = homeViewModel.getAllRoutines();
+
         routineLiveData.observe(this, routines -> {
             routineList = routines;
             ArrayList<String> routineSpinnerArray = new ArrayList<>();
@@ -152,32 +149,39 @@ public class Home extends AppCompatActivity {
                     Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
                     Log.i("parent getting id :", String.valueOf(parent.getSelectedItemId()));
                     currentRoutine = (String) parent.getItemAtPosition(position); // set the current routine's ID according to the selected routine
-
-                    homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
-                        Log.i("HOME", "Inside of current routine");
-                        eve = new ArrayList<Event>();
-                        eve = routine.getEvents();
-                        for (Event i : eve) {
-                            Log.i("HOME", "Period study: " + i.getStudyMinutes());
-                            Log.i("HOME", "Period study: " + i.describeContents());
-                            Log.i("HOME", "Period break: " + i.getBreakMinutes());
-                        }
-                    });
-
-                    // when item is selected
-                    // reset progress, timer
-                    if (timerRunning) {
-                        countDownTimer.cancel();
+                    Log.i("HOME", "Currently selected routine" + currentRoutine);
+                    if (currentRoutine != "NONE") {
+                        homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
+                            Log.i("HOME", "Inside of current routine");
+                            eve = new ArrayList<Event>();
+                            periods = new ArrayList<Period>();
+                            eve = routine.getEvents();
+                            for (Event i : eve) {
+                                periods.add(i.getPeriodAtIndex(0));
+                                periods.add(i.getPeriodAtIndex(1));
+                                //Log.i("HOME", "Period getPeriodAtIndex: " + p.getDevotion());
+                            }
+//                            Log.i("HOME","I will be checking values stored in my periods arraylist");
+//                            for(int i=0;i<periods.size();i++){
+//                                Log.i("HOME","This is devotion: "+periods.get(i).getDevotion());
+//                                Log.i("HOME","This is devotion: "+periods.get(i).getMinutes());
+//                            }
+                        });
                     }
-                    leftTime = 0;
-                    //mHandler.removeCallbacks(timer);
-                    progressBar.setProgress(0);
-                    progress_counter = 0;
-                    timer_counter = 0;
-                    beginButton.setText("BEGIN");
-                    countdownText.setText("00:00");
-                }
+                        // when item is selected
+                        // reset progress, timer
+                        if (timerRunning) {
+                            countDownTimer.cancel();
+                        }
+                        leftTime = 0;
+                        //mHandler.removeCallbacks(timer);
+                        progressBar.setProgress(0);
+                        progress_counter = 0;
+                        timer_counter = 0;
+                        beginButton.setText("BEGIN");
+                        countdownText.setText("00:00");
 
+                }
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     // probably method to setup default value for this part
@@ -196,9 +200,10 @@ public class Home extends AppCompatActivity {
         public void run() {
             //Log.i("RUN","To see if it still runs when timer is stopped");
             timerRunning = false;
-            MILL_IN_FUTURE = (counter_arr[timer_counter]) * 60 * 1000;
+            MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
+            periodStatus.setText(""+periods.get(timer_counter).getDevotion());
             progress_counter = 0;
-            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
             startTimer(MILL_IN_FUTURE);
             // I want to run the timer back to back
 //            int arr [] = {1,3,4,5}; (* 60 * 1000)
@@ -272,8 +277,23 @@ public class Home extends AppCompatActivity {
 // Try progress to update only once
 
 // methods for saving the state and getting it back
+
+
+    @Override
+    protected void onResume() {
+        Log.i("RESUME","On Resume was called!");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.i("PAUSE","ON PAUSE was called!");
+        super.onPause();
+    }
+
     @Override
     protected void onStop() {
+        Log.i("HOME","ON STOP Activity is called!");
         super.onStop();
         SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -289,6 +309,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        Log.i("HOME","ON START Activity is called!");
         super.onStart();
         SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         leftTime = prefs.getLong("MILLIS_LEFT", 0);

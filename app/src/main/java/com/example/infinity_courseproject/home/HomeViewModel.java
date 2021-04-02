@@ -31,7 +31,6 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public LiveData<Routine> getByTitle(String routineTitle) {
-
         return repository.getByTitle(routineTitle);
     }
 
@@ -50,6 +49,5 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData <Routine> get(int id){
         return repository.get(id);
     }
-
 
 }
