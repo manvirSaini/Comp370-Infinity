@@ -1,6 +1,7 @@
 package com.example.infinity_courseproject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +21,7 @@ import com.example.infinity_courseproject.base.BaseRecyclerAdapter;
 import com.example.infinity_courseproject.base.EventBus_Tag;
 import com.example.infinity_courseproject.base.MyRVViewHolder;
 import com.example.infinity_courseproject.courses.Course2;
+import com.example.infinity_courseproject.home.Home;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,19 +30,29 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseActivity extends AppCompatActivity {
+
+public class CourseActivity extends Home {
     RecyclerView lv;
 
     private List<Course2> itemBeanList = new ArrayList();
     private MyAdapter myAdapter;
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.course_main);
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().register(this);
+
+        //initialize navigation drawer
+        drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Courses");
 
         lv = findViewById(R.id.lv);
 
@@ -175,6 +189,58 @@ public class CourseActivity extends AppCompatActivity {
         }
     }
 
+    //Navigation drawer function START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
+    }
 
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clickHome(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public void clickAssignment(View view){
+        redirectActivity(this, AssignmentsActivity.class);
+    }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+    public void clickCourse(View view){
+        recreate();
+    }
+
+    //TODO: Make sure redirects go to desired activity
+    public void clickSetting(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 }
 

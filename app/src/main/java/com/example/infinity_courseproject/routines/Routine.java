@@ -11,6 +11,7 @@ import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Entity class defining a routine, where a routine is a sequence of events, which are themselves
@@ -60,6 +61,7 @@ public class Routine {
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.events = events;
+        this.events = events;
     }
 
     public int getTotalTimeInMinutes() {
@@ -68,6 +70,18 @@ public class Routine {
             sum += e.getTotalTimeInMinutes();
         }
         return sum;
+    }
+
+    @Override
+    public String toString() {
+        return "Routine{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", weekdays=" + Arrays.toString(weekdays) +
+                ", startHour=" + startHour +
+                ", startMinute=" + startMinute +
+                ", events=" + events +
+                '}';
     }
 
     public String getTotalTimeInHoursAndMinutes() {

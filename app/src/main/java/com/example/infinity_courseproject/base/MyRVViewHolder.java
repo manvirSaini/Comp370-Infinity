@@ -8,6 +8,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+/**
+ * Created by seven on 2017/3/16.
+ */
+
 public class MyRVViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
 
@@ -17,6 +21,7 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
     }
 
     //
+
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
