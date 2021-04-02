@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 
 import java.io.File;
 
+/**
+ * Created by Youzi on 2017/8/16.
+ */
 
 public class EventBus_Tag {
     private int tag;
@@ -18,6 +21,7 @@ public class EventBus_Tag {
     private Bitmap bitmap;
     private File file;
     private Object object;
+
     public EventBus_Tag(int tag, Object object ) {
         this.tag = tag;
         this.object = object;
