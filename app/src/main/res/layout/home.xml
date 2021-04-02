@@ -17,8 +17,8 @@
             layout="@layout/main_toolbar"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView"
@@ -45,8 +45,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="142dp"
                 android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"
                 android:prompt="@string/select"
+                android:spinnerMode="dropdown"
                 app:layout_constraintBottom_toTopOf="@+id/progress_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
@@ -76,8 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <ProgressBar
@@ -102,6 +101,18 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="276dp"
+                android:layout_height="81dp"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/progress_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.866"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner1"
+                app:layout_constraintVertical_bias="0.574" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
