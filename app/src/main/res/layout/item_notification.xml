@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
          android:ellipsize="end"
         android:maxLines="2"
-        android:text="name"
+        android:text="assignment title"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -48,7 +48,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="5dp"
-        android:text="Things"
+        android:text="Remaining time"
         android:textColor="@color/colorAccent"
         android:textSize="17sp" />
 
@@ -62,7 +62,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="5dp"
-        android:text="Items"
+        android:text="Due days"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp" />
 
