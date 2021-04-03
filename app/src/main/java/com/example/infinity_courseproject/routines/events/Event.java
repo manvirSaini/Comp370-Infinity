@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 /**
  * The Event class may be associated with a Course, and is composed of periods.
- * Position ensures the order of events in a routine.
  */
 public class Event implements Parcelable {
     private ArrayList<Period> periods;

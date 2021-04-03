@@ -2,7 +2,6 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -79,7 +78,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.assignments_add);
+        setContentView(R.layout.assignments_add_edit);
 
         //initialize UI components
         enterTitle = findViewById(R.id.add_assignment_title_edittext);

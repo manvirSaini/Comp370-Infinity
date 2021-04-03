@@ -2,20 +2,16 @@ package com.example.infinity_courseproject.roomDatabase;
 
 import androidx.room.TypeConverter;
 
-import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
 import com.example.infinity_courseproject.routines.events.Event;
-import com.example.infinity_courseproject.routines.periods.Period;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Converters {
 
-    //routines
     @TypeConverter
     public static boolean[] fromStringToBooleanArray(String value) {
         Type listType = new TypeToken<boolean[]>() {}.getType();
@@ -40,7 +36,7 @@ public class Converters {
         return gson.toJson(list);
     }
 
-    //assignments
+
     @TypeConverter
     public static LocalDateTime toDate(String dateString) {
         if (dateString == null) {
