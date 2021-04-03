@@ -20,12 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
 import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
+import com.example.infinity_courseproject.assignments.Assignment;
+import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -60,6 +63,8 @@ public class Home extends AppCompatActivity {
     int counter_arr[] = {1, 2, 3};
     private ArrayList<Period> periods;
     int timer_counter, progress_counter = 0;
+
+    LiveData<List<Assignment>> assignmentLiveData;
 
     // when begin button is clicked
     public void buttonClicked(View View) {
@@ -190,7 +195,28 @@ public class Home extends AppCompatActivity {
                 }
             });
         });
+
+        AssignmentViewModel assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(AssignmentViewModel.class);
+        //get and observe routines
+        assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
+
+
+        assignmentLiveData.observe(this, new Observer<List<Assignment>>() {
+            @Override
+            public void onChanged(List<Assignment> assignments) {
+                Log.v("----------",assignments.toString());
+            }
+        });
+
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, NotificationAtivity.class));
+            }
+        });
     }
+
 
     public void datesButton(View view) {
         // stop repeating task
