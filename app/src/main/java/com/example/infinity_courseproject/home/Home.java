@@ -66,6 +66,10 @@ public class Home extends AppCompatActivity {
 
     LiveData<List<Assignment>> assignmentLiveData;
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
+
     // when begin button is clicked
     public void buttonClicked(View View) {
         String ButtonText = beginButton.getText().toString();
@@ -99,9 +103,6 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    //navigation drawer stuff
-    static DrawerLayout drawer;
-    TextView toolbarName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +210,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.datesButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Home.this, NotificationAtivity.class));

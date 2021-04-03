@@ -1,21 +1,29 @@
 package com.example.infinity_courseproject.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.infinity_courseproject.AssignmentsActivity;
+import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
+import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.base.BaseActivity;
@@ -59,6 +67,9 @@ public class NotificationAtivity extends BaseActivity {
     private List<Assignment> itemBeanList = new ArrayList();
     private MyAdapter myAdapter;
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
 
     @Override
     protected void setContent() {
@@ -68,6 +79,11 @@ public class NotificationAtivity extends BaseActivity {
 
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().register(this);
+
+        //initialize navigation drawer
+        drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Upcoming");
     }
 
 
@@ -229,6 +245,60 @@ public class NotificationAtivity extends BaseActivity {
         isShow = true;
         startCycle();
     }
+
+    //Navigation drawer function START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
+    }
+
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clickHome(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public void clickAssignment(View view){
+        redirectActivity(this, AssignmentsActivity.class);
+    }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+    //TODO: Make sure redirects go to desired activity
+    public void clickCourse(View view){
+        redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 
 
 }
