@@ -20,7 +20,7 @@
 //
 //public class CourseDialog extends BaseDialog {
 //
-//    TextView tv_done, tv_cancel, tv_title;
+//    TextView tv_commit, tv_cancel, tv_title;
 //    EditText et_0, et_1, et_2;
 //    Course2 bean;
 //    int posi;
@@ -39,7 +39,7 @@
 //        et_0 = window.findViewById(R.id.et_0);
 //        et_1 = window.findViewById(R.id.et_1);
 //        et_2 = window.findViewById(R.id.et_2);
-//        tv_done = window.findViewById(R.id.tv_done);
+//        tv_commit = window.findViewById(R.id.tv_commit);
 //        tv_cancel = window.findViewById(R.id.tv_cancel);
 //        tv_title = window.findViewById(R.id.tv_title);
 //        //set view
@@ -59,7 +59,7 @@
 //            }
 //        });
 //
-//        tv_done.setOnClickListener(new View.OnClickListener() {
+//        tv_commit.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //
