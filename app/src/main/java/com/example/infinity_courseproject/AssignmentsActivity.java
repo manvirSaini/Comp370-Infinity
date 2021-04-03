@@ -2,11 +2,8 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,11 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,18 +23,11 @@ import android.widget.TextView;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
-import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
-import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
-import com.example.infinity_courseproject.routines.Routine;
-import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
-import com.example.infinity_courseproject.routines.RoutineViewModel;
-import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -82,10 +70,6 @@ public class AssignmentsActivity extends Home
                 startActivity(new Intent(AssignmentsActivity.this, Home.class));
             }
         });
-
-
-//        Course c = new Course("I AM ALIVE", "I", "said");
-//        CourseViewModel.insert(c);
 
         //initialize recyclerview
         assignmentRecyclerView = findViewById(R.id.assignment_recyclerview);

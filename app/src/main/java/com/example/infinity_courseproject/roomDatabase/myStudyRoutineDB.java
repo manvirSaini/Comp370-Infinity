@@ -39,8 +39,6 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
 
     /**
      * Executor services - used to run extra threads in the background
-     * Note that this is used to implement insert methods, and currently may lead to poorly ordered
-     * thread executions resulting in database failure
      */
     //this executor is used when the order of inputs matters (useful for testing,
     //as it makes sure that a course is entered into the DB before associated assignments)

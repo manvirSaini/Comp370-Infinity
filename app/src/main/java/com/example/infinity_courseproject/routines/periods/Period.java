@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 /**
  * The Period class is a period of time within an event, and may be devoted to a break or studying.
- * Position ensures the order of periods in an event.
  */
 public class Period implements Parcelable {
     public enum Devotion {STUDY, BREAK}
