@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.infinity_courseproject.assignments.Assignment;
+
 import java.util.List;
 
 public class RoutineViewModel extends AndroidViewModel {
@@ -46,5 +48,9 @@ public class RoutineViewModel extends AndroidViewModel {
 
     public static void deleteAll() {
         repo.deleteAll();
+    }
+
+    public Routine getImmediate(String title) {
+        return repo.getImmediate(title);
     }
 }

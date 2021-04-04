@@ -380,8 +380,14 @@ public class Home extends AppCompatActivity {
 
         currentRoutine = prefs.getString("SPINNER_SELECT", "NONE");
         // current routine's value is NONE then do not proceed else proceed further
-//         if(currentRoutine !="NONE"){
+
+         if(HomeViewModel.getRoutine(currentRoutine) == null){
+             currentRoutine = "NONE";
+             routineRunning = false;
+         }
+
         if (routineRunning) {
+
             //Log.i("SPINNER", (String) menuSpinText.getItemAtPosition(0));
             //menuSpinText.setSelection( ((ArrayAdapter)menuSpinText.getAdapter()).getPosition(currentRoutine));
             leftTime = prefs.getLong("LEFT_TIME", 0);

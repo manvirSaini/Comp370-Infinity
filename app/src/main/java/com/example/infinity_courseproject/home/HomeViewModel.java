@@ -50,4 +50,8 @@ public class HomeViewModel extends AndroidViewModel {
         return repository.get(id);
     }
 
+    public static Routine getRoutine(String title){
+        return repository.getImmediate(title);
+    }
+
 }

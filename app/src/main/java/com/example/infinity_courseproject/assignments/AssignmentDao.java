@@ -13,7 +13,7 @@ import com.example.infinity_courseproject.routines.Routine;
 import java.util.List;
 
 @Dao
-public interface AssignmentDao {
+public interface  AssignmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Assignment assignment);
 
