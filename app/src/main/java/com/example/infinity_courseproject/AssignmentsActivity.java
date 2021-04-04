@@ -1,66 +1,71 @@
 package com.example.infinity_courseproject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
-import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
-import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
-import com.example.infinity_courseproject.routines.Routine;
-import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
-import com.example.infinity_courseproject.routines.RoutineViewModel;
-import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends AppCompatActivity
+public class AssignmentsActivity extends Home
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";
 
-    private Spinner showSpinner; //spinner to display filtering options
     public enum AssignmentFilterBy {ALL, NEUTRAL, COMPLETE, UPCOMING, OVERDUE}
     private static AssignmentFilterBy filter = AssignmentFilterBy.ALL; //by default
 
     private AssignmentViewModel assignmentViewModel;
     private CourseViewModel courseViewModel;
 
-    private LiveData<List<Assignment>> assignmentLiveData;
     private List<Assignment> assignmentCopiedData;
     private AssignmentRecViewAdapter assignmentRecViewAdapter;
     private RecyclerView assignmentRecyclerView;
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignments_main);
-        findViewById(R.id.xiaoxi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(AssignmentsActivity.this, Home.class));
-            }
-        });
+
+        //initialize navigation drawer
+        drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Assignments");
+
+
+        findViewById(R.id.xiaoxi).setOnClickListener(view -> startActivity(new Intent(AssignmentsActivity.this, Home.class)));
+
+
 //        Course c = new Course("I AM ALIVE", "I", "said");
 //        CourseViewModel.insert(c);
 
@@ -77,23 +82,21 @@ public class AssignmentsActivity extends AppCompatActivity
         assignmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get and observe routines
-        assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
+        LiveData<List<Assignment>> assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
         assignmentCopiedData = assignmentLiveData.getValue();
 
-        assignmentLiveData.observe(this, new Observer<List<Assignment>>() {
-            @Override
-            public void onChanged(List<Assignment> assignments) {
-                assignmentCopiedData = assignments;
-                assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
-                        AssignmentsActivity.this, assignmentViewModel, courseViewModel,
-                        AssignmentsActivity.this);
+        assignmentLiveData.observe(this, assignments -> {
+            assignmentCopiedData = assignments;
+            assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
+                    AssignmentsActivity.this, assignmentViewModel, courseViewModel,
+                    AssignmentsActivity.this);
 
-                assignmentRecyclerView.setAdapter(assignmentRecViewAdapter);
-            }
+            assignmentRecyclerView.setAdapter(assignmentRecViewAdapter);
         });
 
         //initialize filter spinner array
-        showSpinner = findViewById(R.id.assignment_show_spinner);
+        //spinner to display filtering options
+        Spinner showSpinner = findViewById(R.id.assignment_show_spinner);
 
         //populate filter spinner array
         ArrayList<String> showSpinnerArray = new ArrayList<>();
@@ -104,7 +107,7 @@ public class AssignmentsActivity extends AppCompatActivity
         showSpinnerArray.add("Overdue");
 
         //create and set spinner adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AssignmentsActivity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AssignmentsActivity.this,
                 android.R.layout.simple_spinner_item, showSpinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         showSpinner.setAdapter(adapter);
@@ -168,6 +171,7 @@ public class AssignmentsActivity extends AppCompatActivity
         startActivityForResult(intent, ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -201,8 +205,55 @@ public class AssignmentsActivity extends AppCompatActivity
         return filter;
     }
 
-    public static void setFilter(AssignmentFilterBy filter) {
-        AssignmentsActivity.filter = filter;
+    //Navigation drawer function START:
+    public void clickMenu(View view){
+        openDrawer(drawer);
     }
 
+    public static void openDrawer(DrawerLayout drawer) {
+
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clickHome(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public void clickAssignment(View view){ recreate(); }
+
+    public void clickRoutine(View view){
+        redirectActivity(this, RoutinesActivity.class);
+    }
+
+    //TODO: Make sure redirects go to desired activity
+    public void clickCourse(View view){
+//        redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 }

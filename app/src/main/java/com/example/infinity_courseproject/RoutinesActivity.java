@@ -2,18 +2,28 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.routines.Routine;
@@ -26,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutinesActivity extends AppCompatActivity
+public class RoutinesActivity extends Home
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
@@ -45,11 +55,23 @@ public class RoutinesActivity extends AppCompatActivity
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
 
+    //navigation drawer stuff
+    static DrawerLayout drawer;
+    TextView toolbarName;
+
+    //For setting master routine
+    public static final String SHARED_ROUTINE = "routine_id";
+    public static final String ID = "text";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_main);
 
+        //Initialize Navigation Drawer
+        drawer = findViewById(R.id.drawer_layout);
+        toolbarName = findViewById(R.id.toolbar_name);
+        toolbarName.setText("Routines");
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);
@@ -163,6 +185,7 @@ public class RoutinesActivity extends AppCompatActivity
 
         });
 
+
     }
 
     //______________________________________________________________________________________________
@@ -225,4 +248,63 @@ public class RoutinesActivity extends AppCompatActivity
     public static void setFilter(RoutineFilterBy filter) {
         RoutinesActivity.filter = filter;
     }
+
+    // TODO: remove toast
+    public  void saveData(){
+        SharedPreferences prefs = getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(ID, masterRoutineSpinner.getSelectedItem().toString());
+        editor.commit();
+
+        Toast.makeText(this, masterRoutineSpinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+
+    }
+
+    //Navigation drawer functions START:
+    public void clickMenu(View view){
+        saveData();
+        openDrawer(drawer);
+    }
+
+    public static void openDrawer(DrawerLayout drawer) {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void clickIcon(View view){
+        closeDrawer(drawer);
+    }
+
+    public static void closeDrawer(DrawerLayout drawer) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clickHome(View view){
+        redirectActivity(this, Home.class);
+    }
+
+    public void clickAssignment(View view){
+        redirectActivity(this, AssignmentsActivity.class);
+    }
+
+    public void clickRoutine(View view){
+        recreate();
+    }
+
+    public void clickCourse(View view){
+//        redirectActivity(this, CourseActivity.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
+        //Set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        activity.startActivity(intent);
+
+        closeDrawer(drawer);
+    }
+    //END of navigation drawer functions
 }

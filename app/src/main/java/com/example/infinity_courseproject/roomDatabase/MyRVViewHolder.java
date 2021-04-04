@@ -1,25 +1,25 @@
-package com.example.infinity_courseproject.base;
+package com.example.infinity_courseproject.roomDatabase;
 
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
- * Created by seven on 2017/3/16.
+ *
  */
 
 public class MyRVViewHolder extends RecyclerView.ViewHolder {
-    private SparseArray<View> mViews;
+    private final SparseArray<View> mViews;
 
     public MyRVViewHolder(View itemView) {
         super(itemView);
         mViews = new SparseArray<>();
     }
 
+    //
 
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
@@ -31,7 +31,7 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     *
+     * Set the value of TextView
      */
     public MyRVViewHolder setText(int viewId, String text) {
         TextView tv = getView(viewId);
@@ -39,13 +39,7 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public MyRVViewHolder setImageResource(int viewId, int resId) {
-        ImageView view = getView(viewId);
-        view.setImageResource(resId);
-        return this;
-    }
-
-//    public MyRVViewHolder setImageURI(Context context, int viewId, String url, int defultPicResId) {
+    //    public MyRVViewHolder setImageURI(Context context, int viewId, String url, int defultPicResId) {
 //        ImageView view = getView(viewId);
 //        ImageUtil.displayImage(view, url, context, defultPicResId);
 //        return this;

@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
-import com.example.infinity_courseproject.base.BaseActivity;
-import com.example.infinity_courseproject.base.BaseRecyclerAdapter;
-import com.example.infinity_courseproject.base.DateUtil;
-import com.example.infinity_courseproject.base.EventBus_Tag;
-import com.example.infinity_courseproject.base.MyRVViewHolder;
-import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.BaseRecyclerAdapter;
+import com.example.infinity_courseproject.roomDatabase.DateUtil;
+import com.example.infinity_courseproject.roomDatabase.EventBus_Tag;
+import com.example.infinity_courseproject.roomDatabase.MyRVViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,35 +34,29 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-public class NotificationAtivity extends BaseActivity {
+
+public class NotificationActivity extends BaseActivity {
 
 
-    @BindView(R.id.lv)
     RecyclerView lv;
 
 
-    @BindView(R.id.tv1)
     TextView tv1;
-    @BindView(R.id.layout0)
     LinearLayout layout0;
 
-    private AssignmentViewModel assignmentViewModel;
-    private CourseViewModel courseViewModel;
-    private LiveData<List<Assignment>> assignmentLiveData;
-
-    private List<Assignment> itemBeanList = new ArrayList();
+    private final ArrayList<Assignment> itemBeanList = new ArrayList<>();
     private MyAdapter myAdapter;
+
+    public NotificationActivity() {
+    }
 
 
     @Override
     protected void setContent() {
         super.setContent();
         setContentView(R.layout.activity_notification);
-        ButterKnife.bind(this);
 
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().register(this);
@@ -74,13 +66,14 @@ public class NotificationAtivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initData() {
+        lv =findViewById(R.id.lv);  tv1 =findViewById(R.id.tv1);  layout0 =findViewById(R.id.layout0);
 
         @SuppressLint("WrongConstant")
-        LinearLayoutManager manager = new LinearLayoutManager(NotificationAtivity.this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
         if (null == manager)
             return;
         lv.setLayoutManager(manager);
-        myAdapter = new MyAdapter(NotificationAtivity.this, itemBeanList, R.layout.item_notification);
+        myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
 
 
@@ -95,26 +88,20 @@ public class NotificationAtivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     class MyAdapter extends BaseRecyclerAdapter<Assignment> {
 
-        private TextView tv_name, tv_content, tv_time;
-        private int selPosi;
-
-        public void setSelPosi(int selPosi) {
-            this.selPosi = selPosi;
-        }
-
         public MyAdapter(Context context, List<Assignment> datas, int layoutId) {
             super(context, datas, layoutId);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void setView(MyRVViewHolder holder, final Assignment bean, int position) {
             if (null == holder || null == bean)
                 return;
             //init view
 
-            tv_name = holder.getView(R.id.tv_name);
-            tv_content = holder.getView(R.id.tv_content);
-            tv_time = holder.getView(R.id.tv_time);
+            TextView tv_name = holder.getView(R.id.tv_name);
+            TextView tv_content = holder.getView(R.id.tv_content);
+            TextView tv_time = holder.getView(R.id.tv_time);
 
             TextView tv_time2 = holder.getView(R.id.tv_time2);
 
@@ -137,50 +124,43 @@ public class NotificationAtivity extends BaseActivity {
             }
             Log.v("----------222", tt + "");
 
-            Long sy = Long.parseLong(td) - System.currentTimeMillis();
+            long sy = Long.parseLong(td) - System.currentTimeMillis();
             if (sy > 0) {
-                tv_time.setText("Remaining Time：" + DateUtil.getStringDate((sy * 1)));
+                tv_time.setText("Remining Time：" + DateUtil.getStringDate((sy)));
                 Log.v("----------333" + position, tv_time.getText().toString());
                 int day = (int) (sy / 1000 / 60 / 60 / 24);
                 int hour = (int) (sy / 1000 / 60 / 60 % 24);
                 int minute = (int) (sy / 1000 / 60 % 60);
                 int second = (int) (sy / 1000 % 60);
-//                String dsd = (day + " 天 " + hour + " 时 " + minute + " 分 " + second + " 秒 ");
+//                String dsd = (day + " days " + hour + " hours " + minute + " minutes " + second + " seconds ");
                 if (day == 0 && hour == 1 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationAtivity.this, bean.getTitle() + "\nThere is one hour left before the deadline", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nOnly one hour left before the due", Toast.LENGTH_LONG).show();
                 }
             } else
                 tv_time.setText("Overdue");
 
 
-            tv_time2.setText("Due date：" + DateUtil.stampToDate(td));
+            tv_time2.setText("Due days：" + DateUtil.stampToDate(td));
 
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventBus_Tag event) {
-        switch (event.getTag()) {
-            case 1:
-                //initialize viewmodels
-                assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                        this.getApplication()).create(AssignmentViewModel.class);
-                //get and observe routines
-                assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
-                assignmentLiveData.observe(this, new Observer<List<Assignment>>() {
-                    @Override
-                    public void onChanged(List<Assignment> assignments) {
-                        Log.v("----------", assignments.toString());
-                        //init listview
-                        itemBeanList.clear();
-                        itemBeanList.addAll(assignments);
-                        myAdapter.notifyDataSetChanged();
+        if (event.getTag() == 1) {//initialize viewmodels
+            AssignmentViewModel assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                    this.getApplication()).create(AssignmentViewModel.class);
+            //get and observe routines
+            LiveData<List<Assignment>> assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
+            assignmentLiveData.observe(this, assignments -> {
+                Log.v("----------", assignments.toString());
+                //init listview
+                itemBeanList.clear();
+                itemBeanList.addAll(assignments);
+                myAdapter.notifyDataSetChanged();
 
-                    }
-                });
-                break;
-
+            });
         }
     }
 
@@ -188,15 +168,14 @@ public class NotificationAtivity extends BaseActivity {
     boolean isShow = true;
     Timer timer;
 
-
     String oldTime = "--", nowTome = "123";
-
 
     private void startCycle() {
 
         if (timer == null)
             timer = new Timer();
         timer.schedule(new TimerTask() {
+            @SuppressLint("SimpleDateFormat")
             @Override
             public void run() {
                 if (!isShow) {
@@ -205,14 +184,13 @@ public class NotificationAtivity extends BaseActivity {
                 nowTome = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
                 if (!oldTime.equals(nowTome)) {
                     oldTime = nowTome;
-
                     startCycle();
                     EventBus.getDefault().post(new EventBus_Tag(1));
                 }
 
                 Log.v("-----------", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()));
             }
-        }, 0, 1000);//
+        }, 0, 1000);
 
     }
 

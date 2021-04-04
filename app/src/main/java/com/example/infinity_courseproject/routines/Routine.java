@@ -61,6 +61,7 @@ public class Routine {
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.events = events;
+        this.events = events;
     }
 
     public int getTotalTimeInMinutes() {

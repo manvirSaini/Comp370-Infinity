@@ -1,11 +1,8 @@
 package com.example.infinity_courseproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,12 +14,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +46,6 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
     private Spinner courseSpinner;
 
-    private CourseViewModel courseViewModel;
     private List<Course> courseList;
 
     private EditText enterYear;
@@ -71,6 +72,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
         assignmentsAddEditViewModel = new ViewModelProvider(this).get(AssignmentsAddEditViewModel.class);
         assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(AssignmentViewModel.class);
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        CourseViewModel courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
         //preset daysPrior
@@ -183,6 +185,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addOrUpdateAssignment(View view) {
         //intent to return to routine section
         Intent replyIntent = new Intent();
@@ -334,10 +337,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
 
     public void markAsComplete(View view) {
-        if (assignmentsAddEditViewModel.isMarkedAsComplete())
-            assignmentsAddEditViewModel.setMarkedAsComplete(false);
-        else
-            assignmentsAddEditViewModel.setMarkedAsComplete(true);
+        assignmentsAddEditViewModel.setMarkedAsComplete(!assignmentsAddEditViewModel.isMarkedAsComplete());
 
     }
 }
