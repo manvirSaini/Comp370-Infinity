@@ -4,15 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.infinity_courseproject.assignments.Assignment;
+import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
+import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.RoutinesAddEditViewModel;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.events.EventRecViewAdapter;
+import com.example.infinity_courseproject.routines.periods.Period;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -65,27 +71,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
     //view models
     RoutinesAddEditViewModel routinesAddEditViewModel;
     RoutineViewModel routineViewModel;
+    CourseViewModel courseViewModel;
     private RecyclerView eventRecyclerView;
 
     //adapters
     private EventRecViewAdapter eventRecViewAdapter;
-
-    //observer for the periods
-    private final Observer<ArrayList<Event>> eventListUpdateObserver = new Observer<ArrayList<Event>>() {
-
-        @Override
-        public void onChanged(ArrayList<Event> events) {
-            eventRecViewAdapter = new EventRecViewAdapter(
-                    events, RoutinesAddActivity.this,
-                    RoutinesAddActivity.this);
-            eventRecyclerView.setAdapter(eventRecViewAdapter);
-
-            //update total time
-            routinesAddEditViewModel.updateTotalTime(events);
-            totalTime.setText(routinesAddEditViewModel.getTotalTimeInHoursAndMinutes());
-        }
-    };
-
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -108,9 +98,27 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         routinesAddEditViewModel = new ViewModelProvider(this).get(RoutinesAddEditViewModel.class);
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
+        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+                this.getApplication()).create(CourseViewModel.class);
 
         //set the routineList to get all routines
         routineList = routineViewModel.getRoutinesOrderByName().getValue();
+
+        //set up event recyclerview and observe its live data
+        LiveData<ArrayList<Event>> eventLiveData = routinesAddEditViewModel.getEventLiveData();
+        eventRecyclerView.setHasFixedSize(true);
+        eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        eventLiveData.observe(this, events -> {
+            eventRecViewAdapter = new EventRecViewAdapter(
+                    events, RoutinesAddActivity.this,
+                    courseViewModel, RoutinesAddActivity.this);
+            eventRecyclerView.setAdapter(eventRecViewAdapter);
+
+            //update total time
+            routinesAddEditViewModel.updateTotalTime(events);
+            totalTime.setText(routinesAddEditViewModel.getTotalTimeInHoursAndMinutes());
+        });
 
         //get data in the case of an edit - startActivity occurs from RoutinesActivity
         Bundle data = getIntent().getExtras();
@@ -143,11 +151,6 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         }
         else
             routinesAddEditViewModel.addEvent();
-
-        //set up period recyclerview and observe its live data
-        eventRecyclerView.setHasFixedSize(true);
-        eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        routinesAddEditViewModel.getEventLiveData().observe(this, eventListUpdateObserver);
 
     }
 
@@ -196,15 +199,12 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             //title, weekdays, startHour, startMin
             String title = enterTitle.getText().toString().trim();
 
-            if (routineList != null) {
-                for (Routine r : routineList) {
-                    if (r.getTitle().equals(title)) {
-                        Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+            for (Routine r : routineList) {
+                if (r.getTitle().equals(title)) {
+                    Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
-
 
             //first index will be the id for sunday button...
             int[] buttonIds = new int[7];
@@ -226,6 +226,10 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             int startHourInt = routinesAddEditViewModel.getStartHour();
             int startMinInt = routinesAddEditViewModel.getStartMin();
             ArrayList<Event> events = routinesAddEditViewModel.getEventCopiedData();
+
+            //final period gets 0 minutes
+            List<Period> periods = events.get(events.size()-1).getPeriods();
+            periods.get(1).setMinutes(0);
 
             //in the event that this is an update, not a new routine...
             if (routineToBeUpdated != null) {

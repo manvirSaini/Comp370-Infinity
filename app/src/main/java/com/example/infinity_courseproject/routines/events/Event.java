@@ -68,6 +68,8 @@ public class Event implements Parcelable {
         int minutes = studyTimeInMinutes%60;
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
         return totalTime;
@@ -80,6 +82,8 @@ public class Event implements Parcelable {
         int minutes = breakTimeInMinutes%60;
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
         return totalTime;

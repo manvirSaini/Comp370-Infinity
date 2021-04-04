@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -21,12 +22,10 @@ import java.util.List;
 public class EventsEditActivity extends AppCompatActivity {
     public static final String EVENT_REPLY = "event_reply";
     public static final String INDEX_REPLY = "index_reply";
-    private TextView eventLabel;
     private Spinner courseSpinner;
     private Spinner studySpinner;
     private Spinner breakSpinner;
 
-    private CourseViewModel courseViewModel;
     private List<Course> courseList;
     private Event eventToEdit;
     private int indexOfEventToEdit;
@@ -37,13 +36,13 @@ public class EventsEditActivity extends AppCompatActivity {
         setContentView(R.layout.events_edit);
 
         //initialize spinners
-        eventLabel = findViewById(R.id.event_edit_label_text);
+        TextView eventLabel = findViewById(R.id.event_edit_label_text);
         courseSpinner = findViewById(R.id.event_course_spinner);
         studySpinner = findViewById(R.id.event_study_spinner);
         breakSpinner = findViewById(R.id.event_break_spinner);
 
         //course viewmodel
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        CourseViewModel courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
         //the bundle to be received from RoutinesAddActivity
@@ -52,7 +51,8 @@ public class EventsEditActivity extends AppCompatActivity {
         indexOfEventToEdit = data.getInt(RoutinesAddActivity.EVENT_TO_EDIT_INDEX);
 
         //fill label
-        eventLabel.setText("Event " + indexOfEventToEdit);
+        int eventNum = indexOfEventToEdit + 1;
+        eventLabel.setText("Event " + eventNum);
 
         //populate course spinner through observing course live data
         LiveData<List<Course>> courseLiveData = courseViewModel.getAllCourses();
@@ -108,17 +108,20 @@ public class EventsEditActivity extends AppCompatActivity {
 
         //initial selections for study and break spinners
         String studyTime = eventToEdit.getStudyTimeInHoursAndMinutes();
+        Log.d("preselect", "onCreate: from event = " + studyTime);
         for (int i = 0; i < studySpinnerArray.size(); i++) {
+            Log.d("preselect", "onCreate: from spinner = " + studySpinnerArray.get(i));
             if (studyTime.equals(studySpinnerArray.get(i)))
                 studySpinner.setSelection(i);
         }
         String breakTime = eventToEdit.getBreakTimeInHoursAndMinutes();
-        for (int i = 0; i < studySpinnerArray.size(); i++) {
+        for (int i = 0; i < breakSpinnerArray.size(); i++) {
             if (breakTime.equals(breakSpinnerArray.get(i))) {
                 breakSpinner.setSelection(i);
                 break;
             }
         }
+
 
     }
 

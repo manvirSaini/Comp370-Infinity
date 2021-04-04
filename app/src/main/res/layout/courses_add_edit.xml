@@ -8,15 +8,8 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Title"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
+    <include
+        layout="@layout/main_toolbar"/>
 
     <LinearLayout
         android:id="@+id/layout_0"
@@ -33,44 +26,52 @@
 
             android:paddingRight="10dp"
             android:text="@string/add_routine_title"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
-            android:id="@+id/et_0"
+            android:id="@+id/courses_add_edit_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/assignment_title_hint"
-            android:inputType="text" />
+            android:hint="@string/courses_add_edit_title_hint"
+            android:inputType="text"
+            android:maxLength="16"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_0"
         android:layout_gravity="center"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
-            android:text="Professor"
-            android:textSize="24sp" />
+            android:text="@string/courses_add_edit_professor_label"
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
 
         <EditText
-            android:id="@+id/et_1"
+            android:id="@+id/courses_add_edit_prof_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/assignment_title_hint"
-            android:inputType="text" />
+            android:hint="@string/courses_add_edit_professor_hint"
+            android:inputType="text"
+            android:maxLength="16"
+            />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_0"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -78,18 +79,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:text="Description"
             android:layout_marginBottom="10dp"
-            android:textSize="24sp" />
+            android:paddingRight="10dp"
+            android:text="@string/courses_add_edit_description_label"
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
+
         <EditText
-            android:id="@+id/et_2"
-            android:minLines="5"
-            android:gravity="top"
+            android:id="@+id/courses_add_edit_description_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/assignment_title_hint"
-            android:inputType="textMultiLine" />
+            android:hint="@string/course_add_edit_description_hint"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:maxLength="40"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -99,14 +103,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
             tools:layout_editor_absoluteY="125dp">
 
             <Button
-                android:id="@+id/tv_cancel"
+                android:id="@+id/assignment_add_edit_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="transitionToCourseSection"
                 android:text="@string/back_button_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/assignment_add_edit_done_button"
@@ -114,9 +118,10 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/tv_commit"
+                android:id="@+id/assignment_add_edit_done_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="addOrUpdateCourse"
                 android:text="@string/done_button_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
