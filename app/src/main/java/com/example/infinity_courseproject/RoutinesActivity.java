@@ -249,16 +249,12 @@ public class RoutinesActivity extends Home
         RoutinesActivity.filter = filter;
     }
 
-    // TODO: remove toast
     public  void saveData(){
         SharedPreferences prefs = getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString(ID, masterRoutineSpinner.getSelectedItem().toString());
         editor.commit();
-
-        Toast.makeText(this, masterRoutineSpinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
-
     }
 
     //Navigation drawer functions START:
