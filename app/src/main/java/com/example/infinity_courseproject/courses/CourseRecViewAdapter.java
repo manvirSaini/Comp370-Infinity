@@ -16,16 +16,13 @@ import java.util.Objects;
 
 public class CourseRecViewAdapter extends RecyclerView.Adapter<CourseRecViewAdapter.ViewHolder> {
     private final OnCourseClickListener onCourseClickListener;
-    private List<Course> courseList;
-    private CourseViewModel courseViewModel;
+    private final List<Course> courseList;
     private Context context;
 
     public CourseRecViewAdapter(List<Course> courseList, Context context,
-                                    CourseViewModel courseViewModel,
                                     OnCourseClickListener onCourseClickListener) {
         this.courseList = courseList;
         this.context = context;
-        this.courseViewModel = courseViewModel;
         this.onCourseClickListener = onCourseClickListener;
     }
 
@@ -42,7 +39,12 @@ public class CourseRecViewAdapter extends RecyclerView.Adapter<CourseRecViewAdap
     public void onBindViewHolder(@NonNull CourseRecViewAdapter.ViewHolder holder, int position) {
         Course course = Objects.requireNonNull(courseList).get(position);
         holder.courseTitle.setText(course.getTitle());
-        holder.professorName.setText(course.getProfessor());
+
+        String professor = course.getProfessor();
+        if (professor !=  null)
+            holder.professorName.setText(course.getProfessor());
+        else
+            holder.professorLabel.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -50,17 +52,18 @@ public class CourseRecViewAdapter extends RecyclerView.Adapter<CourseRecViewAdap
         return Objects.requireNonNull(courseList).size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CourseRecViewAdapter.OnCourseClickListener onCourseClickListener;
         private final TextView courseTitle;
         private final TextView professorName;
+        private final TextView professorLabel;
 
         public ViewHolder(@NonNull View itemView, CourseRecViewAdapter.OnCourseClickListener onCourseClickListener) {
             super(itemView);
             this.onCourseClickListener = onCourseClickListener;
             courseTitle = itemView.findViewById(R.id.course_title_textview);
             professorName = itemView.findViewById(R.id.course_professor_name_textview);
-
+            professorLabel = itemView.findViewById(R.id.course_professor_text);
             itemView.setOnClickListener(this);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

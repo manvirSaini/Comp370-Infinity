@@ -20,17 +20,15 @@ import java.util.Objects;
 public class AssignmentRecViewAdapter extends RecyclerView.Adapter<AssignmentRecViewAdapter.ViewHolder> {
 
     private final OnAssignmentClickListener onAssignmentClickListener;
-    private List<Assignment> assignmentList;
-    private AssignmentViewModel assignmentViewModel;
-    private CourseViewModel courseViewModel;
+    private final List<Assignment> assignmentList;
+    private final CourseViewModel courseViewModel;
     private Context context;
 
     public AssignmentRecViewAdapter(List<Assignment> assignmentList, Context context,
-                                    AssignmentViewModel assignmentViewModel, CourseViewModel courseViewModel,
+                                    CourseViewModel courseViewModel,
                                     OnAssignmentClickListener onAssignmentClickListener) {
         this.assignmentList = assignmentList;
         this.context = context;
-        this.assignmentViewModel = assignmentViewModel;
         this.courseViewModel = courseViewModel;
         this.onAssignmentClickListener = onAssignmentClickListener;
     }

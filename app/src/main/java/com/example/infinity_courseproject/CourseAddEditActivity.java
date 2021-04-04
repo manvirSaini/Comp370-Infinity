@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.routines.Routine;
+
+import java.util.List;
 
 public class CourseAddEditActivity extends AppCompatActivity {
     private static Course courseToBeUpdated;
@@ -26,6 +29,8 @@ public class CourseAddEditActivity extends AppCompatActivity {
     private EditText enterProfName;
     private EditText enterDescription;
 
+    private List<Course> courseList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,9 @@ public class CourseAddEditActivity extends AppCompatActivity {
         //initialize courseViewModel
         CourseViewModel courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
+
+        //get courses
+        courseList = courseViewModel.getAllCourses().getValue();
 
         //get data in the case of an edit - startActivity occurs from CourseActivity
         Bundle data = getIntent().getExtras();
@@ -61,9 +69,23 @@ public class CourseAddEditActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(enterTitle.getText())) {
 
-            String title = enterTitle.getText().toString();
-            String profName = enterProfName.getText().toString();
-            String description = enterDescription.getText().toString();
+            String title = enterTitle.getText().toString().trim();
+
+            for (Course c : courseList) {
+                if (c.getTitle().equals(title)) {
+                    Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+
+            String profName = enterProfName.getText().toString().trim();
+            String description = enterDescription.getText().toString().trim();
+
+            if (profName.length() == 0)
+                profName = null;
+            if (description.length() == 0)
+                description = null;
 
             //in the event that this is an update, not a new course...
             if (courseToBeUpdated != null) {

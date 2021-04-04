@@ -1,36 +1,30 @@
 package com.example.infinity_courseproject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.events.Event;
-import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +36,6 @@ public class RoutinesActivity extends AppCompatActivity
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
     public static final String ROUTINE_ID = "routine_id";
 
-    private Spinner showSpinner; //spinner to display filtering options
     public enum RoutineFilterBy {ALL, GENERAL, SUN, MON, TUES, WED, THURS, FRI, SAT}
     private static RoutineFilterBy filter = RoutineFilterBy.ALL;
 
@@ -50,10 +43,11 @@ public class RoutinesActivity extends AppCompatActivity
 
     private RoutineViewModel routineViewModel;
 
-    private LiveData<List<Routine>> routineLiveData;
-    private List<Routine> routineCopiedData;
+    private List<Routine> routineList;
     private RoutineRecViewAdapter routineRecViewAdapter;
     private RecyclerView routineRecyclerView;
+
+    private TextView emptyRecyclerViewMsg;
 
     //navigation drawer stuff
     static DrawerLayout drawer;
@@ -71,19 +65,18 @@ public class RoutinesActivity extends AppCompatActivity
         //Initialize Navigation Drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText("Routines");
+        toolbarName.setText(R.string.toolbar_label_routines_section);
 
         //initialize recyclerview
         routineRecyclerView = findViewById(R.id.routine_recyclerview);
+
+        //empty message
+        emptyRecyclerViewMsg = findViewById(R.id.routines_empty_recyclerview_msg_text);
 
         //initialize viewmodels
         routineViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(RoutineViewModel.class);
 
-        /**
-         * The master routine should update upon leaving the routines section
-         * Perhaps shared preferences?
-         */
         masterRoutineSpinner = findViewById(R.id.master_routine_spinner);
 
 
@@ -91,34 +84,34 @@ public class RoutinesActivity extends AppCompatActivity
         routineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get and observe routines
-        routineLiveData = routineViewModel.getRoutinesOrderByName();
-        routineCopiedData = routineLiveData.getValue();
+        LiveData<List<Routine>> routineLiveData = routineViewModel.getRoutinesOrderByName();
 
-        routineLiveData.observe(this, new Observer<List<Routine>>() {
-            @Override
-            public void onChanged(List<Routine> routines) {
-                routineCopiedData = routines;
-                routineRecViewAdapter = new RoutineRecViewAdapter(routines,
-                        RoutinesActivity.this,
-                        RoutinesActivity.this);
+        routineLiveData.observe(this, routines -> {
+            routineList = routines;
+            if (routineList.size() == 0)
+                emptyRecyclerViewMsg.setVisibility(View.VISIBLE);
 
-                routineRecyclerView.setAdapter(routineRecViewAdapter);
+            routineRecViewAdapter = new RoutineRecViewAdapter(routines,
+                    RoutinesActivity.this,
+                    RoutinesActivity.this);
 
-                //update master routine spinner
-                ArrayList<String> masterRoutineSpinnerArray = new ArrayList<>();
-                masterRoutineSpinnerArray.add("NONE");
-                for (Routine r : routines) {
-                    masterRoutineSpinnerArray.add(r.getTitle());
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
-                        android.R.layout.simple_spinner_item, masterRoutineSpinnerArray);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                masterRoutineSpinner.setAdapter(adapter);
+            routineRecyclerView.setAdapter(routineRecViewAdapter);
+
+            //update master routine spinner
+            ArrayList<String> masterRoutineSpinnerArray = new ArrayList<>();
+            masterRoutineSpinnerArray.add("NONE");
+            for (Routine r : routines) {
+                masterRoutineSpinnerArray.add(r.getTitle());
             }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(RoutinesActivity.this,
+                    android.R.layout.simple_spinner_item, masterRoutineSpinnerArray);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            masterRoutineSpinner.setAdapter(adapter);
         });
 
         //initialize filter spinner array
-        showSpinner = findViewById(R.id.routine_show_spinner);
+        //spinner to display filtering options
+        Spinner showSpinner = findViewById(R.id.routine_show_spinner);
 
         //populate filter spinner array
         ArrayList<String> showSpinnerArray = new ArrayList<>();
@@ -133,7 +126,7 @@ public class RoutinesActivity extends AppCompatActivity
         showSpinnerArray.add("Saturday");
 
         //create and set spinner adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(RoutinesActivity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(RoutinesActivity.this,
                         android.R.layout.simple_spinner_item, showSpinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         showSpinner.setAdapter(adapter);
@@ -173,8 +166,8 @@ public class RoutinesActivity extends AppCompatActivity
                 }
 
                 //trigger livedata onchanged function
-                if (routineCopiedData != null && routineCopiedData.size() != 0) {
-                    RoutineViewModel.update(routineCopiedData.get(0));
+                if (routineList != null && routineList.size() != 0) {
+                    RoutineViewModel.update(routineList.get(0));
                 }
 
             }
@@ -237,6 +230,9 @@ public class RoutinesActivity extends AppCompatActivity
                     startHour, startMin, events);
 
             RoutineViewModel.insert(routine);
+
+            if (emptyRecyclerViewMsg.getVisibility() == View.VISIBLE)
+                emptyRecyclerViewMsg.setVisibility(View.GONE);
         }
 
     }

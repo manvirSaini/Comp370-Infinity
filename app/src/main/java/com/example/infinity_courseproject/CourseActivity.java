@@ -34,8 +34,11 @@ public class CourseActivity extends AppCompatActivity
 
     private CourseViewModel courseViewModel;
 
+    private List<Course> courseList;
     private CourseRecViewAdapter courseRecViewAdapter;
     private RecyclerView courseRecyclerView;
+
+    private TextView emptyRecyclerViewMsg;
 
     //navigation drawer stuff
     static DrawerLayout drawer;
@@ -44,7 +47,7 @@ public class CourseActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.course_main);
+        setContentView(R.layout.courses_main);
 
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
@@ -53,6 +56,9 @@ public class CourseActivity extends AppCompatActivity
 
         //initialize recyclerview
         courseRecyclerView = findViewById(R.id.course_recyclerview);
+
+        //empty message
+        emptyRecyclerViewMsg = findViewById(R.id.courses_empty_recyclerview_msg_text);
 
         //initialize viewmodel
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -65,8 +71,12 @@ public class CourseActivity extends AppCompatActivity
         LiveData<List<Course>> courseLiveData = courseViewModel.getAllCourses();
 
         courseLiveData.observe(this, courses -> {
+            courseList = courses;
+            if (courseList.size() == 0)
+                emptyRecyclerViewMsg.setVisibility(View.VISIBLE);
+
             courseRecViewAdapter = new CourseRecViewAdapter(courses,
-                    CourseActivity.this, courseViewModel,
+                    CourseActivity.this,
                     CourseActivity.this);
 
             courseRecyclerView.setAdapter(courseRecViewAdapter);
@@ -113,6 +123,9 @@ public class CourseActivity extends AppCompatActivity
 
             Course course = new Course(title, profName, description);
             CourseViewModel.insert(course);
+
+            if (emptyRecyclerViewMsg.getVisibility() == View.VISIBLE)
+                emptyRecyclerViewMsg.setVisibility(View.GONE);
         }
 
     }

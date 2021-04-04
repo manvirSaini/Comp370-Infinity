@@ -8,15 +8,8 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Title"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
+    <include
+        layout="@layout/main_toolbar"/>
 
     <LinearLayout
         android:id="@+id/layout_0"
@@ -33,21 +26,24 @@
 
             android:paddingRight="10dp"
             android:text="@string/add_routine_title"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/courses_add_edit_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. Comp 370"
-            android:inputType="text" />
+            android:hint="@string/courses_add_edit_title_hint"
+            android:inputType="text"
+            android:maxLength="16"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_0"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -55,23 +51,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
-            android:text="Professor:"
-            android:textSize="24sp" />
+            android:text="@string/courses_add_edit_professor_label"
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
 
         <EditText
             android:id="@+id/courses_add_edit_prof_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. Tom Marco"
-            android:inputType="text" />
+            android:hint="@string/courses_add_edit_professor_hint"
+            android:inputType="text"
+            android:maxLength="16"
+            />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_0"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -81,16 +81,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:paddingRight="10dp"
-            android:text="Description:"
-            android:textSize="24sp" />
+            android:text="@string/courses_add_edit_description_label"
+            android:textSize="24sp"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/courses_add_edit_description_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/course_add_edit_description_hint"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:minLines="5" />
+            android:maxLength="40"/>
     </LinearLayout>
 
     <RelativeLayout
