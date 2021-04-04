@@ -9,9 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/**
- * Created by seven on 2017/3/16.
- */
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVViewHolder> {
     public List<T> mDatas;
