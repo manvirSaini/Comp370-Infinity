@@ -1,16 +1,14 @@
 package com.example.infinity_courseproject;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.infinity_courseproject.base.EventBus_Tag;
+import com.example.infinity_courseproject.roomDatabase.EventBus_Tag;
 import com.example.infinity_courseproject.courses.Course2;
 
 import org.greenrobot.eventbus.EventBus;
@@ -69,7 +67,7 @@ public class AddActivity extends AppCompatActivity {
                     tempBean.setTitle(et_0.getText().toString());
                     tempBean.setProfessor(et_1.getText().toString());
                     tempBean.setDescription(et_2.getText().toString());
-                    EventBus.getDefault().post(new EventBus_Tag(2, tempBean));
+// 111                   EventBus.getDefault().post(new EventBus_Tag(2, file, tempBean));
                 } else {//updata
                     bean.setTitle(et_0.getText().toString());
                     bean.setProfessor(et_1.getText().toString());

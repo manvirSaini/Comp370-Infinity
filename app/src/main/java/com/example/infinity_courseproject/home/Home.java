@@ -1,6 +1,7 @@
 package com.example.infinity_courseproject.home;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
-import com.example.infinity_courseproject.CourseActivity;
+//import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.routines.Routine;
@@ -115,6 +116,14 @@ public class Home extends AppCompatActivity {
         beginButton = findViewById(R.id.GoButton);
         showDueButton = findViewById(R.id.datesButton);
         periodStatus = findViewById(R.id.statusTextView);
+        showDueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, NotificationActivity.class));
+            }
+        });
+
+
 
         // timer handler
 
@@ -455,7 +464,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void clickCourse(View view){
-        redirectActivity(this, CourseActivity.class);
+//        redirectActivity(this, CourseActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

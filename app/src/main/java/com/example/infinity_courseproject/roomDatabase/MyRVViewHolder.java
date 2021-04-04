@@ -1,15 +1,14 @@
-package com.example.infinity_courseproject.base;
+package com.example.infinity_courseproject.roomDatabase;
 
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
- * Created by seven on 2017/3/16.
+ * Created by seven
  */
 
 public class MyRVViewHolder extends RecyclerView.ViewHolder {
@@ -40,13 +39,7 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public MyRVViewHolder setImageResource(int viewId, int resId) {
-        ImageView view = getView(viewId);
-        view.setImageResource(resId);
-        return this;
-    }
-
-//    public MyRVViewHolder setImageURI(Context context, int viewId, String url, int defultPicResId) {
+    //    public MyRVViewHolder setImageURI(Context context, int viewId, String url, int defultPicResId) {
 //        ImageView view = getView(viewId);
 //        ImageUtil.displayImage(view, url, context, defultPicResId);
 //        return this;

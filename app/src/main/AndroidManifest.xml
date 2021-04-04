@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
 
+        <activity android:name=".home.NotificationActivity"
+            android:parentActivityName=".RoutinesActivity">
+        </activity>
         <activity
             android:name=".home.Home"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
