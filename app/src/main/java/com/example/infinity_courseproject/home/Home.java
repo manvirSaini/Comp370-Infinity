@@ -68,6 +68,7 @@ public class Home extends AppCompatActivity {
         String ButtonText = beginButton.getText().toString();
 
         if (ButtonText.equals("RESUME")) {
+            Log.i("MILLIS HERE: ",""+MILL_IN_FUTURE);
             periodStatus.setText(""+periods.get(timer_counter).getDevotion());
             startTimer();
             beginButton.setText("PAUSE");
@@ -79,6 +80,8 @@ public class Home extends AppCompatActivity {
             beginButton.setText("BEGIN");
             periodStatus.setText("");
             routineRunning = false;
+            timer_counter = 0;
+
         } else {
             if (currentRoutine == "NONE") {
                 // toast message please select the routine first
@@ -132,14 +135,13 @@ public class Home extends AppCompatActivity {
                 Log.d("TAG", String.valueOf(routines.get(i)));
                 routineSpinnerArray.add(routines.get(i).getTitle());
             }
-            ArrayAdapter routineAdapter = new ArrayAdapter(Home.this,
+            ArrayAdapter routineAdapter = new ArrayAdapter (Home.this,
                     android.R.layout.simple_spinner_dropdown_item, routineSpinnerArray);
             routineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
             menuSpinText.setAdapter(routineAdapter);
             menuSpinText.setSelected(false);  // must
             menuSpinText.setSelection(0, false);
-            if(currentRoutine!="NONE"){
+            if(currentRoutine!="NONE"  ){
                 menuSpinText.setSelection( ((ArrayAdapter)menuSpinText.getAdapter()).getPosition(currentRoutine));
             }
             // to detect whether spinner was set manually by user
@@ -153,16 +155,15 @@ public class Home extends AppCompatActivity {
                     return false;
                 }
             });
-
             menuSpinText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     //Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
                     currentRoutine = (String) parent.getItemAtPosition(position); // set the current routine's ID according to the selected routine
                     Log.i("HOME", "ON ITEM SELECTED current routine" + currentRoutine);
-                    if (currentRoutine != "NONE") {
-                            Log.i("Itemselected",currentRoutine);
-                            homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
+                    if(currentRoutine!="NONE"){
+                        homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
+                                Log.i("HOME","This is homeViewModel");
                                 eve = new ArrayList<Event>();
                                 periods = new ArrayList<Period>();
                                 eve = routine.getEvents();
@@ -174,53 +175,100 @@ public class Home extends AppCompatActivity {
                             });
                             Log.i("PERIODS","Periods populate!");
                             Log.i("PERIODS","Periods "+periods);
-                        if(spinnerTouched) {
-                            // update timer with
-                            if (timerRunning && countDownTimer!=null) {
-                                countDownTimer.cancel();
-                            }
-                            progressBar.setProgress(0);
-                            timer_counter = 0;
-                            Log.i("CREATE","The tile left is :"+leftTime);
-                            //MILL_IN_FUTURE = periods.get(0).getMinutes()*60000;
-                            leftTime = 0;
-                            updateTimer();
-                            Log.i("CREATE","The millis left left is :"+MILL_IN_FUTURE);
-                            //periodStatus.setText(periods.get(0).getDevotion().toString());
-                            Log.i("CREATE","The timer Running :"+timerRunning);
-                        }
-                        else{
-                             Log.i("HOME","Indie of not spinner touched!");
-                             Log.i("HOME","time left = "+leftTime);
-                             Log.i("HOME","MILLIS IN FUTTURE = "+MILL_IN_FUTURE);
-                             Log.i("HOME","Progress counter = "+progress_counter);
-                             Log.i("HOME","timer counter = "+timer_counter);
-                             Log.i("HOME","Timer is running = "+ timerRunning);
-                            Log.i("HOME","value of countdowntimer = "+countDownTimer);
-                            // if routine was set from on start
-                            if(timerRunning){
-                                startTimer();
-                            }
-                        }
                     }
-                    else {
+                    if(spinnerTouched){
+                        // current value NONE or not reset everything
                         if (timerRunning && countDownTimer!=null) {
                             countDownTimer.cancel();
                         }
+
                         leftTime = 0;
+                        MILL_IN_FUTURE = 0;
                         progressBar.setProgress(0);
                         progress_counter = 0;
                         timer_counter = 0;
-                        MILL_IN_FUTURE = 0;
                         beginButton.setText("BEGIN");
                         routineRunning = false;
+                        periodStatus.setText("");
                         updateTimer();
                     }
+                    else{
+                        if(currentRoutine!="NONE"){
+                            Log.i("HOME","time left = "+leftTime);
+                            Log.i("HOME","MILLIS IN FUTTURE = "+MILL_IN_FUTURE);
+                            Log.i("HOME","Progress counter = "+progress_counter);
+                            Log.i("HOME","timer counter = "+timer_counter);
+                            Log.i("HOME","Timer is running = "+ timerRunning);
+                            Log.i("HOME","value of countdowntimer = "+countDownTimer);
+                            // if routine was set from on start
+                            if(timerRunning) {
+                                Log.i("HOME","called start timer");
+                                timerRunning = false; //set to flase since it is no longer running
+                                startTimer();
+                            }
+                        }
+//                        else{
+//                            leftTime = 0;
+//                            MILL_IN_FUTURE = 0;
+//                            progressBar.setProgress(0);
+//                            progress_counter = 0;
+//                            timer_counter = 0;
+//                            beginButton.setText("BEGIN");
+//                            routineRunning = false;
+//                            periodStatus.setText("");
+//                            updateTimer();
+//                        }
+                    }
+//                    if (currentRoutine != "NONE") {
+//                            Log.i("Itemselected",currentRoutine);
+//
+//
+//                        if(spinnerTouched) {
+//                            // update timer with
+//                            if (timerRunning && countDownTimer!=null) {
+//                                countDownTimer.cancel();
+//                            }
+//                            progressBar.setProgress(0);
+//                            timer_counter = 0;
+//                            Log.i("CREATE","The tile left is :"+leftTime);
+//                            //MILL_IN_FUTURE = periods.get(0).getMinutes()*60000;
+//                            leftTime = 0;
+//                            updateTimer();
+//                            Log.i("CREATE","The millis left left is :"+MILL_IN_FUTURE);
+//                            //periodStatus.setText(periods.get(0).getDevotion().toString());
+//                            Log.i("CREATE","The timer Running :"+timerRunning);
+//                        }
+//                        else{
+//                             Log.i("HOME","Indie of not spinner touched!");
+//                             Log.i("HOME","time left = "+leftTime);
+//                             Log.i("HOME","MILLIS IN FUTTURE = "+MILL_IN_FUTURE);
+//                             Log.i("HOME","Progress counter = "+progress_counter);
+//                             Log.i("HOME","timer counter = "+timer_counter);
+//                             Log.i("HOME","Timer is running = "+ timerRunning);
+//                            Log.i("HOME","value of countdowntimer = "+countDownTimer);
+//                            // if routine was set from on start
+//                            if(timerRunning){
+//                                startTimer();
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        if (timerRunning && countDownTimer!=null) {
+//                            countDownTimer.cancel();
+//                        }
+//                        leftTime = 0;
+//                        progressBar.setProgress(0);
+//                        progress_counter = 0;
+//                        timer_counter = 0;
+//                        MILL_IN_FUTURE = 0;
+//                        beginButton.setText("BEGIN");
+//                        routineRunning = false;
+//                        updateTimer();
+//                    }
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     // probably method to setup default value for this part
-
                 }
             });
         });
@@ -234,12 +282,12 @@ public class Home extends AppCompatActivity {
         @Override
         public void run() {
             timerRunning = false;
-            //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
-            MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
+            MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
+            //MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
             periodStatus.setText(""+periods.get(timer_counter).getDevotion());
             progress_counter = 0;
-            progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
-            //progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
+            //progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
             String dev = periods.get(timer_counter).getDevotion().toString();
             if( timer_counter > 0 && dev.equals("STUDY")){
                 Log.i("HOME","This is study period after break so ahd to stop!!");
@@ -311,8 +359,6 @@ public class Home extends AppCompatActivity {
         countDownTimer.cancel();
         timerRunning = false;
     }
-
-
 // TO-DO
 // Activity to be restored when destroyed using shared pref
 // other landscape layout
@@ -320,9 +366,7 @@ public class Home extends AppCompatActivity {
 // TEXT to show which item is being pulled out
 // Alarm manager things
 // Try progress to update only once
-
 // methods for saving the state and getting it back
-
 
     @Override
     protected void onResume() {
@@ -345,9 +389,9 @@ public class Home extends AppCompatActivity {
         editor.putBoolean("ROUTINE_RUNNING",routineRunning);
         editor.putLong("END_TIME", mEndTime);
         editor.putInt("PROGRESS", progress_counter);
-        if(timerRunning && ((timer_counter+1) < periods.size())) {
-            editor.putInt("NEXT_PERIOD", periods.get(timer_counter + 1).getMinutes());
-        }
+//        if(timerRunning && ((timer_counter+1) < periods.size())) {
+//            editor.putInt("NEXT_PERIOD", periods.get(timer_counter + 1).getMinutes());
+//        }
         editor.apply();
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -375,7 +419,6 @@ public class Home extends AppCompatActivity {
         // if routine running then check the sate of button when it was running on
         // then set the timer and other event accordingly
          if(currentRoutine !="NONE"){
-
              if(routineRunning){
                  //Log.i("SPINNER", (String) menuSpinText.getItemAtPosition(0));
                  //menuSpinText.setSelection( ((ArrayAdapter)menuSpinText.getAdapter()).getPosition(currentRoutine));
@@ -386,30 +429,33 @@ public class Home extends AppCompatActivity {
                  timer_counter = prefs.getInt("ARRAY_COUNTER",0);
                  String buttonText = prefs.getString("BUTTON_TEXT","");
                  progress_counter = prefs.getInt("PROGRESS",0);
+                 progressBar.setMax((int)MILL_IN_FUTURE/1000); // set max progress accordingly
                  // get button texts and perform actions accordingly
-                 if(timerRunning){
+                 if(timerRunning) {
 
                      Log.i("TIMER_RUNNING","left time = "+leftTime);
                      Log.i("TIMER_RUNNING","endtime = "+mEndTime);
-                     leftTime = mEndTime - System.currentTimeMillis();
-                     if (leftTime < 0) {
+                     progress_counter = + (int) ((System.currentTimeMillis() - leftTime)/1000);
+                     leftTime = (mEndTime) - System.currentTimeMillis();
+                     if (leftTime < 0 || leftTime == 0) {
                          Log.i("IF","Inside of is leftTime < 0");
                          leftTime = 0;
                          timerRunning = false;
                          progressBar.setProgress(0);
                          beginButton.setText("BEGIN");
-                         MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
-                         timer_counter =+1; // increment counter as well
+                         //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
+                         //timer_counter =+1; // increment counter as well
                          updateTimer();
                          //updateButtons();
                      } else {
                          Log.i("ELSE","Inside of is timer running!");
                          Log.i("ELSE","leftTime "+leftTime);
-                         Log.i("ELSE","leftTime "+MILL_IN_FUTURE);
+                         Log.i("ELSE","MIllis_IN_FUTURE "+MILL_IN_FUTURE);
                          //startTimer();
                          timerRunning = true;
-                         progress_counter = + (int) ((mEndTime - leftTime)/1000);
                          progressBar.setProgress(progress_counter);
+                         beginButton.setText("PAUSE");
+                         updateTimer();
                      }
                  }
                  else{
@@ -420,7 +466,10 @@ public class Home extends AppCompatActivity {
                      //update timer text
                      progressBar.setProgress(progress_counter);
                      beginButton.setText(buttonText);
-                     updateTimer();
+                     if(buttonText=="RESUME"){
+                         updateTimer();
+                     }
+
                  }
              }
              else{
