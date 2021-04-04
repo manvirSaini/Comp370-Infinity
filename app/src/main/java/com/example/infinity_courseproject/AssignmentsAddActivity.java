@@ -187,7 +187,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     }
 
     public void addOrUpdateAssignment(View view) {
-        //intent to return to routine section
+        //intent to return to assignment section
         Intent replyIntent = new Intent();
         if (!TextUtils.isEmpty(enterTitle.getText())) {
             //title, course, due date, description, duedate, complete
@@ -245,7 +245,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
             boolean markedAsComplete = assignmentsAddEditViewModel.isMarkedAsComplete();
 
-            //in the event that this is an update, not a new routine...
+            //in the event that this is an update, not a new assignment...
             if (assignmentToBeUpdated != null) {
                 LocalDateTime dateTime = null;
                 if (dateStr != null)
