@@ -316,7 +316,7 @@ public class Home extends AppCompatActivity {
     protected void onPause() {
         Log.i("PAUSE", "ON PAUSE was called!");
         super.onPause();
-        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
+        SharedPreferences prefs = this.getSharedPreferences("PREFS", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("SPINNER_SELECT", currentRoutine);
         editor.putString("BUTTON_TEXT", (String) beginButton.getText());
@@ -346,7 +346,11 @@ public class Home extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         timerRunning = prefs.getBoolean("TIMER_RUNNING", false);
         routineRunning = prefs.getBoolean("ROUTINE_RUNNING", false);
-        String routine = prefs.getString(ID, "NONE");
+
+        //SharedPrefs for master routine
+        SharedPreferences masterprefs = this.getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
+        String routine = masterprefs.getString(ID, "NONE");
+
         currentRoutine = prefs.getString("SPINNER_SELECT", "NONE");
         // current routine's value is NONE then do not proceed else proceed further
 //         if(currentRoutine !="NONE"){
@@ -405,22 +409,8 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    //Shared Prefs
-    //TODO: Remove toast
-    public void loadSavedRoutine() {
-
-        if (!timerRunning) {
-            SharedPreferences prefs = this.getSharedPreferences(SHARED_ROUTINE, MODE_PRIVATE);
-
-            String routine = prefs.getString(ID, "None");
-
-            Toast.makeText(this, routine, Toast.LENGTH_LONG).show();
-        }
-    }
-
     //Navigation drawer function START:
     public void clickMenu(View view) {
-        loadSavedRoutine();
         openDrawer(drawer);
     }
 
