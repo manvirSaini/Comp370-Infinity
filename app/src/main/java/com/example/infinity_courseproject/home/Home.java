@@ -435,12 +435,13 @@ public class Home extends AppCompatActivity {
 
                      Log.i("TIMER_RUNNING","left time = "+leftTime);
                      Log.i("TIMER_RUNNING","endtime = "+mEndTime);
-                     progress_counter = + (int) ((System.currentTimeMillis() - leftTime)/1000);
+                     long progress_c = System.currentTimeMillis() - (mEndTime - leftTime);
                      leftTime = (mEndTime) - System.currentTimeMillis();
                      if (leftTime < 0 || leftTime == 0) {
                          Log.i("IF","Inside of is leftTime < 0");
                          leftTime = 0;
                          timerRunning = false;
+                         timer_counter = 0;
                          progressBar.setProgress(0);
                          beginButton.setText("BEGIN");
                          //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
@@ -453,7 +454,7 @@ public class Home extends AppCompatActivity {
                          Log.i("ELSE","MIllis_IN_FUTURE "+MILL_IN_FUTURE);
                          //startTimer();
                          timerRunning = true;
-                         progressBar.setProgress(progress_counter);
+                         progressBar.setProgress((int)progress_c);
                          beginButton.setText("PAUSE");
                          updateTimer();
                      }
@@ -480,18 +481,6 @@ public class Home extends AppCompatActivity {
                  }
              }
          }
-        //                 if(buttonText!=""){
-//                     switch(buttonText){
-//                         case "PAUSE":{
-//
-//                         }
-//                         case "RESUME":{
-//
-//                         }
-//                         case "RESET":{
-//
-//                         }
-//                     }
 //                 }
 //        if (timerRunning) {
 //
