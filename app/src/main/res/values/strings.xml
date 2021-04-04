@@ -79,4 +79,7 @@
     <string name="begin">BEGIN</string>
     <string name="select">home spinner</string>
     <string name="Period">statusTextView</string>
+    <string name="course_professor_text">Professor:</string>
+    <string name="add_course_fab_content_description">Button for adding course.</string>
+    <string name="toolbar_label_courses_section">Courses</string>
 </resources>

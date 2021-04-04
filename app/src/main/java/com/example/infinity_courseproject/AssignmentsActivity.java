@@ -2,6 +2,7 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends Home
+public class AssignmentsActivity extends AppCompatActivity
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";
@@ -83,14 +84,13 @@ public class AssignmentsActivity extends Home
         assignmentRecyclerView.setHasFixedSize(true);
         assignmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //get and observe routines
+        //get and observe assignments
         assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
         assignmentCopiedData = assignmentLiveData.getValue();
 
         assignmentLiveData.observe(this, new Observer<List<Assignment>>() {
             @Override
             public void onChanged(List<Assignment> assignments) {
-                assignmentCopiedData = assignments;
                 assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
                         AssignmentsActivity.this, assignmentViewModel, courseViewModel,
                         AssignmentsActivity.this);
@@ -168,7 +168,7 @@ public class AssignmentsActivity extends Home
     }
 
     /**
-     * Onclick function for the add_routine_fab
+     * Onclick function for the add_assignment_fab
      */
     public void transitionToAddAssignmentSubsection(View view) {
         Intent intent = new Intent(this, AssignmentsAddActivity.class);

@@ -87,7 +87,7 @@ public class RoutineRecViewAdapter extends RecyclerView.Adapter<RoutineRecViewAd
         public ViewHolder(@NonNull View itemView, OnRoutineClickListener onRoutineClickListener) {
             super(itemView);
             this.onRoutineClickListener = onRoutineClickListener;
-            recyclerItem = itemView.findViewById(R.id.routine_reycler_item_container);
+            recyclerItem = itemView.findViewById(R.id.routine_recycler_item_container);
             routineName = itemView.findViewById(R.id.routine_title_textview);
             totalTime = itemView.findViewById(R.id.routine_recycler_item_total_time);
             sun = itemView.findViewById(R.id.sun_text);

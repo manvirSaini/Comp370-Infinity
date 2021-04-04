@@ -11,16 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
 import com.example.infinity_courseproject.R;
-import com.example.infinity_courseproject.RoutinesActivity;
-import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AssignmentRecViewAdapter extends RecyclerView.Adapter<AssignmentRecViewAdapter.ViewHolder> {
 
@@ -32,7 +27,7 @@ public class AssignmentRecViewAdapter extends RecyclerView.Adapter<AssignmentRec
 
     public AssignmentRecViewAdapter(List<Assignment> assignmentList, Context context,
                                     AssignmentViewModel assignmentViewModel, CourseViewModel courseViewModel,
-                                    AssignmentRecViewAdapter.OnAssignmentClickListener onAssignmentClickListener) {
+                                    OnAssignmentClickListener onAssignmentClickListener) {
         this.assignmentList = assignmentList;
         this.context = context;
         this.assignmentViewModel = assignmentViewModel;
