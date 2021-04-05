@@ -50,6 +50,9 @@ public class EventRecViewAdapter extends RecyclerView.Adapter<EventRecViewAdapte
             String title = courseViewModel.getImmediate(courseId).getTitle();
             holder.courseTitle.setText(title);
         }
+        else
+            holder.courseTitle.setText("");
+
         holder.studyTime.setText(event.getStudyTimeInHoursAndMinutes());
         holder.breakTime.setText(event.getBreakTimeInHoursAndMinutes());
     }

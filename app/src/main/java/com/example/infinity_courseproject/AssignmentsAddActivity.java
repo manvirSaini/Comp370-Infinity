@@ -46,7 +46,6 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
     private Spinner courseSpinner;
 
-    private CourseViewModel courseViewModel;
     private List<Course> courseList;
 
     private EditText enterYear;
@@ -69,7 +68,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     private ViewGroup dueTimeAndDaysPriorContainer;
 
     private AssignmentsAddEditViewModel assignmentsAddEditViewModel;
-    AssignmentViewModel assignmentViewModel;
+    private AssignmentViewModel assignmentViewModel;
 
 
 
@@ -106,7 +105,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
         assignmentsAddEditViewModel = new ViewModelProvider(this).get(AssignmentsAddEditViewModel.class);
         assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(AssignmentViewModel.class);
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        CourseViewModel courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
         //preset daysPrior
@@ -337,10 +336,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
 
     public void markAsComplete(View view) {
-        if (assignmentsAddEditViewModel.isMarkedAsComplete())
-            assignmentsAddEditViewModel.setMarkedAsComplete(false);
-        else
-            assignmentsAddEditViewModel.setMarkedAsComplete(true);
+        assignmentsAddEditViewModel.setMarkedAsComplete(!assignmentsAddEditViewModel.isMarkedAsComplete());
 
     }
 }

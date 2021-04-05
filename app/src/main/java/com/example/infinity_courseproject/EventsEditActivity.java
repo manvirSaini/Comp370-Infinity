@@ -1,21 +1,21 @@
 package com.example.infinity_courseproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,9 +108,7 @@ public class EventsEditActivity extends AppCompatActivity {
 
         //initial selections for study and break spinners
         String studyTime = eventToEdit.getStudyTimeInHoursAndMinutes();
-        Log.d("preselect", "onCreate: from event = " + studyTime);
         for (int i = 0; i < studySpinnerArray.size(); i++) {
-            Log.d("preselect", "onCreate: from spinner = " + studySpinnerArray.get(i));
             if (studyTime.equals(studySpinnerArray.get(i)))
                 studySpinner.setSelection(i);
         }

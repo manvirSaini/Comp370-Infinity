@@ -101,8 +101,12 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
         courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
-        //set the routineList to get all routines
-        routineList = routineViewModel.getRoutinesOrderByName().getValue();
+        LiveData<List<Routine>> routineLiveData = routineViewModel.getRoutinesOrderByName();
+
+        //set routine list
+        routineLiveData.observe(this, routines -> {
+            routineList = routines;
+        });
 
         //set up event recyclerview and observe its live data
         LiveData<ArrayList<Event>> eventLiveData = routinesAddEditViewModel.getEventLiveData();
@@ -199,12 +203,18 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             //title, weekdays, startHour, startMin
             String title = enterTitle.getText().toString().trim();
 
-            for (Routine r : routineList) {
-                if (r.getTitle().equals(title)) {
-                    Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
-                    return;
+            if (routineList != null) {
+                if (!(routineToBeUpdated != null && routineToBeUpdated.getTitle().equals(title))) {
+                    for (Routine r : routineList) {
+                        if (r.getTitle().equals(title)) {
+                            Toast.makeText(this, R.string.title_already_exists, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                 }
+
             }
+
 
             //first index will be the id for sunday button...
             int[] buttonIds = new int[7];
@@ -223,8 +233,9 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
                 }
             }
 
-            int startHourInt = routinesAddEditViewModel.getStartHour();
-            int startMinInt = routinesAddEditViewModel.getStartMin();
+            Integer startHour = routinesAddEditViewModel.getStartHour();
+            Integer startMin = routinesAddEditViewModel.getStartMin();
+
             ArrayList<Event> events = routinesAddEditViewModel.getEventCopiedData();
 
             //final period gets 0 minutes
@@ -233,7 +244,11 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
             //in the event that this is an update, not a new routine...
             if (routineToBeUpdated != null) {
-                Routine routine = new Routine(title, weekdays, startHourInt, startMinInt, events);
+                if (startHour == 24) {
+                    startHour = null;
+                    startMin = null;
+                }
+                Routine routine = new Routine(title, weekdays, startHour, startMin, events);
                 routine.setId(routineToBeUpdated.getId());
                 RoutineViewModel.update(routine);
                 routineToBeUpdated = null;
@@ -241,8 +256,8 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
             else {
                 replyIntent.putExtra(TITLE_REPLY, title);
                 replyIntent.putExtra(WEEKDAYS_REPLY, weekdays);
-                replyIntent.putExtra(START_HOUR_REPLY, startHourInt);
-                replyIntent.putExtra(START_MINUTE_REPLY, startMinInt);
+                replyIntent.putExtra(START_HOUR_REPLY, startHour);
+                replyIntent.putExtra(START_MINUTE_REPLY, startMin);
                 replyIntent.putParcelableArrayListExtra(EVENT_ARRAYLIST_REPLY, events);
 
                 setResult(RESULT_OK, replyIntent);
