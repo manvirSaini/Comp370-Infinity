@@ -72,7 +72,7 @@ public class AddActivity extends AppCompatActivity {
                     bean.setTitle(et_0.getText().toString());
                     bean.setProfessor(et_1.getText().toString());
                     bean.setDescription(et_2.getText().toString());
-                    EventBus.getDefault().post(new EventBus_Tag(3, posi));
+                    EventBus.getDefault().post(new EventBus_Tag(3, bean, posi));
                 }
                 finish();
 

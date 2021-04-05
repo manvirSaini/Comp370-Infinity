@@ -132,11 +132,15 @@ public class NotificationActivity extends BaseActivity {
                 int hour = (int) (sy / 1000 / 60 / 60 % 24);
                 int minute = (int) (sy / 1000 / 60 % 60);
                 int second = (int) (sy / 1000 % 60);
-//                String dsd = (day + " days " + hour + " hours " + minute + " minutes " + second + " seconds ");
+//                String dsd = (day + " days " + hour + " hous " + minute + " minutes " + second + " seconds ");
                 if (day == 0 && hour == 1 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
                     Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nOnly one hour left before the due", Toast.LENGTH_LONG).show();
                 }
+//                if (day == 0 && hour == 0 && minute == 0 && second == 0) {
+//                    Log.v("----------11113333" + position, tv_time.getText().toString());
+//                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\ntime is over", Toast.LENGTH_LONG).show();
+//                }
             } else
                 tv_time.setText("Overdue");
 

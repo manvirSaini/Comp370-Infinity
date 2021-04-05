@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 
 public class MyRVViewHolder extends RecyclerView.ViewHolder {
-    private final SparseArray<View> mViews;
+    private SparseArray<View> mViews;
 
     public MyRVViewHolder(View itemView) {
         super(itemView);
