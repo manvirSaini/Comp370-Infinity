@@ -55,6 +55,9 @@ public class AssignmentRecViewAdapter extends RecyclerView.Adapter<AssignmentRec
                 String title = courseViewModel.getImmediate(courseId).getTitle();
                 holder.courseTitle.setText(title);
             }
+            else
+                holder.courseTitle.setText("");
+
             if (assignment.getDueTime() != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 holder.dueDate.setText(assignment.getDueTime().format(formatter));

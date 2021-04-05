@@ -44,7 +44,7 @@ public class CourseRecViewAdapter extends RecyclerView.Adapter<CourseRecViewAdap
         if (professor !=  null)
             holder.professorName.setText(course.getProfessor());
         else
-            holder.professorLabel.setVisibility(View.INVISIBLE);
+            holder.professorName.setText("");
     }
 
     @Override
@@ -56,14 +56,12 @@ public class CourseRecViewAdapter extends RecyclerView.Adapter<CourseRecViewAdap
         private final CourseRecViewAdapter.OnCourseClickListener onCourseClickListener;
         private final TextView courseTitle;
         private final TextView professorName;
-        private final TextView professorLabel;
 
         public ViewHolder(@NonNull View itemView, CourseRecViewAdapter.OnCourseClickListener onCourseClickListener) {
             super(itemView);
             this.onCourseClickListener = onCourseClickListener;
             courseTitle = itemView.findViewById(R.id.course_title_textview);
             professorName = itemView.findViewById(R.id.course_professor_name_textview);
-            professorLabel = itemView.findViewById(R.id.course_professor_text);
             itemView.setOnClickListener(this);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
