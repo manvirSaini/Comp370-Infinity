@@ -286,7 +286,7 @@ public class RoutinesActivity extends AppCompatActivity
     }
 
     public void clickCourse(View view){
-        redirectActivity(this, CourseActivity.class);
+//        redirectActivity(this, CourseActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

@@ -1,6 +1,7 @@
 package com.example.infinity_courseproject.home;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
+//import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
@@ -149,7 +151,7 @@ public class Home extends AppCompatActivity {
             menuSpinText.setSelected(false);  // must
             menuSpinText.setSelection(0, false);
             //if (currentRoutine != "NONE") {
-                menuSpinText.setSelection(((ArrayAdapter) menuSpinText.getAdapter()).getPosition(currentRoutine));
+            menuSpinText.setSelection(((ArrayAdapter) menuSpinText.getAdapter()).getPosition(currentRoutine));
             //}
 
             // to detect whether spinner was set manually by user
@@ -253,7 +255,7 @@ public class Home extends AppCompatActivity {
         findViewById(R.id.datesButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this, NotificationAtivity.class));
+                startActivity(new Intent(Home.this, NotificationActivity.class));
             }
         });
     }
@@ -365,7 +367,7 @@ public class Home extends AppCompatActivity {
 
         Log.i("TIMER: ", String.valueOf(countDownTimer));
         if (countDownTimer != null) {
-             pauseTimer(); // pause timer
+            pauseTimer(); // pause timer
 //           countDownTimer.cancel();
         }
 

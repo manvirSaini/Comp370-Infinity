@@ -1,9 +1,22 @@
-package com.example.infinity_courseproject.base;
+package com.example.infinity_courseproject.roomDatabase;
+
 
 public class EventBus_Tag {
-    private int tag;
+    private final int tag;
     private int position;
     private String content;
+    private Object object;
+
+    public EventBus_Tag(int tag, Object object ,int position) {
+        this.tag = tag;
+        this.object = object;
+        this.position = position;
+    }
+
+
+    public Object getObject() {
+        return object;
+    }
 
     public EventBus_Tag(int tag) {
         this.tag = tag;
@@ -30,4 +43,3 @@ public class EventBus_Tag {
     }
 
 }
-

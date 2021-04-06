@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject.base;
+package com.example.infinity_courseproject.roomDatabase;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+/**
+ *
+ */
 public abstract class BaseActivity extends AppCompatActivity {
     public Context myContext;
     public Activity myActivity;
@@ -28,6 +31,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initData();
 
     protected abstract void initListener();
-
 
 }
