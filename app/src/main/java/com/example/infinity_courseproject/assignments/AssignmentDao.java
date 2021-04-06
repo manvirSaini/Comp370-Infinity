@@ -12,7 +12,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface AssignmentDao {
+public interface  AssignmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Assignment assignment);
 

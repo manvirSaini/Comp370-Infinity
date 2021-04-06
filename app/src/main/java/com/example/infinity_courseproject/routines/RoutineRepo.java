@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.util.List;
@@ -59,5 +60,9 @@ public class RoutineRepo {
 
     public void setAllRoutines(LiveData<List<Routine>> allRoutines) {
         this.allRoutines = allRoutines;
+    }
+
+    public Routine getImmediate(String title) {
+        return routineDao.getImmediate(title);
     }
 }

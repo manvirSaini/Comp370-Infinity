@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
-        <activity android:name=".CourseAddEditActivity"></activity>
+
         <activity
             android:name=".home.Home"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RoutinesActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -26,9 +27,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RoutinesAddActivity"
-            android:parentActivityName=".RoutinesActivity"></activity>
+
+        <activity android:name=".RoutinesAddActivity"
+            android:parentActivityName=".RoutinesActivity">
+        </activity>
+
         <activity
             android:name=".AssignmentsActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -36,15 +39,28 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AssignmentsAddActivity"
-            android:parentActivityName=".AssignmentsActivity"></activity>
-        <activity
-            android:name=".EventsEditActivity"
-            android:parentActivityName=".RoutinesAddActivity"></activity>
+
+        <activity android:name=".AssignmentsAddActivity"
+            android:parentActivityName=".AssignmentsActivity">
+        </activity>
+
+        <activity android:name=".EventsEditActivity"
+            android:parentActivityName=".RoutinesAddActivity">
+        </activity>
+
         <activity
             android:name=".CourseActivity"
-            android:theme="@style/Theme.InfinityCourseProject.NoActionBar"></activity>
+            android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
+        </activity>
+
+        <activity android:name=".CourseAddEditActivity"
+            android:parentActivityName=".CourseActivity">
+        </activity>
+
+        <activity android:name=".home.NotificationAtivity"
+            android:parentActivityName=".home.Home">
+        </activity>
+
     </application>
 
 </manifest>

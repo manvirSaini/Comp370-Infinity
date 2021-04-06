@@ -9,6 +9,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.infinity_courseproject.assignments.Assignment;
+
 import java.util.List;
 
 @Dao
@@ -34,5 +36,7 @@ public interface RoutineDao {
 
     @Query("SELECT * FROM routine_table ORDER BY title ASC")
     LiveData<List<Routine>> getRoutinesOrderByName();
-    
+
+    @Query("SELECT * FROM routine_table WHERE title LIKE :title")
+    Routine getImmediate(String title);
 }
