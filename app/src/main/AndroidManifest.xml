@@ -53,7 +53,7 @@
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
         </activity>
 
-        <activity android:name=".AddActivity"
+        <activity android:name=".CourseAddEditActivity"
             android:parentActivityName=".CourseActivity">
         </activity>
 
