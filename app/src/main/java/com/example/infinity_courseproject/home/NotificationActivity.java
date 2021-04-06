@@ -49,7 +49,6 @@ public class NotificationActivity extends BaseActivity {
 
     RecyclerView lv;
 
-
     TextView tv1;
     LinearLayout layout0;
 
@@ -77,7 +76,6 @@ public class NotificationActivity extends BaseActivity {
         toolbarName.setText("Home");
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initData() {
@@ -92,7 +90,6 @@ public class NotificationActivity extends BaseActivity {
         lv.setLayoutManager(manager);
         myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
-
 
     }
 
@@ -112,7 +109,7 @@ public class NotificationActivity extends BaseActivity {
         @SuppressLint("SetTextI18n")
         @Override
         public void setView(MyRVViewHolder holder, final Assignment bean, int position) {
-            if (null == holder || null == bean)
+            if (null == holder || null == bean )
                 return;
             //init view
 
@@ -169,6 +166,7 @@ public class NotificationActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventBus_Tag event) {
+
         if (event.getTag() == 1) {//initialize viewmodels
             AssignmentViewModel assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
                     this.getApplication()).create(AssignmentViewModel.class);
@@ -178,26 +176,26 @@ public class NotificationActivity extends BaseActivity {
                 Log.v("----------", assignments.toString());
                 itemBeanList.clear();
                 for (int i=0;i<assignments.size();i++){
-                    String tt = assignments.get(i).getDueTime() + "";
-                    tt = tt.substring(0, 10) + " " +
-                            DateUtil.getFullTime(assignments.get(i).getDueTime().getHour()) + ":" +
-                            DateUtil.getFullTime(assignments.get(i).getDueTime().getMinute()) + ":" +
-                            DateUtil.getFullTime(assignments.get(i).getDueTime().getSecond());
-                    try {
-                        String  td = DateUtil.dateToStamp(tt);
-                        long sy = Long.parseLong(td) - System.currentTimeMillis();
-                        int day = (int) (sy / 1000 / 60 / 60 / 24);
+                    if (!(assignments.get(i).getDueTime() == null)) {
+                        String tt = assignments.get(i).getDueTime() + "";
+                        tt = tt.substring(0, 10) + " " +
+                                DateUtil.getFullTime(assignments.get(i).getDueTime().getHour()) + ":" +
+                                DateUtil.getFullTime(assignments.get(i).getDueTime().getMinute()) + ":" +
+                                DateUtil.getFullTime(assignments.get(i).getDueTime().getSecond());
+                        try {
+                            String td = DateUtil.dateToStamp(tt);
+                            long sy = Long.parseLong(td) - System.currentTimeMillis();
+                            int day = (int) (sy / 1000 / 60 / 60 / 24);
 
-                        if (day<=0){
-                            itemBeanList.add(assignments.get(i));
+                            if (day <= 0) {
+                                itemBeanList.add(assignments.get(i));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
                     }
-
                 }
                 //init listview
-
 
                 myAdapter.notifyDataSetChanged();
 
