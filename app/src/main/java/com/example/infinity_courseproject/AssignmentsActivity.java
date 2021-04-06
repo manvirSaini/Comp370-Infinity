@@ -87,15 +87,6 @@ public class AssignmentsActivity extends Home
 
         assignmentLiveData.observe(this, assignments -> {
             assignmentCopiedData = assignments;
-
-
-
-
-
-
-
-
-
             assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
                     AssignmentsActivity.this, assignmentViewModel, courseViewModel,
                     AssignmentsActivity.this);
