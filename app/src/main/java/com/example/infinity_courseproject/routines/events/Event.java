@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 /**
  * The Event class may be associated with a Course, and is composed of periods.
- * Position ensures the order of events in a routine.
  */
 public class Event implements Parcelable {
     private ArrayList<Period> periods;
@@ -69,6 +68,8 @@ public class Event implements Parcelable {
         int minutes = studyTimeInMinutes%60;
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
         return totalTime;
@@ -81,6 +82,8 @@ public class Event implements Parcelable {
         int minutes = breakTimeInMinutes%60;
         if (hours == 0)
             totalTime = minutes + "min";
+        else if (minutes == 0)
+            totalTime = hours + "h";
         else
             totalTime = hours + "h " + minutes + "min";
         return totalTime;

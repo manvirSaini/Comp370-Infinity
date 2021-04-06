@@ -225,7 +225,7 @@ public class DateUtil {
 
     /**
      *
-     * @param seconds
+     * @param - seconds
      * @param
      * @return
      */

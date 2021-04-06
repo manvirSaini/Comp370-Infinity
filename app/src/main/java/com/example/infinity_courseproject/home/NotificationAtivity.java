@@ -44,20 +44,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class NotificationAtivity extends BaseActivity {
 
 
-    @BindView(R.id.lv)
+//    @BindView(R.id.lv)
     RecyclerView lv;
-
-
-    @BindView(R.id.tv1)
+//
+//
+//    @BindView(R.id.tv1)
     TextView tv1;
-    @BindView(R.id.layout0)
+//    @BindView(R.id.layout0)
     LinearLayout layout0;
 
     private AssignmentViewModel assignmentViewModel;
@@ -75,7 +72,7 @@ public class NotificationAtivity extends BaseActivity {
     protected void setContent() {
         super.setContent();
         setContentView(R.layout.activity_notification);
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().register(this);

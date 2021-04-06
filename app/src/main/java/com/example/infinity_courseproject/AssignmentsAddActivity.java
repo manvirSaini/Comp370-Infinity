@@ -2,7 +2,6 @@ package com.example.infinity_courseproject;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -47,7 +46,6 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
     private Spinner courseSpinner;
 
-    private CourseViewModel courseViewModel;
     private List<Course> courseList;
 
     private EditText enterYear;
@@ -70,7 +68,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     private ViewGroup dueTimeAndDaysPriorContainer;
 
     private AssignmentsAddEditViewModel assignmentsAddEditViewModel;
-    AssignmentViewModel assignmentViewModel;
+    private AssignmentViewModel assignmentViewModel;
 
 
 
@@ -79,7 +77,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.assignments_add);
+        setContentView(R.layout.assignments_add_edit);
 
         //initialize UI components
         enterTitle = findViewById(R.id.add_assignment_title_edittext);
@@ -107,7 +105,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
         assignmentsAddEditViewModel = new ViewModelProvider(this).get(AssignmentsAddEditViewModel.class);
         assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(AssignmentViewModel.class);
-        courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        CourseViewModel courseViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseViewModel.class);
 
         //preset daysPrior
@@ -188,7 +186,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     }
 
     public void addOrUpdateAssignment(View view) {
-        //intent to return to routine section
+        //intent to return to assignment section
         Intent replyIntent = new Intent();
         if (!TextUtils.isEmpty(enterTitle.getText())) {
             //title, course, due date, description, duedate, complete
@@ -246,7 +244,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
             boolean markedAsComplete = assignmentsAddEditViewModel.isMarkedAsComplete();
 
-            //in the event that this is an update, not a new routine...
+            //in the event that this is an update, not a new assignment...
             if (assignmentToBeUpdated != null) {
                 LocalDateTime dateTime = null;
                 if (dateStr != null)
@@ -338,10 +336,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
 
 
     public void markAsComplete(View view) {
-        if (assignmentsAddEditViewModel.isMarkedAsComplete())
-            assignmentsAddEditViewModel.setMarkedAsComplete(false);
-        else
-            assignmentsAddEditViewModel.setMarkedAsComplete(true);
+        assignmentsAddEditViewModel.setMarkedAsComplete(!assignmentsAddEditViewModel.isMarkedAsComplete());
 
     }
 }

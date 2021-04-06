@@ -9,9 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/**
- * Created by seven on 2017/3/16.
- */
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVViewHolder> {
     public List<T> mDatas;
@@ -33,6 +30,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
     }
 
     /**
+     *
+     *
      * @param listener
      */
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -40,6 +39,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
     }
 
     /**
+     *
+     *
      * @param listener
      */
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
@@ -66,6 +67,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
     public abstract void setView(MyRVViewHolder holder, T datadto, int position);
 
     /**
+     *
+     *
      * @param holder
      */
     public void setUpItemEvent(final MyRVViewHolder holder) {
@@ -73,6 +76,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     int layoutPosition = holder.getAdapterPosition();
                     onItemClickListener.onItemClick(holder.itemView, layoutPosition);
                 }
@@ -101,7 +105,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
     }
 
     /**
-     * Define the click callback interface
+     *
      */
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -111,3 +115,4 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<MyRVVi
         void onItemLongClick(View view, int position);
     }
 }
+

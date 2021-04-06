@@ -27,14 +27,17 @@
             android:textSize="24sp"
             tools:layout_editor_absoluteX="69dp"
             tools:layout_editor_absoluteY="101dp"
-            android:paddingEnd="10dp" />
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/add_routine_title_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_routine_title_hint"
-            android:inputType="text" />
+            android:inputType="text"
+            android:autofillHints="text"
+            android:maxLength="16"/>
 
     </LinearLayout>
 
@@ -114,7 +117,8 @@
             android:textSize="@dimen/header2"
             tools:layout_editor_absoluteX="208dp"
             tools:layout_editor_absoluteY="321dp"
-            android:paddingEnd="10dp" />
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/start_hour_textview"

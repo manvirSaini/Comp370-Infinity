@@ -12,7 +12,7 @@
     <string name="s_for_saturday">S</string>
     <string name="title_activity_routines_add">Add Routine</string>
     <string name="add_routine_title">Title:</string>
-    <string name="add_routine_title_hint">eg. MondayRoutine</string>
+    <string name="add_routine_title_hint">e.g. MondayRoutine</string>
     <string name="add_routine_weekdays">Weekdays:</string>
     <string name="add_routine_start_time">Start Time:</string>
     <string name="add_routine_total_time">Total Time:</string>
@@ -40,7 +40,7 @@
     <string name="routine_show_text">Show:</string>
     <string name="master_routine_text">Master Routine:</string>
     <string name="assignment_due_date_text">Due Date:</string>
-    <string name="assignment_title_hint">eg. Assignment 1</string>
+    <string name="assignment_title_hint">e.g. Assignment 1</string>
     <string name="add_assignment_description_text">Description:</string>
     <string name="add_assignment_fab_content_description">Button for adding assignment</string>
     <string name="add_assignment_due_date_text">Due Date:</string>
@@ -79,4 +79,18 @@
     <string name="begin">BEGIN</string>
     <string name="select">home spinner</string>
     <string name="Period">statusTextView</string>
+    <string name="course_professor_text">Professor:</string>
+    <string name="add_course_fab_content_description">Button for adding course.</string>
+    <string name="toolbar_label_courses_section">Courses</string>
+    <string name="toolbar_label_assignments_section">Assignments</string>
+    <string name="no_courses_message">There are no courses here!
+        Select the add button at the bottom right of the screen to add a course.</string>
+    <string name="toolbar_label_routines_section">Routines</string>
+    <string name="no_assignments_message">There are no assignments here! Select the add button at the bottom right of the screen to add an assignment.</string>
+    <string name="no_routines_message">There are no routines here! Select the add button at the bottom right of the screen to add a routine.</string>
+    <string name="courses_add_edit_professor_hint">e.g. Tom Marco</string>
+    <string name="courses_add_edit_description_label">Description:</string>
+    <string name="course_add_edit_description_hint">Course description here.</string>
+    <string name="courses_add_edit_professor_label">Professor:</string>
+    <string name="courses_add_edit_title_hint">e.g. Comp 370</string>
 </resources>

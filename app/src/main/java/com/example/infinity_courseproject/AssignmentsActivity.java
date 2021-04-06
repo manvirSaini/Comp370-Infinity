@@ -1,65 +1,53 @@
 package com.example.infinity_courseproject;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
-import com.example.infinity_courseproject.assignments.AssignmentsAddEditViewModel;
-import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
-import com.example.infinity_courseproject.routines.Routine;
-import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
-import com.example.infinity_courseproject.routines.RoutineViewModel;
-import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends Home
+public class AssignmentsActivity extends AppCompatActivity
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";
 
-    private Spinner showSpinner; //spinner to display filtering options
     public enum AssignmentFilterBy {ALL, NEUTRAL, COMPLETE, UPCOMING, OVERDUE}
     private static AssignmentFilterBy filter = AssignmentFilterBy.ALL; //by default
 
     private AssignmentViewModel assignmentViewModel;
     private CourseViewModel courseViewModel;
 
-    private LiveData<List<Assignment>> assignmentLiveData;
-    private List<Assignment> assignmentCopiedData;
+    private List<Assignment> assignmentList;
     private AssignmentRecViewAdapter assignmentRecViewAdapter;
     private RecyclerView assignmentRecyclerView;
+
+    private TextView emptyRecyclerViewMsg;
 
     //navigation drawer stuff
     static DrawerLayout drawer;
@@ -73,22 +61,17 @@ public class AssignmentsActivity extends Home
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText("Assignments");
+        toolbarName.setText(R.string.toolbar_label_assignments_section);
 
 
-        findViewById(R.id.xiaoxi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(AssignmentsActivity.this, Home.class));
-            }
-        });
-
-
-//        Course c = new Course("I AM ALIVE", "I", "said");
-//        CourseViewModel.insert(c);
+        findViewById(R.id.xiaoxi).setOnClickListener(view -> startActivity(
+                new Intent(AssignmentsActivity.this, Home.class)));
 
         //initialize recyclerview
         assignmentRecyclerView = findViewById(R.id.assignment_recyclerview);
+
+        //empty message
+        emptyRecyclerViewMsg = findViewById(R.id.assignments_empty_recyclerview_msg_text);
 
         //initialize viewmodels
         assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -99,24 +82,25 @@ public class AssignmentsActivity extends Home
         assignmentRecyclerView.setHasFixedSize(true);
         assignmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //get and observe routines
-        assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
-        assignmentCopiedData = assignmentLiveData.getValue();
+        //get and observe assignments
+        LiveData<List<Assignment>> assignmentLiveData =
+                assignmentViewModel.getAssignmentsOrderByDueTime();
 
-        assignmentLiveData.observe(this, new Observer<List<Assignment>>() {
-            @Override
-            public void onChanged(List<Assignment> assignments) {
-                assignmentCopiedData = assignments;
-                assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
-                        AssignmentsActivity.this, assignmentViewModel, courseViewModel,
-                        AssignmentsActivity.this);
+        assignmentLiveData.observe(this, assignments -> {
+            assignmentList = assignments;
+            if (assignments.size() == 0)
+                emptyRecyclerViewMsg.setVisibility(View.VISIBLE);
 
-                assignmentRecyclerView.setAdapter(assignmentRecViewAdapter);
-            }
+            assignmentRecViewAdapter = new AssignmentRecViewAdapter(assignments,
+                    AssignmentsActivity.this, courseViewModel,
+                    AssignmentsActivity.this);
+
+            assignmentRecyclerView.setAdapter(assignmentRecViewAdapter);
         });
 
         //initialize filter spinner array
-        showSpinner = findViewById(R.id.assignment_show_spinner);
+        //spinner to display filtering options
+        Spinner showSpinner = findViewById(R.id.assignment_show_spinner);
 
         //populate filter spinner array
         ArrayList<String> showSpinnerArray = new ArrayList<>();
@@ -127,7 +111,7 @@ public class AssignmentsActivity extends Home
         showSpinnerArray.add("Overdue");
 
         //create and set spinner adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AssignmentsActivity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AssignmentsActivity.this,
                 android.R.layout.simple_spinner_item, showSpinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         showSpinner.setAdapter(adapter);
@@ -155,8 +139,8 @@ public class AssignmentsActivity extends Home
                 }
 
                 //trigger livedata onChanged function
-                if (assignmentCopiedData != null && assignmentCopiedData.size() != 0) {
-                    AssignmentViewModel.update(assignmentCopiedData.get(0));
+                if (assignmentList != null && assignmentList.size() != 0) {
+                    AssignmentViewModel.update(assignmentList.get(0));
                 }
             }
 
@@ -184,7 +168,7 @@ public class AssignmentsActivity extends Home
     }
 
     /**
-     * Onclick function for the add_routine_fab
+     * Onclick function for the add_assignment_fab
      */
     public void transitionToAddAssignmentSubsection(View view) {
         Intent intent = new Intent(this, AssignmentsAddActivity.class);
@@ -217,6 +201,9 @@ public class AssignmentsActivity extends Home
 
             Assignment assignment = new Assignment(title, courseId, date, description, daysPrior, complete);
             AssignmentViewModel.insert(assignment);
+
+            if (emptyRecyclerViewMsg.getVisibility() == View.VISIBLE)
+                emptyRecyclerViewMsg.setVisibility(View.GONE);
         }
 
     }

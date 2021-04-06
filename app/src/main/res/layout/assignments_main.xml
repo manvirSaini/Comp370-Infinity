@@ -57,6 +57,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/assignments_empty_recyclerview_msg_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/no_assignments_message"
+                android:textSize="@dimen/header3"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/assignment_recyclerview"
                 android:layout_width="match_parent"
@@ -87,7 +97,8 @@
                 android:src="@mipmap/xiaoxi"
                 android:layout_toLeftOf="@+id/add_assignment_fab"
                 android:layout_alignParentBottom="true"
-                android:contentDescription="@string/add_assignment_fab_content_description" />
+                android:contentDescription="@string/add_assignment_fab_content_description"
+                android:layout_toStartOf="@+id/add_assignment_fab" />
         </RelativeLayout>
     </LinearLayout>
 

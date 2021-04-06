@@ -32,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/assignment_title_hint"
-            android:inputType="text" />
+            android:inputType="text"
+            android:maxLength="16"/>
 
     </LinearLayout>
 
@@ -335,10 +336,7 @@
         android:autofillHints="Describe the assignment."
         android:gravity="top|start"
         android:inputType="text"
-        android:maxLength="48" />
-
-
-
+        android:maxLength="40" />
 
     <CheckBox
         android:id="@+id/add_assignment_mark_as_complete_checkbox"
@@ -382,7 +380,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
-
-
 
 </LinearLayout>

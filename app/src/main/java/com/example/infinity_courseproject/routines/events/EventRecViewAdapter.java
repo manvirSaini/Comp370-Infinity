@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.R;
+import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.List;
@@ -18,37 +19,42 @@ import java.util.Objects;
 public class EventRecViewAdapter extends RecyclerView.Adapter<EventRecViewAdapter.ViewHolder> {
 
     private final OnEventClickListener onEventClickListener;
-    private List<Event> eventList;
-    private Context context;
+    private final List<Event> eventList;
+    private final Context context;
+    private final CourseViewModel courseViewModel;
 
     public EventRecViewAdapter(List<Event> eventList, Context context,
+                               CourseViewModel courseViewModel,
                                OnEventClickListener onEventClickListener) {
         this.eventList = eventList;
         this.context = context;
+        this.courseViewModel = courseViewModel;
         this.onEventClickListener = onEventClickListener;
     }
 
-    /**
-     * Change to recview item accustomed to periods
-     * @param parent
-     * @param viewType
-     * @return
-     */
     @NonNull
     @Override
     public EventRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.events_recyclerview_item, parent,false);
-        return new EventRecViewAdapter.ViewHolder(view, onEventClickListener);
+        return new ViewHolder(view, onEventClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventRecViewAdapter.ViewHolder holder, int position) {
         Event event = Objects.requireNonNull(eventList).get(position);
-        holder.eventLabel.setText("Event " + position);
-        //holder.courseTitle.setText("");
-        holder.studyTime.setText(String.valueOf(event.getStudyMinutes()));
-        holder.breakTime.setText(String.valueOf(event.getBreakMinutes()));
+        int eventNum = position + 1;
+        holder.eventLabel.setText("Event " + eventNum);
+        int courseId = event.getCourseId();
+        if (courseId != 0) {
+            String title = courseViewModel.getImmediate(courseId).getTitle();
+            holder.courseTitle.setText(title);
+        }
+        else
+            holder.courseTitle.setText("");
+
+        holder.studyTime.setText(event.getStudyTimeInHoursAndMinutes());
+        holder.breakTime.setText(event.getBreakTimeInHoursAndMinutes());
     }
 
     @Override
@@ -56,7 +62,7 @@ public class EventRecViewAdapter extends RecyclerView.Adapter<EventRecViewAdapte
         return Objects.requireNonNull(eventList).size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         OnEventClickListener onEventClickListener;
         private final TextView eventLabel;
         private final TextView courseTitle;

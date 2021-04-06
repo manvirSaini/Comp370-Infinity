@@ -1,27 +1,13 @@
 package com.example.infinity_courseproject.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 
-import org.json.JSONException;
-
-
-/**
- * @Author: Paper
- * time :2019/9/4  10:26
- * desc:
- */
 public abstract class BaseActivity extends AppCompatActivity {
     public Context myContext;
     public Activity myActivity;
@@ -43,29 +29,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initListener();
 
-
-    private Fragment currentV4Fragment;
-    public void changeFragment(int resView, Fragment targetFragment) {
-        if (targetFragment.equals(currentV4Fragment)) {
-            return;
-        }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (!targetFragment.isAdded()) {
-            transaction.add(resView, targetFragment, targetFragment.getClass().getName());
-        }
-
-        if (targetFragment.isHidden()) {
-            transaction.show(targetFragment);
-        }
-
-        if (currentV4Fragment != null && currentV4Fragment.isVisible()) {
-            transaction.hide(currentV4Fragment);
-//            transaction.remove(currentV4Fragment);
-        }
-
-        currentV4Fragment = targetFragment;
-        transaction.commitAllowingStateLoss();
-    }
 
 }
