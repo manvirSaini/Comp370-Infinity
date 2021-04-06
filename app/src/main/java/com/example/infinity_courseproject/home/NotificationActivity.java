@@ -35,8 +35,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
-
 public class NotificationActivity extends BaseActivity {
 
 
@@ -66,7 +64,9 @@ public class NotificationActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initData() {
-        lv =findViewById(R.id.lv);  tv1 =findViewById(R.id.tv1);  layout0 =findViewById(R.id.layout0);
+        lv = findViewById(R.id.lv);
+        tv1 = findViewById(R.id.tv1);
+        layout0 = findViewById(R.id.layout0);
 
         @SuppressLint("WrongConstant")
         LinearLayoutManager manager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
@@ -133,13 +133,13 @@ public class NotificationActivity extends BaseActivity {
                 int minute = (int) (sy / 1000 / 60 % 60);
                 int second = (int) (sy / 1000 % 60);
 //                String dsd = (day + " days " + hour + " hous " + minute + " minutes " + second + " seconds ");
-                if (day == 0 && hour == 1 && minute == 0 && second == 0) {
+                if (day == 0 && hour == 23 && minute == 59 && second == 59) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nOnly one hour left before the due", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nThe assignment is upcoming", Toast.LENGTH_LONG).show();
                 }
                 if (day == 0 && hour == 0 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\ntime is over", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is over due", Toast.LENGTH_LONG).show();
                 }
             } else
                 tv_time.setText("Overdue");
@@ -159,9 +159,29 @@ public class NotificationActivity extends BaseActivity {
             LiveData<List<Assignment>> assignmentLiveData = assignmentViewModel.getAssignmentsOrderByDueTime();
             assignmentLiveData.observe(this, assignments -> {
                 Log.v("----------", assignments.toString());
-                //init listview
                 itemBeanList.clear();
-                itemBeanList.addAll(assignments);
+                for (int i=0;i<assignments.size();i++){
+                    String tt = assignments.get(i).getDueTime() + "";
+                    tt = tt.substring(0, 10) + " " +
+                            DateUtil.getFullTime(assignments.get(i).getDueTime().getHour()) + ":" +
+                            DateUtil.getFullTime(assignments.get(i).getDueTime().getMinute()) + ":" +
+                            DateUtil.getFullTime(assignments.get(i).getDueTime().getSecond());
+                    try {
+                        String  td = DateUtil.dateToStamp(tt);
+                        long sy = Long.parseLong(td) - System.currentTimeMillis();
+                        int day = (int) (sy / 1000 / 60 / 60 / 24);
+
+                        if (day<=0){
+                            itemBeanList.add(assignments.get(i));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                //init listview
+
+
                 myAdapter.notifyDataSetChanged();
 
             });
