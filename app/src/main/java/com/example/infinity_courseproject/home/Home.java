@@ -356,7 +356,7 @@ public class Home extends AppCompatActivity {
         editor.putInt("PROGRESS", progress_counter);
         editor.apply();
         if (countDownTimer != null) {
-            countDownTimer.cancel();
+            pauseTimer();
         }
     }
 
