@@ -1,4 +1,4 @@
-package com.example.infinity_courseproject.base;
+package com.example.infinity_courseproject.roomDatabase;
 
 import android.util.SparseArray;
 import android.view.View;
@@ -6,6 +6,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+
+/**
+ *
+ */
 
 public class MyRVViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
@@ -15,6 +19,7 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
         mViews = new SparseArray<>();
     }
 
+    //
 
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
@@ -25,6 +30,9 @@ public class MyRVViewHolder extends RecyclerView.ViewHolder {
         return (T) view;
     }
 
+    /**
+     * Set the value of TextView
+     */
     public MyRVViewHolder setText(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(text);
