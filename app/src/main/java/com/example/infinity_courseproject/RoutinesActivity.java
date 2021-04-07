@@ -280,7 +280,6 @@ public class RoutinesActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         }
     }
-
     public void clickHome(View view){
         redirectActivity(this, Home.class);
     }
@@ -294,7 +293,7 @@ public class RoutinesActivity extends BaseActivity
     }
 
     public void clickCourse(View view){
-//        redirectActivity(this, CourseActivity.class);
+        redirectActivity(this, CourseActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

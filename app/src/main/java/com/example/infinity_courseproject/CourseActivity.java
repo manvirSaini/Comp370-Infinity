@@ -185,11 +185,6 @@ public class CourseActivity extends BaseActivity
         recreate();
     }
 
-    //TODO: Make sure redirects go to desired activity
-    public void clickSetting(View view){
-        redirectActivity(this, Home.class);
-    }
-
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag

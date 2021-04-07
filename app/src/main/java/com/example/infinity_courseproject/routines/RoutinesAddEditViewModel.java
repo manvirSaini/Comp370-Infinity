@@ -16,9 +16,9 @@ public class RoutinesAddEditViewModel extends ViewModel {
     private int startMin = 0;
     private int totalTimeInMinutes;
 
-    private MutableLiveData<ArrayList<Event>> eventLiveData;
+    private final MutableLiveData<ArrayList<Event>> eventLiveData;
     //copy of mutable data contents
-    private ArrayList<Event> eventCopiedData;
+    private final ArrayList<Event> eventCopiedData;
 
     //constructor
     public RoutinesAddEditViewModel() {

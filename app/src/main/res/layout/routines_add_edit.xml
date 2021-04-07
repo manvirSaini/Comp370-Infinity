@@ -37,7 +37,7 @@
             android:hint="@string/add_routine_title_hint"
             android:inputType="text"
             android:autofillHints="text"
-            android:maxLength="16"/>
+            android:maxLength="12"/>
 
     </LinearLayout>
 
