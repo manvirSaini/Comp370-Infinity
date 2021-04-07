@@ -248,13 +248,8 @@ public class AssignmentsActivity extends AppCompatActivity
         redirectActivity(this, RoutinesActivity.class);
     }
 
-    //TODO: Make sure redirects go to desired activity
     public void clickCourse(View view){
         redirectActivity(this, CourseActivity.class);
-    }
-
-    public void clickSetting(View view){
-        redirectActivity(this, Home.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

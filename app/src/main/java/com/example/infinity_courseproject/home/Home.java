@@ -480,7 +480,6 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    //   TODO: change mainactivity to home
     public void clickHome(View view) {
         recreate();
     }
