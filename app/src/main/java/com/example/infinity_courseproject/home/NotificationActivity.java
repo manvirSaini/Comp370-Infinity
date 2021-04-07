@@ -29,6 +29,7 @@ import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.roomDatabase.BaseRecyclerAdapter;
 import com.example.infinity_courseproject.roomDatabase.DateUtil;
 import com.example.infinity_courseproject.roomDatabase.EventBus_Tag;
+import com.example.infinity_courseproject.roomDatabase.MyApplication;
 import com.example.infinity_courseproject.roomDatabase.MyRVViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -91,7 +92,13 @@ public class NotificationActivity extends BaseActivity {
         lv.setLayoutManager(manager);
         myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
-
+        if (MyApplication.chakan == 1) {
+            layout0.setVisibility(View.VISIBLE);
+            tv1.setVisibility(View.GONE);
+        } else {
+            layout0.setVisibility(View.GONE);
+            tv1.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

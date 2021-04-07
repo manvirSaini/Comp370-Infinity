@@ -28,12 +28,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.infinity_courseproject.AssignmentsActivity;
 //import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.CourseActivity;
+import com.example.infinity_courseproject.PassengerActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.TimeService;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -160,7 +162,7 @@ public class Home extends BaseActivity {
             menuSpinText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-
+                    SoundPoolUtil.isplay();
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         spinnerTouched = true; // User DID touched the spinner!
                     }
@@ -170,7 +172,7 @@ public class Home extends BaseActivity {
             menuSpinText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Log.i("parent value :", String.valueOf(parent.getSelectedItem()));
+                    Log.i("parent value :", String.valueOf(parent.getSelectedItem())); SoundPoolUtil.isplay();
                     periods = null;
                     currentRoutine = (String) parent.getItemAtPosition(position); // set the current routine's ID according to the selected routine
                     Log.i("HOME", "ON ITEM SELECTED current routine" + currentRoutine);
@@ -256,8 +258,16 @@ public class Home extends BaseActivity {
 
         findViewById(R.id.datesButton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { SoundPoolUtil.isplay();
                 startActivity(new Intent(Home.this, NotificationActivity.class));
+            }
+        });
+
+        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundPoolUtil.isplay();
+                startActivity(new Intent(Home.this, PassengerActivity.class));
             }
         });
     }
