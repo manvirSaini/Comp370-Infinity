@@ -53,7 +53,7 @@ public class Home extends AppCompatActivity {
     TextView countdownText;
     private Spinner menuSpinText;
     TextView periodStatus;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private boolean timerRunning = false;
     private boolean routineRunning = false;
     private boolean spinnerTouched = false;
@@ -78,33 +78,40 @@ public class Home extends AppCompatActivity {
     public void buttonClicked(View View) {
         String ButtonText = beginButton.getText().toString();
 
-        if (ButtonText.equals("RESUME")) {
-            Log.i("RESUME BUTTON: ", "MILL_IN_FUTURE" + MILL_IN_FUTURE);
-            periodStatus.setText("" + periods.get(timer_counter).getDevotion());
-            startTimer();
-            beginButton.setText("PAUSE");
-        } else if (ButtonText.equals("PAUSE")) {
-            pauseTimer(); // call pause timer button
-            beginButton.setText("RESUME");
-        } else if (ButtonText.equals("RESET")) {
-            progressBar.setProgress(0); // reset progress and finish timer and run method
-            beginButton.setText("BEGIN");
-            periodStatus.setText("");
-            routineRunning = false;
-            timer_counter = 0;
+        switch (ButtonText) {
+            case "RESUME":
+                Log.i("RESUME BUTTON: ", "MILL_IN_FUTURE" + MILL_IN_FUTURE);
+                periodStatus.setText(String.valueOf(periods.get(timer_counter).getDevotion()));
+                startTimer();
+                beginButton.setText(R.string.home_action_button_pause_label);
+                break;
+            case "PAUSE":
+                pauseTimer(); // call pause timer button
 
-        } else {
-            Log.i("BEGIN BUTTON","Current Routine: "+currentRoutine);
-            if (currentRoutine.equals("NONE")) {
-                // toast message please select the routine first
-                Toast.makeText(Home.this, "Please select the routine First!",
-                        Toast.LENGTH_LONG).show();
-            } else {
-                // this is begin button which will get data from database and begin the timer
-                routineRunning = true;
-                timer.run();
-                beginButton.setText("PAUSE");
-            }
+                beginButton.setText(R.string.home_action_button_resume_label);
+                break;
+            case "RESET":
+                progressBar.setProgress(0); // reset progress and finish timer and run method
+
+                beginButton.setText(R.string.home_action_button_begin_label);
+                periodStatus.setText("");
+                routineRunning = false;
+                timer_counter = 0;
+
+                break;
+            default:
+                Log.i("BEGIN BUTTON", "Current Routine: " + currentRoutine);
+                if (currentRoutine.equals("NONE")) {
+                    // toast message please select the routine first
+                    Toast.makeText(Home.this, "Please select the routine first!",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    // this is begin button which will get data from database and begin the timer
+                    routineRunning = true;
+                    timer.run();
+                    beginButton.setText(R.string.home_action_button_pause_label);
+                }
+                break;
         }
     }
 
@@ -117,7 +124,7 @@ public class Home extends AppCompatActivity {
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText("Home");
+        toolbarName.setText(R.string.toolbar_label_home_section);
 
         // set routine spinner, progress, timer text, Begin and due button
         menuSpinText = findViewById(R.id.spinner1);
@@ -172,7 +179,7 @@ public class Home extends AppCompatActivity {
                     periods = null;
                     currentRoutine = (String) parent.getItemAtPosition(position); // set the current routine's ID according to the selected routine
                     Log.i("HOME", "ON ITEM SELECTED current routine" + currentRoutine);
-                    if (currentRoutine != "NONE") {
+                    if (!currentRoutine.equals("NONE")) {
 
                         homeViewModel.getByTitle(currentRoutine).observe(Home.this, routine -> {
                             Log.i("HOME", "This is homeViewModel");
@@ -199,7 +206,7 @@ public class Home extends AppCompatActivity {
                         progressBar.setProgress(0);
                         progress_counter = 0;
                         timer_counter = 0;
-                        beginButton.setText("BEGIN");
+                        beginButton.setText(R.string.home_action_button_begin_label);
                         routineRunning = false;
                         periodStatus.setText("");
                         if (periods != null) {
@@ -208,7 +215,7 @@ public class Home extends AppCompatActivity {
                         }
                         updateTimer();
                     } else {
-                        if (currentRoutine != "NONE") {
+                        if (!currentRoutine.equals("NONE")) {
 //                            Log.i("HOME", "time left = " + leftTime);
 //                            Log.i("HOME", "MILLIS IN FUTTURE = " + MILL_IN_FUTURE);
 //                            Log.i("HOME", "Progress counter = " + progress_counter);
@@ -260,13 +267,13 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    private Runnable timer = new Runnable() {
+    private final Runnable timer = new Runnable() {
         @Override
         public void run() {
             timerRunning = false;
             //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
             MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
-            periodStatus.setText("" + periods.get(timer_counter).getDevotion());
+            periodStatus.setText(String.valueOf(periods.get(timer_counter).getDevotion()));
             progress_counter = 0;
             progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
             //progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
@@ -276,7 +283,7 @@ public class Home extends AppCompatActivity {
                 //pauseTimer();
                 periodStatus.setText(dev);
                 updateTimer();
-                beginButton.setText("RESUME");
+                beginButton.setText(R.string.home_action_button_resume_label);
             } else {
                 Log.i("BEGIN", "This is the value of MILL_IN_FUTUTRE" + MILL_IN_FUTURE);
                 startTimer();
@@ -317,8 +324,8 @@ public class Home extends AppCompatActivity {
                         progressBar.setProgress(0);
                         mHandler.postDelayed(timer, 1);
                     } else {
-                        beginButton.setText("RESET");
-                        periodStatus.setText("Routine Completed!");
+                        beginButton.setText(R.string.home_action_button_reset_label);
+                        periodStatus.setText(R.string.routine_completion_message);
                     }
                 }
             };
@@ -401,7 +408,7 @@ public class Home extends AppCompatActivity {
 //             timerRunning = false;
 //         }
 
-        if (routineRunning && homeViewModel.getRoutine(currentRoutine) != null) {
+        if (routineRunning && HomeViewModel.getRoutine(currentRoutine) != null) {
 
             //Log.i("SPINNER", (String) menuSpinText.getItemAtPosition(0));
             //menuSpinText.setSelection( ((ArrayAdapter)menuSpinText.getAdapter()).getPosition(currentRoutine));
@@ -426,12 +433,12 @@ public class Home extends AppCompatActivity {
                     timerRunning = false;
                     timer_counter = 0;
                     progressBar.setProgress(0);
-                    beginButton.setText("BEGIN");
+                    beginButton.setText(R.string.home_action_button_begin_label);
                     //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
                     //timer_counter =+1; // increment counter as well
-                    updateTimer();
                     //updateButtons();
-                } else {
+                }
+                else {
                     Log.i("ELSE", "Inside of is timer running!");
                     Log.i("ELSE", "leftTime " + leftTime);
                     Log.i("ELSE", "MILLI_IN_FUTURE " + MILL_IN_FUTURE);
@@ -440,18 +447,20 @@ public class Home extends AppCompatActivity {
                     timerRunning = true;
                     Log.i("TIMER Running :", String.valueOf(timerRunning));
                     progressBar.setProgress((int) progress_c);
-                    beginButton.setText("PAUSE");
-                    updateTimer();
+                    beginButton.setText(R.string.home_action_button_pause_label);
                 }
-            } else {
+                updateTimer();
+            }
+            else {
                 // selected routine, set progress, counters, button
                 progressBar.setProgress(progress_counter);
                 beginButton.setText(buttonText);
-                if (buttonText == "RESUME") {
+                if (buttonText.equals("RESUME")) {
                     updateTimer();
                 }
             }
-        } else {
+        }
+        else {
             // set the master routine
             Log.i("ROUTINE", "This is under master routine" + routine);
             Log.i("ROUTINE", "This is under current routine" + currentRoutine);
