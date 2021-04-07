@@ -150,15 +150,6 @@ public class AssignmentsActivity extends BaseActivity
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
-        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundPoolUtil.isplay();
-                startActivity(new Intent(AssignmentsActivity.this, PassengerActivity.class));
-            }
-        });
-
     }
 
     @Override
@@ -260,6 +251,10 @@ public class AssignmentsActivity extends BaseActivity
 
     public void clickCourse(View view){
         redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

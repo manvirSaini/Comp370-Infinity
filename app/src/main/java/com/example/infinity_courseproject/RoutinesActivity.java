@@ -180,13 +180,6 @@ public class RoutinesActivity extends BaseActivity
 
         });
 
-        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundPoolUtil.isplay();
-                startActivity(new Intent(RoutinesActivity.this, PassengerActivity.class));
-            }
-        });
     }
 
     //______________________________________________________________________________________________

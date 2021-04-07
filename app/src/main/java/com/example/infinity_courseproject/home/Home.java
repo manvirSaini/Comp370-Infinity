@@ -31,7 +31,7 @@ import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.PassengerActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
-import com.example.infinity_courseproject.TimeService;
+//import com.example.infinity_courseproject.TimeService;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
@@ -124,7 +124,7 @@ public class Home extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        startService(new Intent(this, TimeService.class));
+//        startService(new Intent(this, TimeService.class));
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
@@ -267,14 +267,6 @@ public class Home extends BaseActivity {
             @Override
             public void onClick(View view) { SoundPoolUtil.isplay();
                 startActivity(new Intent(Home.this, NotificationActivity.class));
-            }
-        });
-
-        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundPoolUtil.isplay();
-                startActivity(new Intent(Home.this, PassengerActivity.class));
             }
         });
     }

@@ -10,12 +10,15 @@
         android:name=".roomDatabase.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
+
         <activity android:name=".home.NotificationActivity"
-            android:parentActivityName=".RoutinesActivity">
+            android:parentActivityName=".home.Home">
         </activity>
+
         <activity android:name=".PassengerActivity"
-            android:parentActivityName=".RoutinesActivity">
+            android:parentActivityName=".home.Home">
         </activity>
+
         <activity
             android:name=".home.Home"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -62,11 +65,6 @@
         <activity android:name=".CourseAddEditActivity"
             android:parentActivityName=".CourseActivity">
         </activity>
-
-        <activity android:name=".home.NotificationAtivity"
-            android:parentActivityName=".home.Home">
-        </activity>
-
 
         <service android:name=".TimeService"/>
 
