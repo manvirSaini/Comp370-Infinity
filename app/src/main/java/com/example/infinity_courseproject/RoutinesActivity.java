@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.home.Home;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutinesActivity extends AppCompatActivity
+public class RoutinesActivity extends BaseActivity
         implements RoutineRecViewAdapter.OnRoutineClickListener {
 
     private static final int ADD_ROUTINE_ACTIVITY_REQUEST_CODE = 1;
@@ -58,7 +59,7 @@ public class RoutinesActivity extends AppCompatActivity
     public static final String ID = "text";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_main);
 

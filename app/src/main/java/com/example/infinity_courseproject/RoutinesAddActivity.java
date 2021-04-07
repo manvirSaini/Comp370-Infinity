@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
 import com.example.infinity_courseproject.routines.RoutinesAddEditViewModel;
@@ -39,7 +40,7 @@ import java.util.Set;
  * The RoutinesAddActivity is the UI controller for the UI presented in the routines_add.xml file.
  * Author - David Semke
  */
-public class RoutinesAddActivity extends AppCompatActivity implements LifecycleOwner,
+public class RoutinesAddActivity extends BaseActivity implements LifecycleOwner,
         EventRecViewAdapter.OnEventClickListener {
 
     private static final int EDIT_EVENT_ACTIVITY_REQUEST_CODE = 1;
@@ -79,7 +80,7 @@ public class RoutinesAddActivity extends AppCompatActivity implements LifecycleO
 
     @SuppressLint("DefaultLocale")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.routines_add_edit);
 

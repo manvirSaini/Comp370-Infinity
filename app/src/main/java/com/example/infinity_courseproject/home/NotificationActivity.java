@@ -166,6 +166,7 @@ public class NotificationActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventBus_Tag event) {
+        super.onEventMainThread(event);
 
         if (event.getTag() == 1) {//initialize viewmodels
             AssignmentViewModel assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -207,7 +208,8 @@ public class NotificationActivity extends BaseActivity {
     boolean isShow = true;
     Timer timer;
 
-    String oldTime = "--", nowTome = "123";
+    String oldTime = "--",
+            nowTome = "123";
 
     private void startCycle() {
 

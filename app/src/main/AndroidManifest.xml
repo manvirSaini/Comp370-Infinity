@@ -64,6 +64,10 @@
             android:parentActivityName=".home.Home">
         </activity>
 
+
+        <service android:name=".TimeService"/>
+
+
     </application>
 
 </manifest>

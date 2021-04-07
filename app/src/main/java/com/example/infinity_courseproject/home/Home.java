@@ -30,8 +30,10 @@ import com.example.infinity_courseproject.AssignmentsActivity;
 import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
+import com.example.infinity_courseproject.TimeService;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -44,7 +46,7 @@ import java.util.Locale;
 import static com.example.infinity_courseproject.RoutinesActivity.ID;
 import static com.example.infinity_courseproject.RoutinesActivity.SHARED_ROUTINE;
 
-public class Home extends AppCompatActivity {
+public class Home extends BaseActivity {
 
     private HomeViewModel homeViewModel;
     Button beginButton;
@@ -110,10 +112,10 @@ public class Home extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
+        startService(new Intent(this, TimeService.class));
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);

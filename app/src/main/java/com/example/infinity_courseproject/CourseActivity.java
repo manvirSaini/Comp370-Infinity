@@ -23,11 +23,13 @@ import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseRecViewAdapter;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+
 import java.util.List;
 import java.util.Objects;
 
 
-public class CourseActivity extends AppCompatActivity
+public class CourseActivity extends BaseActivity
         implements CourseRecViewAdapter.OnCourseClickListener {
     public static final int ADD_COURSE_ACTIVITY_REQUEST_CODE = 1;
     public static final String COURSE_ID = "course_id";
@@ -45,7 +47,7 @@ public class CourseActivity extends AppCompatActivity
     TextView toolbarName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.courses_main);
 
