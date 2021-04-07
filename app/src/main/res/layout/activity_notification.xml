@@ -51,8 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Go to Option to open upcoming/over due list,
-                        and see the list"
+                    android:text="Go to Option to open upcoming/overdue dates list, and see the list"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:visibility="gone" />

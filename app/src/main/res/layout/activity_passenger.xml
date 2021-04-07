@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/shape_bg_0f8dfb"
             android:gravity="center"
-            android:text="ON/OFF"
+            android:text="OFF/ON"
             android:textColor="#fff"
             android:textSize="20sp" />
 
@@ -66,7 +66,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/shape_bg_0f8dfb"
             android:gravity="center"
-            android:text="ON/OFF"
+            android:text="OFF/ON"
             android:textColor="#fff"
             android:textSize="20sp" />
 

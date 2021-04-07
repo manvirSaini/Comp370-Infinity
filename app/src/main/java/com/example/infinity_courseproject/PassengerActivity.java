@@ -33,8 +33,8 @@ public class PassengerActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-         tv_0.setText(MyApplication.chakan == 0 ? "OFF" : "ON");
-        tv_1.setText(MyApplication.shengyin  == 0 ? "OFF" : "ON");
+         tv_0.setText(MyApplication.chakan == 0 ? "ON" : "OFF");
+        tv_1.setText(MyApplication.shengyin  == 0 ? "ON" : "OFF");
         tv_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
