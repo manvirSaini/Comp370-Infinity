@@ -60,10 +60,6 @@
             android:parentActivityName=".CourseActivity">
         </activity>
 
-        <activity android:name=".home.NotificationAtivity"
-            android:parentActivityName=".home.Home">
-        </activity>
-
     </application>
 
 </manifest>
