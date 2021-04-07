@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.infinity_courseproject.home.Home;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -65,7 +67,13 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 //                return true;
 //            }
 //        });
-
+        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundPoolUtil.isplay();
+                startActivity(new Intent(NavigationDrawerActivity.this, PassengerActivity.class));
+            }
+        });
     }
 
     public void clickMenu(View view){

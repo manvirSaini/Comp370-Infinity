@@ -26,6 +26,7 @@ import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.time.LocalDateTime;
@@ -147,6 +148,14 @@ public class AssignmentsActivity extends BaseActivity
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundPoolUtil.isplay();
+                startActivity(new Intent(AssignmentsActivity.this, PassengerActivity.class));
             }
         });
 

@@ -24,6 +24,7 @@ import com.example.infinity_courseproject.courses.CourseRecViewAdapter;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -84,6 +85,14 @@ public class CourseActivity extends BaseActivity
             courseRecyclerView.setAdapter(courseRecViewAdapter);
         });
 
+        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundPoolUtil.isplay();
+                startActivity(new Intent(CourseActivity.this, PassengerActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -95,12 +104,14 @@ public class CourseActivity extends BaseActivity
         startActivity(intent);
     }
 
+
     @Override
     public void onCourseLongClick(int position) {
         Course course =
                 Objects.requireNonNull(courseViewModel.getAllCourses().getValue()).get(position);
         CourseViewModel.delete(course);
     }
+
 
     /**
      * Onclick function for the add_course_fab

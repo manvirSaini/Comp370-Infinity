@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
@@ -179,7 +180,13 @@ public class RoutinesActivity extends BaseActivity
 
         });
 
-
+        findViewById(R.id.layout_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundPoolUtil.isplay();
+                startActivity(new Intent(RoutinesActivity.this, PassengerActivity.class));
+            }
+        });
     }
 
     //______________________________________________________________________________________________

@@ -33,13 +33,13 @@ public class PassengerActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-         tv_0.setText(MyApplication.chakan == 0 ? "关" : "开");
-        tv_1.setText(MyApplication.shengyin  == 0 ? "关" : "开");
+         tv_0.setText(MyApplication.chakan == 0 ? "OFF" : "ON");
+        tv_1.setText(MyApplication.shengyin  == 0 ? "OFF" : "ON");
         tv_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyApplication.chakan= (MyApplication.chakan == 0 ? 1 : 0);
-                ToastUtil.showToast(myActivity, "设置成功");
+                ToastUtil.showToast(myActivity, "SET SUCCESS");
                 SoundPoolUtil.isplay();
                 finish();
             }
@@ -48,7 +48,7 @@ public class PassengerActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 MyApplication.shengyin= (MyApplication.shengyin == 0 ? 1 : 0);
-                ToastUtil.showToast(myActivity, "设置成功");
+                ToastUtil.showToast(myActivity, "SET SUCCESS");
                 SoundPoolUtil.isplay();
                 finish();
             }
