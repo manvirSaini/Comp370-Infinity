@@ -189,7 +189,8 @@ public class Home extends AppCompatActivity {
                             if(timer_counter < periods.size()){
                                 MILL_IN_FUTURE = counter_arr[timer_counter]; // set millis on create
 //                              MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
-                                periodStatus.setText(periods.get(timer_counter).getDevotion().toString());
+                                Log.i("MILL_IN_FUTURE", String.valueOf(MILL_IN_FUTURE));
+                                periodStatus.setText(periods.get(timer_counter).getDevotion().toString()+" PERIOD");
                                 updateTimer();
                             }
 
@@ -212,10 +213,10 @@ public class Home extends AppCompatActivity {
                         beginButton.setText("BEGIN");
                         routineRunning = false;
                         periodStatus.setText("");
-                        if (periods != null) {
-                            MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
-                            periodStatus.setText(periods.get(0).getDevotion().toString());
-                        }
+//                        if (periods != null) {
+//                            MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
+//                            periodStatus.setText(periods.get(0).getDevotion().toString());
+//                        }
                         updateTimer();
                     } else {
                         if (currentRoutine != "NONE") {
@@ -276,7 +277,7 @@ public class Home extends AppCompatActivity {
             timerRunning = false;
             MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
             //MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
-            periodStatus.setText("" + periods.get(timer_counter).getDevotion());
+            periodStatus.setText("" + periods.get(timer_counter).getDevotion()+" PERIOD");
             progress_counter = 0;
             //progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
             progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
@@ -284,7 +285,7 @@ public class Home extends AppCompatActivity {
             if (timer_counter > 0 && dev.equals("STUDY")) {
                 Log.i("HOME", "This is study period after break so ahd to stop!!");
                 //pauseTimer();
-                periodStatus.setText(dev);
+                periodStatus.setText(dev+" PERIOD");
                 updateTimer();
                 beginButton.setText("RESUME");
             } else {
@@ -434,10 +435,10 @@ public class Home extends AppCompatActivity {
                 if (leftTime < 0 || leftTime == 0) {
                     Log.i("IF", "Inside of is leftTime < 0");
                     leftTime = 0;
-                    timer_counter += 1;// increase counter by one to get value of next period
+                    timer_counter = 0;// increase counter by one to get value of next period
                     progressBar.setProgress(0);
                     beginButton.setText("RESUME");
-                    timerRunning = true;
+                    timerRunning = false;
                     //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
                     //timer_counter =+1; // increment counter as well
                     updateTimer();
