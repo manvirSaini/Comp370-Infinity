@@ -29,6 +29,7 @@ import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.roomDatabase.BaseRecyclerAdapter;
 import com.example.infinity_courseproject.roomDatabase.DateUtil;
 import com.example.infinity_courseproject.roomDatabase.EventBus_Tag;
+import com.example.infinity_courseproject.roomDatabase.MyApplication;
 import com.example.infinity_courseproject.roomDatabase.MyRVViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +63,7 @@ public class NotificationActivity extends BaseActivity {
     public NotificationActivity() {
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void setContent() {
         super.setContent();
@@ -90,7 +92,13 @@ public class NotificationActivity extends BaseActivity {
         lv.setLayoutManager(manager);
         myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
-
+        if (MyApplication.chakan == 1) {
+            layout0.setVisibility(View.VISIBLE);
+            tv1.setVisibility(View.GONE);
+        } else {
+            layout0.setVisibility(View.GONE);
+            tv1.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -166,6 +174,7 @@ public class NotificationActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventBus_Tag event) {
+        super.onEventMainThread(event);
 
         if (event.getTag() == 1) {//initialize viewmodels
             AssignmentViewModel assignmentViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -207,7 +216,8 @@ public class NotificationActivity extends BaseActivity {
     boolean isShow = true;
     Timer timer;
 
-    String oldTime = "--", nowTome = "123";
+    String oldTime = "--",
+            nowTome = "123";
 
     private void startCycle() {
 

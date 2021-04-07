@@ -13,13 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsEditActivity extends AppCompatActivity {
+public class EventsEditActivity extends BaseActivity {
     public static final String EVENT_REPLY = "event_reply";
     public static final String INDEX_REPLY = "index_reply";
     private Spinner courseSpinner;
@@ -31,7 +32,7 @@ public class EventsEditActivity extends AppCompatActivity {
     private int indexOfEventToEdit;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_edit);
 

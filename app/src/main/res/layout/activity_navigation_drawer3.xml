@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@drawable/layout_round">
+    android:background="@drawable/layout_round"
+    android:orientation="vertical">
 
     <Space
         android:layout_width="match_parent"
@@ -40,11 +40,11 @@
         android:layout_height="50dp" />
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:onClick="clickHome">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:onClick="clickHome"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="70dp"
@@ -67,7 +67,7 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
@@ -76,9 +76,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:onClick="clickAssignment">
+        android:onClick="clickAssignment"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="70dp"
@@ -91,16 +91,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Assignments"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            />
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="Assignments"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
@@ -109,9 +108,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:onClick="clickRoutine">
+        android:onClick="clickRoutine"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="70dp"
@@ -124,16 +123,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Routines"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="9dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            />
+            android:layout_weight="1"
+            android:padding="9dp"
+            android:text="Routines"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
@@ -142,9 +140,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:onClick="clickCourse">
+        android:onClick="clickCourse"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="70dp"
@@ -157,14 +155,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Courses"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            />
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="Courses"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -173,11 +170,12 @@
         android:layout_height="200dp" />
 
     <LinearLayout
+        android:id="@+id/layout_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:onClick="clickSetting">
+        android:onClick="clickSetting"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="70dp"
@@ -190,14 +188,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Options"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            />
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="Options"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

@@ -13,10 +13,11 @@ import android.widget.Toast;
 
 import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 
 import java.util.List;
 
-public class CourseAddEditActivity extends AppCompatActivity {
+public class CourseAddEditActivity extends BaseActivity {
     private static Course courseToBeUpdated;
 
     //constants identifying extras of return intent
@@ -33,7 +34,7 @@ public class CourseAddEditActivity extends AppCompatActivity {
     List<Course> courseList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.courses_add_edit);
 
