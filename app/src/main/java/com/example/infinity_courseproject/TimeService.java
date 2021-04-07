@@ -111,7 +111,7 @@ public class TimeService extends Service implements LifecycleOwner {
                                     EventBus.getDefault().post(new EventBus_Tag(10,assignments.get(i).getTitle(),"The assignment is upcoming"));
                                 }
                                 if (day == 0 && hour == 0 && minute == 0 && second == 0) {
-                                    EventBus.getDefault().post(new EventBus_Tag(10,assignments.get(i).getTitle(),"the assignment is over due"));
+                                    EventBus.getDefault().post(new EventBus_Tag(10,assignments.get(i).getTitle(),"The assignment is now due"));
                                 }
                             }
 
