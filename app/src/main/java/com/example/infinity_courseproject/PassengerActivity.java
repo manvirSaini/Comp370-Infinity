@@ -106,6 +106,10 @@ public class PassengerActivity extends BaseActivity {
         redirectActivity(this, CourseActivity.class);
     }
 
+    public void clickSetting(View view){
+        recreate();
+    }
+
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag

@@ -509,6 +509,10 @@ public class Home extends BaseActivity {
         redirectActivity(this, CourseActivity.class);
     }
 
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
+    }
+
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag
