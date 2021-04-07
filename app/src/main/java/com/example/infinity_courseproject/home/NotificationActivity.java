@@ -62,6 +62,7 @@ public class NotificationActivity extends BaseActivity {
     public NotificationActivity() {
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void setContent() {
         super.setContent();
