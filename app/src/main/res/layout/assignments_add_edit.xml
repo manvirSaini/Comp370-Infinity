@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/assignment_title_hint"
             android:inputType="text"
-            android:maxLength="16"/>
+            android:maxLength="12"/>
 
     </LinearLayout>
 

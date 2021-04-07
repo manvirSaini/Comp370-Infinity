@@ -24,6 +24,7 @@ import com.example.infinity_courseproject.courses.CourseRecViewAdapter;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -83,7 +84,6 @@ public class CourseActivity extends BaseActivity
 
             courseRecyclerView.setAdapter(courseRecViewAdapter);
         });
-
     }
 
     @Override
@@ -95,12 +95,14 @@ public class CourseActivity extends BaseActivity
         startActivity(intent);
     }
 
+
     @Override
     public void onCourseLongClick(int position) {
         Course course =
                 Objects.requireNonNull(courseViewModel.getAllCourses().getValue()).get(position);
         CourseViewModel.delete(course);
     }
+
 
     /**
      * Onclick function for the add_course_fab
@@ -174,9 +176,8 @@ public class CourseActivity extends BaseActivity
         recreate();
     }
 
-    //TODO: Make sure redirects go to desired activity
     public void clickSetting(View view){
-        redirectActivity(this, Home.class);
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

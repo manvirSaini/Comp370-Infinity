@@ -51,8 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="请在我的选项里面设置，
-                    然后查看消息"
+                    android:text="Go to Option to open upcoming/overdue dates list, and see the list"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:visibility="gone" />

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.RoutineRecViewAdapter;
 import com.example.infinity_courseproject.routines.RoutineViewModel;
@@ -179,7 +180,6 @@ public class RoutinesActivity extends BaseActivity
 
         });
 
-
     }
 
     //______________________________________________________________________________________________
@@ -273,7 +273,6 @@ public class RoutinesActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         }
     }
-
     public void clickHome(View view){
         redirectActivity(this, Home.class);
     }
@@ -287,7 +286,11 @@ public class RoutinesActivity extends BaseActivity
     }
 
     public void clickCourse(View view){
-//        redirectActivity(this, CourseActivity.class);
+        redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

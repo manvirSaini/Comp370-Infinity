@@ -28,12 +28,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.infinity_courseproject.AssignmentsActivity;
 //import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.CourseActivity;
+import com.example.infinity_courseproject.PassengerActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
-import com.example.infinity_courseproject.TimeService;
+//import com.example.infinity_courseproject.TimeService;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -55,7 +57,7 @@ public class Home extends BaseActivity {
     TextView countdownText;
     private Spinner menuSpinText;
     TextView periodStatus;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private boolean timerRunning = false;
     private boolean routineRunning = false;
     private boolean spinnerTouched = false;
@@ -67,7 +69,7 @@ public class Home extends BaseActivity {
     ArrayList<Event> eve;
     private ArrayList<Period> periods;
     private CountDownTimer countDownTimer;
-    //int counter_arr[] = {1, 1, 1, 1,1,1};
+    int counter_arr[] = {1, 2, 1, 2};
     int timer_counter, progress_counter = 0;
 
     LiveData<List<Assignment>> assignmentLiveData;
@@ -82,13 +84,14 @@ public class Home extends BaseActivity {
 
         if (ButtonText.equals("RESUME")) {
             Log.i("RESUME BUTTON: ", "MILL_IN_FUTURE" + MILL_IN_FUTURE);
-            periodStatus.setText("" + periods.get(timer_counter).getDevotion());
+            periodStatus.setText("" + periods.get(timer_counter).getDevotion()+" PERIOD");
             startTimer();
             beginButton.setText("PAUSE");
         } else if (ButtonText.equals("PAUSE")) {
             pauseTimer(); // call pause timer button
             beginButton.setText("RESUME");
         } else if (ButtonText.equals("RESET")) {
+            countdownText.setText("00:00");
             progressBar.setProgress(0); // reset progress and finish timer and run method
             beginButton.setText("BEGIN");
             periodStatus.setText("");
@@ -115,7 +118,7 @@ public class Home extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        startService(new Intent(this, TimeService.class));
+
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
@@ -186,6 +189,21 @@ public class Home extends BaseActivity {
                                 periods.add(i.getPeriodAtIndex(0));
                                 periods.add(i.getPeriodAtIndex(1));
                             }
+                            Log.i("VIEWMODEL", String.valueOf(periods));
+
+                            if(timer_counter < periods.size()){
+                                MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;; // set millis on create
+//                              MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
+                                Log.i("MILL_IN_FUTURE", String.valueOf(MILL_IN_FUTURE));
+                                progressBar.setMax((int) MILL_IN_FUTURE / 1000);
+                                periodStatus.setText(periods.get(timer_counter).getDevotion().toString()+" PERIOD");
+                                updateTimer();
+                            }
+                            else{
+                                progressBar.setMax(100);
+                                progressBar.setProgress(100);
+                                beginButton.setText("RESET");
+                            }
                         });
                         Log.i("PERIODS", "Periods populate!");
                         Log.i("PERIODS", "Periods " + periods);
@@ -204,19 +222,14 @@ public class Home extends BaseActivity {
                         beginButton.setText("BEGIN");
                         routineRunning = false;
                         periodStatus.setText("");
-                        if (periods != null) {
-                            MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
-                            periodStatus.setText(periods.get(0).getDevotion().toString());
-                        }
+//                        if (periods != null) {
+//                            MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
+//                            periodStatus.setText(periods.get(0).getDevotion().toString());
+//                        }
                         updateTimer();
                     } else {
                         if (currentRoutine != "NONE") {
-//                            Log.i("HOME", "time left = " + leftTime);
-//                            Log.i("HOME", "MILLIS IN FUTTURE = " + MILL_IN_FUTURE);
-//                            Log.i("HOME", "Progress counter = " + progress_counter);
-//                            Log.i("HOME", "timer counter = " + timer_counter);
-//                            Log.i("HOME", "Timer is running = " + timerRunning);
-//                            Log.i("HOME", "value of count down timer = " + countDownTimer);
+//
                             // if routine was set from on start
                             if (timerRunning) {
                                 Log.i("HOME", "called start timer");
@@ -266,17 +279,17 @@ public class Home extends BaseActivity {
         @Override
         public void run() {
             timerRunning = false;
-            //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
-            MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
-            periodStatus.setText("" + periods.get(timer_counter).getDevotion());
+            MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
+            //MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
+            periodStatus.setText("" + periods.get(timer_counter).getDevotion()+" PERIOD");
             progress_counter = 0;
-            progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
-            //progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
+            //progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
             String dev = periods.get(timer_counter).getDevotion().toString();
             if (timer_counter > 0 && dev.equals("STUDY")) {
                 Log.i("HOME", "This is study period after break so ahd to stop!!");
                 //pauseTimer();
-                periodStatus.setText(dev);
+                periodStatus.setText(dev+" PERIOD");
                 updateTimer();
                 beginButton.setText("RESUME");
             } else {
@@ -293,6 +306,7 @@ public class Home extends BaseActivity {
             mEndTime = System.currentTimeMillis() + time;
             timerRunning = true;
             Log.i("TIME", "This is the value of time in countdown = " + time);
+            Log.i("TIME", "This is the value of time in countdown = " + countDownTimer);
             countDownTimer = new CountDownTimer(time, 1000) {
                 @Override
                 public void onTick(long tick) {
@@ -425,18 +439,16 @@ public class Home extends BaseActivity {
                 if (leftTime < 0 || leftTime == 0) {
                     Log.i("IF", "Inside of is leftTime < 0");
                     leftTime = 0;
-                    timerRunning = false;
-                    timer_counter = 0;
+                    timer_counter +=1;// increase counter by one to get value of next period
                     progressBar.setProgress(0);
-                    beginButton.setText("BEGIN");
+                    progress_counter = 0;
+                    beginButton.setText("RESUME");
+                    timerRunning = false;
                     //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
                     //timer_counter =+1; // increment counter as well
                     updateTimer();
                     //updateButtons();
                 } else {
-                    Log.i("ELSE", "Inside of is timer running!");
-                    Log.i("ELSE", "leftTime " + leftTime);
-                    Log.i("ELSE", "MILLI_IN_FUTURE " + MILL_IN_FUTURE);
                     //startTimer();
                     Log.i("ELSE","This is current routine: "+currentRoutine);
                     timerRunning = true;
@@ -482,7 +494,6 @@ public class Home extends BaseActivity {
         }
     }
 
-    //   TODO: change mainactivity to home
     public void clickHome(View view) {
         recreate();
     }
@@ -497,6 +508,10 @@ public class Home extends BaseActivity {
 
     public void clickCourse(View view) {
         redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

@@ -26,6 +26,7 @@ import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
 import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.time.LocalDateTime;
@@ -149,7 +150,6 @@ public class AssignmentsActivity extends BaseActivity
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
     }
 
     @Override
@@ -249,13 +249,12 @@ public class AssignmentsActivity extends BaseActivity
         redirectActivity(this, RoutinesActivity.class);
     }
 
-    //TODO: Make sure redirects go to desired activity
     public void clickCourse(View view){
         redirectActivity(this, CourseActivity.class);
     }
 
     public void clickSetting(View view){
-        redirectActivity(this, Home.class);
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {
