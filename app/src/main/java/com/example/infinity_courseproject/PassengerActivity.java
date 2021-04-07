@@ -35,7 +35,7 @@ public class PassengerActivity extends BaseActivity {
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText(R.string.toolbar_label_assignments_section);
+        toolbarName.setText("Options");
     }
 
     @Override
