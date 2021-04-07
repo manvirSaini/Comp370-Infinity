@@ -65,7 +65,7 @@ public class Home extends AppCompatActivity {
     ArrayList<Event> eve;
     private ArrayList<Period> periods;
     private CountDownTimer countDownTimer;
-    //int counter_arr[] = {1, 1, 1, 1,1,1};
+    int counter_arr[] = {1, 2, 3, 4,5,6};
     int timer_counter, progress_counter = 0;
 
     LiveData<List<Assignment>> assignmentLiveData;
@@ -184,6 +184,16 @@ public class Home extends AppCompatActivity {
                                 periods.add(i.getPeriodAtIndex(0));
                                 periods.add(i.getPeriodAtIndex(1));
                             }
+                            Log.i("VIEWMODEL", String.valueOf(periods));
+
+                            if(timer_counter < periods.size()){
+                                MILL_IN_FUTURE = counter_arr[timer_counter]; // set millis on create
+//                              MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
+                                periodStatus.setText(periods.get(timer_counter).getDevotion().toString());
+                                updateTimer();
+                            }
+
+
                         });
                         Log.i("PERIODS", "Periods populate!");
                         Log.i("PERIODS", "Periods " + periods);
@@ -264,12 +274,12 @@ public class Home extends AppCompatActivity {
         @Override
         public void run() {
             timerRunning = false;
-            //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
-            MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
+            MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
+            //MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
             periodStatus.setText("" + periods.get(timer_counter).getDevotion());
             progress_counter = 0;
-            progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
-            //progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
+            //progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
+            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
             String dev = periods.get(timer_counter).getDevotion().toString();
             if (timer_counter > 0 && dev.equals("STUDY")) {
                 Log.i("HOME", "This is study period after break so ahd to stop!!");
@@ -291,6 +301,7 @@ public class Home extends AppCompatActivity {
             mEndTime = System.currentTimeMillis() + time;
             timerRunning = true;
             Log.i("TIME", "This is the value of time in countdown = " + time);
+            Log.i("TIME", "This is the value of time in countdown = " + countDownTimer);
             countDownTimer = new CountDownTimer(time, 1000) {
                 @Override
                 public void onTick(long tick) {
@@ -423,18 +434,15 @@ public class Home extends AppCompatActivity {
                 if (leftTime < 0 || leftTime == 0) {
                     Log.i("IF", "Inside of is leftTime < 0");
                     leftTime = 0;
-                    timerRunning = false;
-                    timer_counter = 0;
+                    timer_counter += 1;// increase counter by one to get value of next period
                     progressBar.setProgress(0);
-                    beginButton.setText("BEGIN");
+                    beginButton.setText("RESUME");
+                    timerRunning = true;
                     //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
                     //timer_counter =+1; // increment counter as well
                     updateTimer();
                     //updateButtons();
                 } else {
-                    Log.i("ELSE", "Inside of is timer running!");
-                    Log.i("ELSE", "leftTime " + leftTime);
-                    Log.i("ELSE", "MILLI_IN_FUTURE " + MILL_IN_FUTURE);
                     //startTimer();
                     Log.i("ELSE","This is current routine: "+currentRoutine);
                     timerRunning = true;
