@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infinity_courseproject.AssignmentsActivity;
 import com.example.infinity_courseproject.CourseActivity;
+import com.example.infinity_courseproject.PassengerActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
 import com.example.infinity_courseproject.assignments.Assignment;
@@ -291,6 +292,10 @@ public class NotificationActivity extends BaseActivity {
 
     public void clickCourse(View view) {
         redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

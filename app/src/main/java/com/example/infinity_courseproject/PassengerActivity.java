@@ -110,6 +110,7 @@ public class PassengerActivity extends BaseActivity {
         recreate();
     }
 
+
     public static void redirectActivity(Activity activity, Class aclass) {
         Intent intent = new Intent(activity, aclass);
         //Set flag

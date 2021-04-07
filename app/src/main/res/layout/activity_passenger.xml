@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="Notification Toast Set"
-                android:textColor="#000"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -65,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="Sound Set"
-                android:textColor="#000"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
