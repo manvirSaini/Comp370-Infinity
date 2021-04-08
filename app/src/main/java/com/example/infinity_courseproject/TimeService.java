@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -11,6 +12,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
@@ -49,6 +51,7 @@ public class TimeService extends Service implements LifecycleOwner {
         this.init();
 
         timer.schedule(new TimerTask() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
 
@@ -71,6 +74,7 @@ public class TimeService extends Service implements LifecycleOwner {
             nowTome = "123";
     private final ArrayList<Assignment> itemBeanList = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     private void sendTimeChangedBroadcast(){
 
