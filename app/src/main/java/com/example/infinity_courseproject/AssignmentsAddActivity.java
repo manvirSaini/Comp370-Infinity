@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
@@ -30,7 +31,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignmentsAddActivity extends AppCompatActivity {
+public class AssignmentsAddActivity extends BaseActivity {
 
     private static Assignment assignmentToBeUpdated;
 
@@ -75,7 +76,7 @@ public class AssignmentsAddActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignments_add_edit);
 

@@ -23,11 +23,14 @@ import com.example.infinity_courseproject.courses.Course;
 import com.example.infinity_courseproject.courses.CourseRecViewAdapter;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
+
 import java.util.List;
 import java.util.Objects;
 
 
-public class CourseActivity extends AppCompatActivity
+public class CourseActivity extends BaseActivity
         implements CourseRecViewAdapter.OnCourseClickListener {
     public static final int ADD_COURSE_ACTIVITY_REQUEST_CODE = 1;
     public static final String COURSE_ID = "course_id";
@@ -45,7 +48,7 @@ public class CourseActivity extends AppCompatActivity
     TextView toolbarName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.courses_main);
 
@@ -81,7 +84,6 @@ public class CourseActivity extends AppCompatActivity
 
             courseRecyclerView.setAdapter(courseRecViewAdapter);
         });
-
     }
 
     @Override
@@ -93,12 +95,14 @@ public class CourseActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
     @Override
     public void onCourseLongClick(int position) {
         Course course =
                 Objects.requireNonNull(courseViewModel.getAllCourses().getValue()).get(position);
         CourseViewModel.delete(course);
     }
+
 
     /**
      * Onclick function for the add_course_fab
@@ -170,6 +174,10 @@ public class CourseActivity extends AppCompatActivity
 
     public void clickCourse(View view){
         recreate();
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

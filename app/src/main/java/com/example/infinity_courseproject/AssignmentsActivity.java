@@ -25,6 +25,8 @@ import com.example.infinity_courseproject.assignments.AssignmentRecViewAdapter;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
 import com.example.infinity_courseproject.courses.CourseViewModel;
 import com.example.infinity_courseproject.home.Home;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.roomDatabase.myStudyRoutineDB;
 
 import java.time.LocalDateTime;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentsActivity extends AppCompatActivity
+public class AssignmentsActivity extends BaseActivity
         implements AssignmentRecViewAdapter.OnAssignmentClickListener{
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";
@@ -54,7 +56,7 @@ public class AssignmentsActivity extends AppCompatActivity
     TextView toolbarName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.assignments_main);
 
@@ -85,7 +87,7 @@ public class AssignmentsActivity extends AppCompatActivity
         //get and observe assignments
         LiveData<List<Assignment>> assignmentLiveData =
                 assignmentViewModel.getAssignmentsOrderByDueTime();
-
+        List<Assignment> aaa=assignmentLiveData.getValue();
         assignmentLiveData.observe(this, assignments -> {
             assignmentList = assignments;
             if (assignments.size() == 0)
@@ -148,7 +150,6 @@ public class AssignmentsActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
     }
 
     @Override
@@ -250,6 +251,10 @@ public class AssignmentsActivity extends AppCompatActivity
 
     public void clickCourse(View view){
         redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

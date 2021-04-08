@@ -5,6 +5,8 @@ public class EventBus_Tag {
     private final int tag;
     private int position;
     private String content;
+    private String title;
+
     private Object object;
 
     public EventBus_Tag(int tag, Object object ,int position) {
@@ -13,6 +15,20 @@ public class EventBus_Tag {
         this.position = position;
     }
 
+    public EventBus_Tag(int tag, String title , String content ) {
+        this.tag = tag;
+        this.title = title;
+        this.content = content;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Object getObject() {
         return object;

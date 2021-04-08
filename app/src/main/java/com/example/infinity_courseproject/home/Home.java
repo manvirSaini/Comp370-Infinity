@@ -28,10 +28,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.infinity_courseproject.AssignmentsActivity;
 //import com.example.infinity_courseproject.CourseActivity;
 import com.example.infinity_courseproject.CourseActivity;
+import com.example.infinity_courseproject.PassengerActivity;
 import com.example.infinity_courseproject.R;
 import com.example.infinity_courseproject.RoutinesActivity;
+import com.example.infinity_courseproject.TimeService;
 import com.example.infinity_courseproject.assignments.Assignment;
 import com.example.infinity_courseproject.assignments.AssignmentViewModel;
+import com.example.infinity_courseproject.roomDatabase.BaseActivity;
+import com.example.infinity_courseproject.roomDatabase.SoundPoolUtil;
 import com.example.infinity_courseproject.routines.Routine;
 import com.example.infinity_courseproject.routines.events.Event;
 import com.example.infinity_courseproject.routines.periods.Period;
@@ -44,7 +48,7 @@ import java.util.Locale;
 import static com.example.infinity_courseproject.RoutinesActivity.ID;
 import static com.example.infinity_courseproject.RoutinesActivity.SHARED_ROUTINE;
 
-public class Home extends AppCompatActivity {
+public class Home extends BaseActivity {
 
     private HomeViewModel homeViewModel;
     Button beginButton;
@@ -53,7 +57,7 @@ public class Home extends AppCompatActivity {
     TextView countdownText;
     private Spinner menuSpinText;
     TextView periodStatus;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private boolean timerRunning = false;
     private boolean routineRunning = false;
     private boolean spinnerTouched = false;
@@ -112,9 +116,10 @@ public class Home extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        startService(new Intent(this, TimeService.class));
 
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
@@ -471,6 +476,10 @@ public class Home extends AppCompatActivity {
 
     public void clickCourse(View view) {
         redirectActivity(this, CourseActivity.class);
+    }
+
+    public void clickSetting(View view){
+        redirectActivity(this, PassengerActivity.class);
     }
 
     public static void redirectActivity(Activity activity, Class aclass) {

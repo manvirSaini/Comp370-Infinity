@@ -7,12 +7,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:name=".roomDatabase.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
 
         <activity android:name=".home.NotificationActivity"
-            android:parentActivityName=".RoutinesActivity">
+            android:parentActivityName=".home.Home">
         </activity>
+
+        <activity android:name=".PassengerActivity"
+            android:parentActivityName=".home.Home">
+        </activity>
+
         <activity
             android:name=".home.Home"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
@@ -60,9 +66,8 @@
             android:parentActivityName=".CourseActivity">
         </activity>
 
-        <activity android:name=".home.NotificationAtivity"
-            android:parentActivityName=".home.Home">
-        </activity>
+        <service android:name=".TimeService"/>
+
 
     </application>
 

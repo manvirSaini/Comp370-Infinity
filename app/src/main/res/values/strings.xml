@@ -39,7 +39,7 @@
     <string name="delete_button_text">Delete</string>
     <string name="routine_show_text">Show:</string>
     <string name="master_routine_text">Master Routine:</string>
-    <string name="assignment_due_date_text">Due Date:</string>
+    <string name="assignment_due_date_text">Due:</string>
     <string name="assignment_title_hint">e.g. Assignment 1</string>
     <string name="add_assignment_description_text">Description:</string>
     <string name="add_assignment_fab_content_description">Button for adding assignment</string>
@@ -93,4 +93,10 @@
     <string name="course_add_edit_description_hint">Course description here.</string>
     <string name="courses_add_edit_professor_label">Professor:</string>
     <string name="courses_add_edit_title_hint">e.g. Comp 370</string>
+    <string name="home_action_button_begin_label">BEGIN</string>
+    <string name="home_action_button_resume_label">RESUME</string>
+    <string name="routine_completion_message">Routine Completed!</string>
+    <string name="home_action_button_reset_label">RESET</string>
+    <string name="toolbar_label_home_section">Home</string>
+    <string name="home_action_button_pause_label">PAUSE</string>
 </resources>
