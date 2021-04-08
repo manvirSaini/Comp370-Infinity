@@ -87,7 +87,7 @@ public class AssignmentsActivity extends BaseActivity
         //get and observe assignments
         LiveData<List<Assignment>> assignmentLiveData =
                 assignmentViewModel.getAssignmentsOrderByDueTime();
-        List<Assignment> aaa=assignmentLiveData.getValue();
+
         assignmentLiveData.observe(this, assignments -> {
             assignmentList = assignments;
             if (assignments.size() == 0)

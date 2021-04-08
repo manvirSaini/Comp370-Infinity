@@ -76,7 +76,7 @@ public class NotificationActivity extends BaseActivity {
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText("Upcoming");
+        toolbarName.setText("Upcoming/Overdue Dates");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -35,7 +35,7 @@ public class PassengerActivity extends BaseActivity {
         //initialize navigation drawer
         drawer = findViewById(R.id.drawer_layout);
         toolbarName = findViewById(R.id.toolbar_name);
-        toolbarName.setText("Options");
+        toolbarName.setText(R.string.toolbar_label_options_section);
     }
 
     @Override
@@ -47,23 +47,17 @@ public class PassengerActivity extends BaseActivity {
     protected void initListener() {
          tv_0.setText(MyApplication.chakan == 0 ? "ON" : "OFF");
         tv_1.setText(MyApplication.shengyin  == 0 ? "ON" : "OFF");
-        tv_0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyApplication.chakan= (MyApplication.chakan == 0 ? 1 : 0);
-                ToastUtil.showToast(myActivity, "SET SUCCESS");
-                SoundPoolUtil.isplay();
-                finish();
-            }
+        tv_0.setOnClickListener(v -> {
+            MyApplication.chakan= (MyApplication.chakan == 0 ? 1 : 0);
+            ToastUtil.showToast(myActivity, "SET SUCCESS");
+            SoundPoolUtil.isplay();
+            finish();
         });
-        tv_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyApplication.shengyin= (MyApplication.shengyin == 0 ? 1 : 0);
-                ToastUtil.showToast(myActivity, "SET SUCCESS");
-                SoundPoolUtil.isplay();
-                finish();
-            }
+        tv_1.setOnClickListener(v -> {
+            MyApplication.shengyin= (MyApplication.shengyin == 0 ? 1 : 0);
+            ToastUtil.showToast(myActivity, "SET SUCCESS");
+            SoundPoolUtil.isplay();
+            finish();
         });
 
 

@@ -49,9 +49,7 @@ public class CourseAddEditActivity extends BaseActivity {
 
         LiveData<List<Course>> courseLiveData = courseViewModel.getAllCourses();
 
-        courseLiveData.observe(this, courses -> {
-            courseList = courses;
-        });
+        courseLiveData.observe(this, courses -> courseList = courses);
 
         //get data in the case of an edit - startActivity occurs from CourseActivity
         Bundle data = getIntent().getExtras();

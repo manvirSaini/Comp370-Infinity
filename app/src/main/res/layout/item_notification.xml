@@ -31,9 +31,6 @@
         android:textSize="18sp" />
 
 
-
-
-
     <TextView
         android:id="@+id/tv_time2"
         android:layout_width="wrap_content"
@@ -44,10 +41,9 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="5dp"
-        android:text="Due days"
+        android:text="Due date"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp" />
-
 
 
     <TextView
@@ -60,7 +56,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="5dp"
-        android:text="Remining time"
+        android:text="Remaining time"
         android:textColor="@color/colorAccent"
         android:textSize="17sp" />
 

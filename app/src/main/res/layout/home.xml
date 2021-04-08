@@ -104,9 +104,10 @@
 
             <TextView
                 android:id="@+id/statusTextView"
-                android:layout_width="276dp"
-                android:layout_height="81dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textSize="24sp"
+                android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/progress_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.866"
