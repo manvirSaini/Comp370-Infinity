@@ -66,7 +66,7 @@ public class Home extends AppCompatActivity {
     ArrayList<Event> eve;
     private ArrayList<Period> periods;
     private CountDownTimer countDownTimer;
-    int counter_arr[] = {1, 2, 1, 2};
+    //int counter_arr[] = {1, 2, 3, 4};
     int timer_counter, progress_counter = 0;
 
     LiveData<List<Assignment>> assignmentLiveData;
@@ -183,8 +183,8 @@ public class Home extends AppCompatActivity {
                                 periods.add(i.getPeriodAtIndex(1));
                             }
                             if(timer_counter < periods.size()){
-                                MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;; // set millis on create
-//                              MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
+                                //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;; // set millis on create
+                                MILL_IN_FUTURE = periods.get(0).getMinutes() * 60000;
                                 Log.i("MILL_IN_FUTURE", String.valueOf(MILL_IN_FUTURE));
                                 progressBar.setMax((int) MILL_IN_FUTURE / 1000);
                                 periodStatus.setText(periods.get(timer_counter).getDevotion().toString()+" PERIOD");
@@ -256,12 +256,12 @@ public class Home extends AppCompatActivity {
         @Override
         public void run() {
             timerRunning = false;
-            MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
-            //MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
+            //MILL_IN_FUTURE = counter_arr[timer_counter] * 60 * 1000;
+            MILL_IN_FUTURE = periods.get(timer_counter).getMinutes() * 60 * 1000;
             periodStatus.setText("" + periods.get(timer_counter).getDevotion()+" PERIOD");
             progress_counter = 0;
-            //progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
-            progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
+            progressBar.setMax((int) (periods.get(timer_counter).getMinutes() * 60)); // set the progress max equals to number of secomds in set time
+            //progressBar.setMax((int) (counter_arr[timer_counter] * 60)); // set the progress max equals to number of seconds in set time
             String dev = periods.get(timer_counter).getDevotion().toString();
             if (timer_counter > 0 && dev.equals("STUDY")) {
                 Log.i("HOME", "This is study period after break so ahd to stop!!");
