@@ -88,8 +88,8 @@ public class NotificationActivity extends BaseActivity {
 
         @SuppressLint("WrongConstant")
         LinearLayoutManager manager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
-        if (null == manager)
-            return;
+        //if (null == manager)
+        //    return;
         lv.setLayoutManager(manager);
         myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
@@ -149,7 +149,7 @@ public class NotificationActivity extends BaseActivity {
 
             long sy = Long.parseLong(td) - System.currentTimeMillis();
             if (sy > 0) {
-                tv_time.setText("Remining Time：" + DateUtil.getStringDate((sy)));
+                tv_time.setText("Remaining Time：" + DateUtil.getStringDate((sy)));
                 Log.v("----------333" + position, tv_time.getText().toString());
                 int day = (int) (sy / 1000 / 60 / 60 / 24);
                 int hour = (int) (sy / 1000 / 60 / 60 % 24);
@@ -162,13 +162,13 @@ public class NotificationActivity extends BaseActivity {
                 }
                 if (day == 0 && hour == 0 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is over due", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is now due", Toast.LENGTH_LONG).show();
                 }
             } else
                 tv_time.setText("Overdue");
 
 
-            tv_time2.setText("Due days：" + DateUtil.stampToDate(td));
+            tv_time2.setText("Due date：" + DateUtil.stampToDate(td));
 
         }
     }

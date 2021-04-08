@@ -47,8 +47,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             new GT.GT_Notification(this)
                     .setNotifyId(0x1)
                     .setChanelId(getClass().getName())
-                    .setChanelDescription("GT通知")
-                    .setChanelName("GT 名字")
+                    .setChanelDescription("GTnotification")
+                    .setChanelName("GT name")
                     .sendingNotice(R.drawable.ic_launcher_background,event.getTitle(),event.getContent(),0,true,true, Home.class);
 
         }
