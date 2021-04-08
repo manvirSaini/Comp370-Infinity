@@ -1,8 +1,11 @@
 package com.example.infinity_courseproject.assignments;
 
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -54,6 +57,7 @@ public class Assignment {
         this.complete = complete;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Status determineStatus() {
         Status status = Status.NEUTRAL;
         LocalDateTime currentDate = LocalDateTime.now();
@@ -74,6 +78,7 @@ public class Assignment {
         return status;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String stringifyStatus() {
         Status status = determineStatus();
         String stringStatus = null;

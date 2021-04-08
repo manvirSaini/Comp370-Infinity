@@ -115,6 +115,7 @@ public class NotificationActivity extends BaseActivity {
             super(context, datas, layoutId);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @SuppressLint("SetTextI18n")
         @Override
         public void setView(MyRVViewHolder holder, final Assignment bean, int position) {
@@ -173,6 +174,7 @@ public class NotificationActivity extends BaseActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventBus_Tag event) {
         super.onEventMainThread(event);
