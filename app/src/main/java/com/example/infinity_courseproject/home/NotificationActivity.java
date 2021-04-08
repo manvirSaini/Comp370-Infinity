@@ -88,8 +88,8 @@ public class NotificationActivity extends BaseActivity {
 
         @SuppressLint("WrongConstant")
         LinearLayoutManager manager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
-        if (null == manager)
-            return;
+        //if (null == manager)
+        //    return;
         lv.setLayoutManager(manager);
         myAdapter = new MyAdapter(NotificationActivity.this, itemBeanList, R.layout.item_notification);
         lv.setAdapter(myAdapter);
@@ -162,7 +162,7 @@ public class NotificationActivity extends BaseActivity {
                 }
                 if (day == 0 && hour == 0 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is over due", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is now due", Toast.LENGTH_LONG).show();
                 }
             } else
                 tv_time.setText("Overdue");
