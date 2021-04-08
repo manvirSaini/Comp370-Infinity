@@ -425,36 +425,39 @@ public class Home extends AppCompatActivity {
             String buttonText = prefs.getString("BUTTON_TEXT", "");
             progress_counter = prefs.getInt("PROGRESS", 0);
             progressBar.setMax((int) MILL_IN_FUTURE / 1000); // set max progress accordingly
+
             // get button texts and perform actions accordingly
             if (timerRunning) {
-
-                Log.i("TIMER_RUNNING", "left time = " + leftTime);
-                Log.i("TIMER_RUNNING", "endtime = " + mEndTime);
-                long progress_c = System.currentTimeMillis() - (mEndTime - leftTime);
+                Log.i("millis_in_future", "MILLI IN FUTUTRE = " + MILL_IN_FUTURE/1000);
+                Log.i("Max for progress", "Max for progress = " + progressBar.getMax());
+                Log.i("PROGRESS", "PROGRESS_COUNTER = " + progress_counter);
+                Log.i("PROGRESS", "SYSTEM TIME now = " + System.currentTimeMillis()/1000);
+                Log.i("PROGRESS", "Left TIME before = " + leftTime/1000);
+                Log.i("PROGRESS", "mEndTime TIME now = " + mEndTime/1000);
+                int progress_c = (int) ((leftTime/1000)-(mEndTime - System.currentTimeMillis())/1000) + progress_counter;
+                //progress_c = progress_c/6000; // convert millis to seconds
+                Log.i("PROGRESS","Progress after addition: "+progress_c);
                 leftTime = (mEndTime) - System.currentTimeMillis();
+                Log.i("left time now", "left TIME now = " + leftTime/1000);
                 if (leftTime < 0 || leftTime == 0) {
-                    Log.i("IF", "Inside of is leftTime < 0");
+                    // when timer is over
                     leftTime = 0;
                     timer_counter +=1;// increase counter by one to get value of next period
                     progressBar.setProgress(0);
                     progress_counter = 0;
                     beginButton.setText("RESUME");
                     timerRunning = false;
-                    //MILL_IN_FUTURE = prefs.getInt("NEXT_PERIOD",0);
-                    //timer_counter =+1; // increment counter as well
                     updateTimer();
-                    //updateButtons();
                 } else {
-                    //startTimer();
-                    Log.i("ELSE","This is current routine: "+currentRoutine);
+                    // When timer is not over
                     timerRunning = true;
-                    Log.i("TIMER Running :", String.valueOf(timerRunning));
-                    progressBar.setProgress((int) progress_c);
+                    progressBar.setProgress(progress_c);
+                    progress_counter = progress_c;
                     beginButton.setText("PAUSE");
                     updateTimer();
                 }
             } else {
-                // selected routine, set progress, counters, button
+                // When timer is not running but routine is running
                 progressBar.setProgress(progress_counter);
                 beginButton.setText(buttonText);
                 if (buttonText == "RESUME") {
@@ -463,8 +466,6 @@ public class Home extends AppCompatActivity {
             }
         } else {
             // set the master routine
-            Log.i("ROUTINE", "This is under master routine" + routine);
-            Log.i("ROUTINE", "This is under current routine" + currentRoutine);
             currentRoutine = routine;
         }
     }
