@@ -97,6 +97,9 @@
     <string name="home_action_button_resume_label">RESUME</string>
     <string name="routine_completion_message">Routine Completed!</string>
     <string name="home_action_button_reset_label">RESET</string>
-    <string name="toolbar_label_home_section">Home</string>
     <string name="home_action_button_pause_label">PAUSE</string>
+    <string name="initial_countdown_timer_value">00:00</string>
+    <string name="toolbar_label_home_section">Home</string>
+    <string name="message_upon_completing_routine">Routine Completed!</string>
+    <string name="toolbar_label_options_section">Options</string>
 </resources>

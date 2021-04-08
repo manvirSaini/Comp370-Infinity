@@ -50,10 +50,7 @@ public abstract class myStudyRoutineDB extends RoomDatabase {
             = Executors.newFixedThreadPool(THREADS_FOR_ANY_ORDER_THREADING);
 
     /**
-     * Method to create singleton database - stay away from callbacks for prepopulation of tables
-     * (migrations seem to prevent them from working)
-     * @param context
-     * @return
+     * Method to create singleton database
      */
     public static myStudyRoutineDB getDatabase(final Context context) {
         if (INSTANCE == null) {

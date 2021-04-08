@@ -1,9 +1,5 @@
 package com.example.infinity_courseproject.roomDatabase;
 
-
-
-
-
 import android.app.Application;
 
 

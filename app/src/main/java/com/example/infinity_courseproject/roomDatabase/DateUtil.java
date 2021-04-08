@@ -22,8 +22,7 @@ public class DateUtil {
         int hour = (int) (ms / 1000 / 60 / 60 % 24);
         int minute = (int) (ms / 1000 / 60 % 60);
         int second = (int) (ms / 1000 % 60);
-        String dsd = (day + " days " + hour + " hours " + minute + " minutes " + second + " seconds ");
-        return dsd;
+        return (day + " days " + hour + " hours " + minute + " minutes " + second + " seconds ");
     }
 
 

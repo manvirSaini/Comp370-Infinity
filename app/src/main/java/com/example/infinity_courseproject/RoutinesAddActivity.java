@@ -105,9 +105,7 @@ public class RoutinesAddActivity extends BaseActivity implements LifecycleOwner,
         LiveData<List<Routine>> routineLiveData = routineViewModel.getRoutinesOrderByName();
 
         //set routine list
-        routineLiveData.observe(this, routines -> {
-            routineList = routines;
-        });
+        routineLiveData.observe(this, routines -> routineList = routines);
 
         //set up event recyclerview and observe its live data
         LiveData<ArrayList<Event>> eventLiveData = routinesAddEditViewModel.getEventLiveData();
