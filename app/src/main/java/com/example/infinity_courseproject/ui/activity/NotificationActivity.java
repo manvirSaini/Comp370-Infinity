@@ -154,11 +154,11 @@ public class NotificationActivity extends BaseActivity {
 //                String dsd = (day + " days " + hour + " hous " + minute + " minutes " + second + " seconds ");
                 if (day == 0 && hour == 23 && minute == 59 && second == 59) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nThe assignment is upcoming", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nThe assignment is upcoming.", Toast.LENGTH_LONG).show();
                 }
                 if (day == 0 && hour == 0 && minute == 0 && second == 0) {
                     Log.v("----------11113333" + position, tv_time.getText().toString());
-                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nthe assignment is now due", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NotificationActivity.this, bean.getTitle() + "\nThe assignment is now due.", Toast.LENGTH_LONG).show();
                 }
             } else
                 tv_time.setText("Overdue");

@@ -15,6 +15,7 @@ import com.example.infinity_courseproject.ui.recyclerViewAdapter.EventRecViewAda
 import com.example.infinity_courseproject.domain.nonEntity.Period;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,7 +37,7 @@ import java.util.Set;
  * The RoutinesAddActivity is the UI controller for the UI presented in the routines_add.xml file.
  * Author - David Semke
  */
-public class RoutineAddEditActivity extends BaseActivity implements LifecycleOwner,
+public class RoutineAddEditActivity extends AppCompatActivity implements LifecycleOwner,
         OnItemClickListener {
 
     private static final int EDIT_EVENT_ACTIVITY_REQUEST_CODE = 1;
