@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
@@ -38,7 +39,7 @@ import java.util.Locale;
 import static com.example.infinity_courseproject.ui.activity.RoutineActivity.ID;
 import static com.example.infinity_courseproject.ui.activity.RoutineActivity.SHARED_ROUTINE;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel homeViewModel;
     Button beginButton;
@@ -51,7 +52,6 @@ public class HomeActivity extends BaseActivity {
     private boolean timerRunning = false;
     private boolean routineRunning = false;
     private boolean spinnerTouched = false;
-    //private boolean homeButton = false;
     private long leftTime;
     private long mEndTime;
     private static long MILL_IN_FUTURE;
@@ -98,7 +98,7 @@ public class HomeActivity extends BaseActivity {
                 Log.i("BEGIN BUTTON", "Current Routine: " + currentRoutine);
                 if (currentRoutine.equals("NONE")) {
                     // toast message please select the routine first
-                    Toast.makeText(HomeActivity.this, "Please select the routine First!",
+                    Toast.makeText(HomeActivity.this, "Select the routine first!",
                             Toast.LENGTH_LONG).show();
                 } else {
                     // this is begin button which will get data from database and begin the timer

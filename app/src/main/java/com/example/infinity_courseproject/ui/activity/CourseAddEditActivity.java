@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,7 +17,7 @@ import com.example.infinity_courseproject.ui.viewModel.CourseViewModel;
 
 import java.util.List;
 
-public class CourseAddEditActivity extends BaseActivity {
+public class CourseAddEditActivity extends AppCompatActivity {
     private static Course courseToBeUpdated;
 
     //constants identifying extras of return intent

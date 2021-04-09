@@ -13,10 +13,7 @@ import com.example.infinity_courseproject.ui.util.MyApplication;
 import com.example.infinity_courseproject.ui.util.SoundPoolUtil;
 import com.example.infinity_courseproject.ui.util.ToastUtil;
 
-
-
 public class PassengerActivity extends BaseActivity {
-
 
     TextView tv_0;
 

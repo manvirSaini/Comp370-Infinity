@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,7 +20,7 @@ import com.example.infinity_courseproject.domain.nonEntity.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventEditActivity extends BaseActivity {
+public class EventEditActivity extends AppCompatActivity {
     public static final String EVENT_REPLY = "event_reply";
     public static final String INDEX_REPLY = "index_reply";
     private Spinner courseSpinner;

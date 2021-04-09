@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AssignmentActivity extends BaseActivity
+public class AssignmentActivity extends AppCompatActivity
         implements OnItemClickListener {
     public static final int ADD_ASSIGNMENT_ACTIVITY_REQUEST_CODE = 1;
     public static final String ASSIGNMENT_ID = "assignment_id";

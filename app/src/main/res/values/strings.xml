@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Infinity - Course Project</string>
+    <string name="app_name">myStudy Routine</string>
     <string name="routines_order_by_name">Name</string>
     <string name="routines_order_by_total_time">Total Time</string>
     <string name="db_drop">DROP TABLE IF EXISTS</string>
