@@ -7,20 +7,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:name=".roomDatabase.MyApplication"
+        android:name=".ui.util.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinityCourseProject">
 
-        <activity android:name=".home.NotificationActivity"
-            android:parentActivityName=".home.Home">
+        <activity android:name=".ui.activity.NotificationActivity"
+            android:parentActivityName=".ui.activity.HomeActivity">
         </activity>
 
-        <activity android:name=".PassengerActivity"
-            android:parentActivityName=".home.Home">
+        <activity android:name=".ui.activity.PassengerActivity"
+            android:parentActivityName=".ui.activity.HomeActivity">
         </activity>
 
         <activity
-            android:name=".home.Home"
+            android:name=".ui.activity.HomeActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,43 +30,43 @@
         </activity>
 
         <activity
-            android:name=".RoutinesActivity"
+            android:name=".ui.activity.RoutineActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".RoutinesAddActivity"
-            android:parentActivityName=".RoutinesActivity">
+        <activity android:name=".ui.activity.RoutineAddEditActivity"
+            android:parentActivityName=".ui.activity.RoutineActivity">
         </activity>
 
         <activity
-            android:name=".AssignmentsActivity"
+            android:name=".ui.activity.AssignmentActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".AssignmentsAddActivity"
-            android:parentActivityName=".AssignmentsActivity">
+        <activity android:name=".ui.activity.AssignmentAddEditActivity"
+            android:parentActivityName=".ui.activity.AssignmentActivity">
         </activity>
 
-        <activity android:name=".EventsEditActivity"
-            android:parentActivityName=".RoutinesAddActivity">
+        <activity android:name=".ui.activity.EventEditActivity"
+            android:parentActivityName=".ui.activity.RoutineAddEditActivity">
         </activity>
 
         <activity
-            android:name=".CourseActivity"
+            android:name=".ui.activity.CourseActivity"
             android:theme="@style/Theme.InfinityCourseProject.NoActionBar">
         </activity>
 
-        <activity android:name=".CourseAddEditActivity"
-            android:parentActivityName=".CourseActivity">
+        <activity android:name=".ui.activity.CourseAddEditActivity"
+            android:parentActivityName=".ui.activity.CourseActivity">
         </activity>
 
-        <service android:name=".TimeService"/>
+        <service android:name=".domain.util.TimeService"/>
 
 
     </application>
